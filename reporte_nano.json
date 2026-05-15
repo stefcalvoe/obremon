@@ -1,0 +1,153 @@
+{
+  "timestamp": "2026-04-23T21:41:30.864190",
+  "metodo": "YOLOv8 NANO, skip=5 frames",
+  "total_videos": 24,
+  "total_personas": 243,
+  "promedio": 10.125,
+  "videos": [
+    {
+      "video": "Bus080_2026-04-16_05-57-00_20.mov",
+      "duracion": "19.7s",
+      "frames": 159,
+      "personas": 24
+    },
+    {
+      "video": "Bus080_2026-04-16_05-57-21_20.mov",
+      "duracion": "20.1s",
+      "frames": 162,
+      "personas": 22
+    },
+    {
+      "video": "Bus080_2026-04-16_05-57-42_20.mov",
+      "duracion": "20.4s",
+      "frames": 164,
+      "personas": 8
+    },
+    {
+      "video": "Bus080_2026-04-16_05-58-03_20.mov",
+      "duracion": "19.0s",
+      "frames": 153,
+      "personas": 4
+    },
+    {
+      "video": "Bus080_2026-04-16_05-58-24_20.mov",
+      "duracion": "19.3s",
+      "frames": 155,
+      "personas": 5
+    },
+    {
+      "video": "Bus080_2026-04-16_05-58-45_20.mov",
+      "duracion": "19.6s",
+      "frames": 158,
+      "personas": 9
+    },
+    {
+      "video": "Bus080_2026-04-16_05-59-06_20.mov",
+      "duracion": "20.0s",
+      "frames": 161,
+      "personas": 3
+    },
+    {
+      "video": "Bus080_2026-04-16_05-59-27_20.mov",
+      "duracion": "20.5s",
+      "frames": 165,
+      "personas": 2
+    },
+    {
+      "video": "Bus080_2026-04-16_05-59-48_20.mov",
+      "duracion": "19.0s",
+      "frames": 153,
+      "personas": 7
+    },
+    {
+      "video": "Bus080_2026-04-16_06-00-09_20.mov",
+      "duracion": "19.3s",
+      "frames": 155,
+      "personas": 3
+    },
+    {
+      "video": "Bus080_2026-04-16_06-00-30_20.mov",
+      "duracion": "19.7s",
+      "frames": 159,
+      "personas": 0
+    },
+    {
+      "video": "Bus080_2026-04-16_06-00-51_20.mov",
+      "duracion": "20.0s",
+      "frames": 161,
+      "personas": 27
+    },
+    {
+      "video": "Bus080_2026-04-16_06-01-12_20.mov",
+      "duracion": "18.6s",
+      "frames": 150,
+      "personas": 11
+    },
+    {
+      "video": "Bus080_2026-04-16_06-01-33_20.mov",
+      "duracion": "18.9s",
+      "frames": 152,
+      "personas": 1
+    },
+    {
+      "video": "Bus080_2026-04-16_06-01-54_20.mov",
+      "duracion": "19.4s",
+      "frames": 156,
+      "personas": 2
+    },
+    {
+      "video": "Bus080_2026-04-16_06-02-15_20.mov",
+      "duracion": "19.6s",
+      "frames": 158,
+      "personas": 0
+    },
+    {
+      "video": "Bus080_2026-04-16_06-02-36_20.mov",
+      "duracion": "20.0s",
+      "frames": 161,
+      "personas": 0
+    },
+    {
+      "video": "Bus080_2026-04-16_06-02-57_20.mov",
+      "duracion": "20.4s",
+      "frames": 164,
+      "personas": 35
+    },
+    {
+      "video": "Bus080_2026-04-16_06-03-18_20.mov",
+      "duracion": "18.9s",
+      "frames": 152,
+      "personas": 12
+    },
+    {
+      "video": "Bus080_2026-04-16_06-03-39_20.mov",
+      "duracion": "19.4s",
+      "frames": 156,
+      "personas": 3
+    },
+    {
+      "video": "Bus080_2026-04-16_06-04-00_20.mov",
+      "duracion": "19.6s",
+      "frames": 158,
+      "personas": 11
+    },
+    {
+      "video": "Bus080_2026-04-16_06-04-21_20.mov",
+      "duracion": "20.1s",
+      "frames": 162,
+      "personas": 21
+    },
+    {
+      "video": "Bus080_2026-04-16_06-04-42_20.mov",
+      "duracion": "20.5s",
+      "frames": 165,
+      "personas": 6
+    },
+    {
+      "video": "Bus080_2026-04-16_06-05-03_20.mov",
+      "duracion": "19.0s",
+      "frames": 153,
+      "personas": 27
+    }
+  ]
+}

@@ -1,0 +1,170 @@
+╔═══════════════════════════════════════════════════════════╗
+║   GUÍA DE DISTRIBUCIÓN A 5 COMPUTADORAS                  ║
+║   Aforador AMSA v16.15                                   ║
+╚═══════════════════════════════════════════════════════════╝
+
+📦 ARCHIVO DE INSTALACIÓN
+
+Nombre: Aforador_AMSA_v16.15_INSTALADOR.zip
+Tamaño: 33 KB
+Ubicación: C:\aforador-ia\Aforador_AMSA_v16.15_INSTALADOR.zip
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+🚀 PASOS PARA DISTRIBUIR A LAS 5 COMPUTADORAS
+
+═══ OPCIÓN 1: POR USB (Recomendado - Más rápido) ═══
+
+1. Obtén un USB de 1GB o más
+2. Copia el archivo ZIP al USB:
+   - Aforador_AMSA_v16.15_INSTALADOR.zip
+
+3. En cada computadora:
+   a) Inserta el USB
+   b) Copia el archivo ZIP a la carpeta Descargas/
+   c) Abre Descargas/ y DOBLE-CLICK en el ZIP
+   d) Se extrae automáticamente
+   e) DOBLE-CLICK en INSTALAR.bat
+   f) Sigue las instrucciones en pantalla
+   g) ¡Listo! Verás acceso directo en escritorio
+
+═══ OPCIÓN 2: CORREO ELECTRÓNICO ═══
+
+1. Envía el ZIP por correo a los 5 operadores
+2. Ellos descarguen el archivo
+3. Extraigan (click derecho → "Extraer aquí")
+4. Ejecuten INSTALAR.bat
+5. ¡Listo!
+
+═══ OPCIÓN 3: CARPETA COMPARTIDA EN RED ═══
+
+Si tienen red local Windows:
+1. Copia el ZIP en carpeta compartida
+2. Cada usuario accede desde su computadora
+3. Extrae y ejecuta INSTALAR.bat
+4. ¡Instalado!
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+✓ VERIFICACIÓN DESPUÉS DE INSTALAR
+
+En cada computadora, verifica:
+
+1. ✓ Hay acceso directo "Aforador AMSA" en escritorio
+2. ✓ Al hacer doble-click se abre en navegador
+3. ✓ Se ven 3 paneles (Videos | Player | Controles)
+4. ✓ Existe carpeta: C:\Users\[Usuario]\Documents\Aforador_AMSA\
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+📊 RECOPILACIÓN DE DATOS (Cada 2 semanas)
+
+Después de 2 semanas de uso:
+
+1. En cada computadora, abre:
+   C:\Users\[Usuario]\Documents\Aforador_AMSA\ia_training\
+
+2. Copia todos los archivos .json de esa carpeta
+
+3. Centraliza en una sola carpeta:
+   Por ejemplo: C:\DATOS_IA_AMSA\
+
+4. Envía esa carpeta al administrador para entrenar la IA
+
+¿Cómo enviar los datos?
+- Por USB
+- Por correo (si no son muchos archivos)
+- Por OneDrive/Google Drive
+- Por FTP
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+🔄 CICLO DE MEJORA (Mensual)
+
+SEMANA 1-2:
+├─ Operadores usan normalmente
+├─ Sistema genera datos automáticamente
+└─ En ia_training/ se acumulan .json
+
+SEMANA 3-4:
+├─ Recopila datos de las 5 computadoras
+├─ Entrena modelo mejorado (Google Colab)
+├─ Exporta modelo nuevo (best.pt)
+└─ Distribuye a las 5 computadoras
+
+SEMANA 5+:
+└─ ¡IA mejorada en todas las máquinas!
+   Repetir ciclo
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+❓ PREGUNTAS FRECUENTES
+
+P: ¿Necesitan internet para usar?
+R: NO. Solo para descargar fuentes la PRIMERA VEZ.
+   Después funciona sin internet.
+
+P: ¿Se pueden usar en Windows 7?
+R: SÍ, funciona en Windows 7, 8, 10 y 11.
+
+P: ¿Necesito instalar algo especial?
+R: NO. Solo Google Chrome (que probablemente ya tienen).
+
+P: ¿Qué pasa si borro los archivos en ia_training/?
+R: PERDERAS datos de entrenamiento. NO BORRES.
+
+P: ¿Puedo mover la carpeta Aforador_AMSA?
+R: SÍ, puedes moverla. Pero mejor déjala donde se instala.
+
+P: ¿Dónde aparecen los Excel descargados?
+R: En la carpeta Descargas/ de Windows o donde configure el navegador.
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+📝 CHECKLIST DE DISTRIBUCIÓN
+
+ANTES de distribuir:
+☐ Tienes el archivo ZIP: Aforador_AMSA_v16.15_INSTALADOR.zip
+☐ Has verificado que funciona en una computadora test
+☐ Tienes lista la estrategia de distribución (USB, email, etc.)
+
+EN CADA COMPUTADORA, verifica:
+☐ ZIP se extrae correctamente
+☐ INSTALAR.bat se ejecuta sin errores
+☐ Se crea carpeta Aforador_AMSA en Documentos
+☐ Se crea acceso directo en Escritorio
+☐ La aplicación abre en navegador
+☐ Se ven todos los 3 paneles (Videos | Player | Controles)
+
+DESPUÉS de instalar todas:
+☐ Has creado un plan de recopilación de datos
+☐ Sabes cómo recopilar los .json cada 2 semanas
+☐ Sabes dónde guardarlos centralmente
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+💡 TIPS IMPORTANTES
+
+1. ANTES de distribuir, instala tú en una computadora
+   para verificar que todo funcione
+
+2. PREPARA instrucciones simples para los operadores
+   (en la carpeta está GUIA_USUARIO.txt)
+
+3. RECUERDA a los operadores que llenen:
+   - Conductor
+   - Aforador
+   - Observaciones
+   (esto es importante para la IA)
+
+4. ESTABLECE un día fijo para recopilar datos
+   (ejemplo: cada 2 viernes)
+
+5. ANUNCIA cuando habrá actualizaciones con IA mejorada
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+¡Listo para distribuir a las 5 computadoras! 🚌
+
+Versión: 16.15
+Fecha: Abril 2026

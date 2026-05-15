@@ -1,0 +1,64 @@
+{
+  "timestamp": "2026-04-23T20:03:04.889688",
+  "video_file": "bus_real.mov",
+  "api_url": "http://localhost:8000",
+  "resultados": {
+    "file_name": "bus_real.mov",
+    "total_frames": 159,
+    "total_personas_sum": 470,
+    "promedio_personas_frame": 2.9559748427672954,
+    "frame_detections": [
+      {
+        "frame": 0,
+        "count": 1,
+        "confidence": 0.8900132179260254
+      },
+      {
+        "frame": 1,
+        "count": 1,
+        "confidence": 0.8277199268341064
+      },
+      {
+        "frame": 2,
+        "count": 1,
+        "confidence": 0.8265324234962463
+      },
+      {
+        "frame": 3,
+        "count": 1,
+        "confidence": 0.7933028340339661
+      },
+      {
+        "frame": 4,
+        "count": 1,
+        "confidence": 0.8860242366790771
+      },
+      {
+        "frame": 5,
+        "count": 1,
+        "confidence": 0.9030343890190125
+      },
+      {
+        "frame": 6,
+        "count": 1,
+        "confidence": 0.8861039876937866
+      },
+      {
+        "frame": 7,
+        "count": 1,
+        "confidence": 0.8997576832771301
+      },
+      {
+        "frame": 8,
+        "count": 1,
+        "confidence": 0.89334636926651
+      },
+      {
+        "frame": 9,
+        "count": 1,
+        "confidence": 0.8901342153549194
+      }
+    ],
+    "status": "success"
+  }
+}

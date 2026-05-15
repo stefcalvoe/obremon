@@ -1,0 +1,391 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Aforador AMSA v16.15 - Mejorado con IA</title>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;600;700;800&family=Barlow:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg:#0d1117; --panel:#161b22; --border:#30363d; --text:#e6edf3; --muted:#7d8590;
+  --blue:#1a73e8; --bldim:rgba(26,115,232,0.15);
+  --green:#2ea043; --grdim:rgba(46,160,67,0.15);
+  --amber:#d29922; --amdim:rgba(210,153,34,0.15);
+  --red:#da3633;
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+html,body{height:100%;overflow:hidden;}
+body{font-family:"Barlow",sans-serif;background:var(--bg);color:var(--text);padding:20px;}
+
+.container {
+  max-width:1400px;
+  margin:0 auto;
+  background:var(--panel);
+  border-radius:8px;
+  border:1px solid var(--border);
+  padding:20px;
+  overflow:auto;
+  max-height:90vh;
+}
+
+h1 { color:var(--green); margin-bottom:20px; font-size:24px; }
+.subtitle { color:var(--muted); margin-bottom:30px; font-size:13px; }
+
+.grid { display:grid; grid-template-columns:1fr 1fr; gap:20px; margin-bottom:30px; }
+.panel { border:1px solid var(--border); border-radius:6px; padding:15px; }
+.panel.ia { border-left:4px solid var(--blue); }
+.panel.real { border-left:4px solid var(--green); }
+
+.display-big {
+  font-size:56px; font-weight:bold; text-align:center;
+  padding:20px; border-radius:6px; margin:15px 0;
+  font-family:"Barlow Condensed",sans-serif;
+}
+.display-big.real { background:var(--grdim); color:var(--green); }
+.display-big.ia { background:var(--bldim); color:var(--blue); }
+
+.buttons { display:grid; grid-template-columns:1fr 1fr; gap:10px; }
+.btn { padding:12px; border:none; border-radius:6px; cursor:pointer;
+  font-weight:bold; font-family:"Barlow",sans-serif; color:#fff; }
+.btn.up { background:var(--green); }
+.btn.down { background:var(--red); }
+.btn.up:hover { opacity:.9; }
+.btn.down:hover { opacity:.9; }
+
+.tabla-contenedor {
+  margin-top:30px;
+  border:1px solid var(--border);
+  border-radius:6px;
+  overflow:hidden;
+}
+
+.tabla-contenedor h2 {
+  background:var(--border);
+  padding:12px;
+  margin:0;
+  font-size:14px;
+  color:var(--text);
+}
+
+table {
+  width:100%;
+  border-collapse:collapse;
+  font-size:12px;
+}
+
+thead {
+  background:var(--border);
+}
+
+th {
+  padding:10px;
+  text-align:left;
+  color:var(--muted);
+  font-weight:600;
+  border-bottom:1px solid var(--border);
+}
+
+td {
+  padding:10px;
+  border-bottom:1px solid var(--border);
+}
+
+tbody tr {
+  border-bottom:1px solid rgba(48,54,61,0.5);
+}
+
+tbody tr.expandible {
+  cursor:pointer;
+  transition:background 0.2s;
+}
+
+tbody tr.expandible:hover {
+  background:rgba(26,115,232,0.05);
+}
+
+.toggle-icon {
+  color:var(--blue);
+  margin-right:8px;
+  font-weight:bold;
+}
+
+.detalle-ia {
+  display:none;
+}
+
+.detalle-ia.show {
+  display:table-row;
+}
+
+.detalle-ia td {
+  background:rgba(26,115,232,0.05);
+  padding:15px;
+}
+
+.info-box {
+  background:var(--panel);
+  padding:10px;
+  border-left:3px solid var(--blue);
+  border-radius:4px;
+  margin:8px 0;
+  font-size:12px;
+}
+
+.info-label {
+  color:var(--muted);
+  font-size:11px;
+  text-transform:uppercase;
+  margin-bottom:3px;
+}
+
+.info-value {
+  color:var(--text);
+  font-weight:bold;
+  font-size:14px;
+}
+
+.precision {
+  display:inline-block;
+  padding:4px 8px;
+  border-radius:4px;
+  font-weight:bold;
+  font-size:11px;
+}
+
+.precision.good { background:var(--grdim); color:var(--green); }
+.precision.medium { background:var(--amdim); color:var(--amber); }
+.precision.bad { background:rgba(218,54,51,0.15); color:var(--red); }
+
+.stat-grid { display:grid; grid-template-columns:1fr 1fr; gap:10px; margin:10px 0; }
+.stat { background:var(--bg); padding:10px; border-radius:4px; text-align:center; }
+.stat-label { color:var(--muted); font-size:11px; margin-bottom:5px; }
+.stat-value { color:var(--text); font-size:18px; font-weight:bold; }
+</style>
+</head>
+<body>
+
+<div class="container">
+  <h1>🚌 Aforador AMSA IA v16.15</h1>
+  <p class="subtitle">Sistema integrado de conteo manual vs automatico con IA</p>
+
+  <div class="grid">
+    <!-- PANEL MANUAL -->
+    <div class="panel real">
+      <h2>📊 Aforo Manual (Real)</h2>
+      <div class="display-big real" id="conteoReal">0</div>
+
+      <div class="buttons">
+        <button class="btn up" onclick="subePersona()">➕ SUBE</button>
+        <button class="btn down" onclick="bajaPersona()">➖ BAJA</button>
+      </div>
+
+      <div class="stat-grid">
+        <div class="stat">
+          <div class="stat-label">Total Subidas</div>
+          <div class="stat-value" id="totalSubidas">0</div>
+        </div>
+        <div class="stat">
+          <div class="stat-label">Total Bajadas</div>
+          <div class="stat-value" id="totalBajadas">0</div>
+        </div>
+      </div>
+
+      <button class="btn" style="background:#666; width:100%; margin-top:10px;" onclick="resetearConteo()">REINICIAR</button>
+    </div>
+
+    <!-- PANEL IA -->
+    <div class="panel ia">
+      <h2>🤖 Conteo IA (Automatico)</h2>
+      <div class="display-big ia" id="conteoIA">Cargando...</div>
+
+      <div class="stat-grid">
+        <div class="stat">
+          <div class="stat-label">Frames Analizados</div>
+          <div class="stat-value" id="framesIA">0</div>
+        </div>
+        <div class="stat">
+          <div class="stat-label">Promedio/Frame</div>
+          <div class="stat-value" id="promedioIA">0</div>
+        </div>
+      </div>
+
+      <div class="info-box">
+        <div class="info-label">Precision</div>
+        <div class="info-value" id="precisionIA">-</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- TABLA EXPANDIBLE -->
+  <div class="tabla-contenedor">
+    <h2>📈 Resultados - Haz clic para ver detalles de IA</h2>
+    <table>
+      <thead>
+        <tr>
+          <th>Video</th>
+          <th>Duracion</th>
+          <th>Aforo Manual</th>
+          <th>Conteo IA</th>
+          <th>Diferencia</th>
+          <th>Precision</th>
+        </tr>
+      </thead>
+      <tbody id="tablaResultados">
+        <tr>
+          <td colspan="6" style="text-align:center; color:var(--muted);">
+            Completa aforos para ver resultados...
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<script>
+const VIDEOS = [
+  { name: "Bus080_2026-04-16_05-57-00_20.mov", duracion: "20s", personasIA: 24 },
+  { name: "Bus080_2026-04-16_05-57-21_20.mov", duracion: "20s", personasIA: 22 },
+  { name: "Bus080_2026-04-16_05-57-42_20.mov", duracion: "20s", personasIA: 8 },
+  { name: "Bus080_2026-04-16_05-58-03_20.mov", duracion: "20s", personasIA: 4 },
+  { name: "Bus080_2026-04-16_05-58-24_20.mov", duracion: "20s", personasIA: 5 },
+  { name: "Bus080_2026-04-16_05-58-45_20.mov", duracion: "20s", personasIA: 9 },
+  { name: "Bus080_2026-04-16_05-59-06_20.mov", duracion: "20s", personasIA: 3 },
+  { name: "Bus080_2026-04-16_05-59-27_20.mov", duracion: "20s", personasIA: 2 },
+  { name: "Bus080_2026-04-16_05-59-48_20.mov", duracion: "20s", personasIA: 7 },
+  { name: "Bus080_2026-04-16_06-00-09_20.mov", duracion: "20s", personasIA: 3 },
+  { name: "Bus080_2026-04-16_06-00-30_20.mov", duracion: "20s", personasIA: 0 },
+  { name: "Bus080_2026-04-16_06-00-51_20.mov", duracion: "20s", personasIA: 27 },
+  { name: "Bus080_2026-04-16_06-01-12_20.mov", duracion: "20s", personasIA: 11 },
+  { name: "Bus080_2026-04-16_06-01-33_20.mov", duracion: "20s", personasIA: 1 },
+  { name: "Bus080_2026-04-16_06-01-54_20.mov", duracion: "20s", personasIA: 2 },
+  { name: "Bus080_2026-04-16_06-02-15_20.mov", duracion: "20s", personasIA: 0 },
+  { name: "Bus080_2026-04-16_06-02-36_20.mov", duracion: "20s", personasIA: 0 },
+  { name: "Bus080_2026-04-16_06-02-57_20.mov", duracion: "20s", personasIA: 35 },
+  { name: "Bus080_2026-04-16_06-03-18_20.mov", duracion: "20s", personasIA: 12 },
+  { name: "Bus080_2026-04-16_06-03-39_20.mov", duracion: "20s", personasIA: 3 },
+  { name: "Bus080_2026-04-16_06-04-00_20.mov", duracion: "20s", personasIA: 11 },
+  { name: "Bus080_2026-04-16_06-04-21_20.mov", duracion: "20s", personasIA: 21 },
+  { name: "Bus080_2026-04-16_06-04-42_20.mov", duracion: "20s", personasIA: 6 },
+  { name: "Bus080_2026-04-16_06-05-03_20.mov", duracion: "20s", personasIA: 27 }
+];
+
+let conteoManual = 0;
+let totalSubidas = 0;
+let totalBajadas = 0;
+let resultados = {};
+
+function subePersona() {
+  conteoManual++;
+  totalSubidas++;
+  actualizar();
+}
+
+function bajaPersona() {
+  if (conteoManual > 0) {
+    conteoManual--;
+    totalBajadas++;
+    actualizar();
+  }
+}
+
+function resetearConteo() {
+  conteoManual = 0;
+  totalSubidas = 0;
+  totalBajadas = 0;
+  actualizar();
+}
+
+function actualizar() {
+  document.getElementById('conteoReal').textContent = conteoManual;
+  document.getElementById('totalSubidas').textContent = totalSubidas;
+  document.getElementById('totalBajadas').textContent = totalBajadas;
+  cargarTabla();
+}
+
+function toggleDetalle(idx) {
+  const fila = document.getElementById('detalle_' + idx);
+  if (fila) {
+    fila.classList.toggle('show');
+  }
+}
+
+function cargarTabla() {
+  const tbody = document.getElementById('tablaResultados');
+
+  if (Object.keys(resultados).length === 0) {
+    tbody.innerHTML = '<tr><td colspan="6" style="text-align:center; color:var(--muted);">Completa aforos para ver resultados...</td></tr>';
+    return;
+  }
+
+  let html = '';
+  VIDEOS.forEach((video, idx) => {
+    const r = resultados[video.name];
+    if (!r) return;
+
+    const precision = r.real > 0 ? ((100 - (r.diff / r.real) * 100).toFixed(0)) : 0;
+    let precisionClass = 'bad';
+    if (precision >= 80) precisionClass = 'good';
+    else if (precision >= 60) precisionClass = 'medium';
+
+    // Fila principal
+    html += `
+      <tr class="expandible" onclick="toggleDetalle(${idx})">
+        <td><span class="toggle-icon">▼</span> ${video.name.substring(0, 30)}</td>
+        <td>${video.duracion}</td>
+        <td><strong>${r.real}</strong></td>
+        <td><strong>${r.ia}</strong></td>
+        <td>${r.diff}</td>
+        <td><span class="precision ${precisionClass}">${precision}%</span></td>
+      </tr>
+    `;
+
+    // Fila detalle IA (expandible)
+    html += `
+      <tr class="detalle-ia" id="detalle_${idx}">
+        <td colspan="6">
+          <div class="info-box">
+            <div class="info-label">Conteo IA Detallado</div>
+            <div style="padding:10px 0;">
+              <div style="margin:8px 0;">
+                <strong style="color:var(--blue);">Personas detectadas:</strong> ${r.ia}
+              </div>
+              <div style="margin:8px 0;">
+                <strong style="color:var(--blue);">Frames analizados:</strong> 159
+              </div>
+              <div style="margin:8px 0;">
+                <strong style="color:var(--blue);">Promedio por frame:</strong> ${(r.ia / 159).toFixed(2)}
+              </div>
+              <div style="margin:8px 0; border-top:1px solid var(--border); padding-top:8px;">
+                <strong style="color:var(--text);">Comparacion:</strong>
+                <div style="color:var(--muted); font-size:11px;">
+                  Manual: ${r.real} | IA: ${r.ia} | Diferencia: ${r.diff} | Precision: ${precision}%
+                </div>
+              </div>
+            </div>
+          </div>
+        </td>
+      </tr>
+    `;
+  });
+
+  tbody.innerHTML = html;
+}
+
+// Simulacion: guardar resultados al contar
+document.addEventListener('click', function(e) {
+  const videoName = VIDEOS.find(v => resultados[v.name] === undefined);
+  if (videoName && conteoManual > 0) {
+    resultados[videoName.name] = {
+      real: conteoManual,
+      ia: videoName.personasIA,
+      diff: Math.abs(conteoManual - videoName.personasIA)
+    };
+  }
+});
+
+// Inicializar
+window.addEventListener('load', actualizar);
+</script>
+
+</body>
+</html>

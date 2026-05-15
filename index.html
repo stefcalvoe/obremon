@@ -1,0 +1,631 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AMSA Ruta 40 | Dashboard Operativo</title>
+<style>
+:root{--p1:#1e3a5f;--p2:#0d9488;--p3:#14b8a6;--bg:#f0f4f8;--card:#fff;--txt:#1e293b;--txt2:#64748b;--ok:#059669;--warn:#d97706;--err:#dc2626;--brd:#e2e8f0;--glow:rgba(13,148,136,.4)}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Segoe UI',system-ui,-apple-system,sans-serif;background:var(--bg);color:var(--txt);overflow-x:hidden}
+
+/* TOPBAR */
+.top{background:linear-gradient(135deg,var(--p1),#0f2942);color:#fff;padding:14px 28px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100;box-shadow:0 2px 20px rgba(0,0,0,.3)}
+.top h1{font-size:17px;font-weight:700;letter-spacing:-.3px}
+.top .sub{font-size:12px;opacity:.75}
+.top-badge{background:var(--p2);padding:4px 12px;border-radius:20px;font-size:11px;font-weight:700}
+
+/* TABS */
+.tabs{background:#fff;border-bottom:1px solid var(--brd);display:flex;overflow-x:auto;position:sticky;top:50px;z-index:99;box-shadow:0 1px 4px rgba(0,0,0,.04)}
+.tabs::-webkit-scrollbar{height:0}
+.tab{padding:13px 20px;cursor:pointer;font-size:12.5px;font-weight:700;color:var(--txt2);border-bottom:3px solid transparent;white-space:nowrap;transition:.25s;text-transform:uppercase;letter-spacing:.5px}
+.tab:hover{color:var(--p2);background:#f8fffe}
+.tab.active{color:var(--p2);border-bottom-color:var(--p2);background:#f0fdfa}
+
+/* PAGES */
+.page{display:none;padding:24px;max-width:1360px;margin:0 auto;min-height:70vh}
+.page.active{display:block;animation:fadeUp .35s ease}
+@keyframes fadeUp{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
+
+/* KPI */
+.kpi-row{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:16px;margin-bottom:24px}
+.kpi{background:var(--card);border-radius:14px;padding:22px;position:relative;overflow:hidden;box-shadow:0 1px 8px rgba(0,0,0,.06);transition:.2s}
+.kpi:hover{transform:translateY(-3px);box-shadow:0 6px 24px rgba(0,0,0,.1)}
+.kpi::before{content:'';position:absolute;top:0;left:0;width:4px;height:100%;background:linear-gradient(180deg,var(--p1),var(--p2));border-radius:4px 0 0 4px}
+.kpi .icon{font-size:28px;margin-bottom:6px}
+.kpi .val{font-size:26px;font-weight:800;background:linear-gradient(135deg,var(--p1),var(--p2));-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+.kpi .lbl{font-size:11.5px;color:var(--txt2);margin-top:4px;font-weight:600}
+
+/* CARDS */
+.card{background:var(--card);border-radius:14px;padding:24px;margin-bottom:20px;box-shadow:0 1px 8px rgba(0,0,0,.06)}
+.card h3{font-size:15px;font-weight:700;color:var(--p1);margin-bottom:14px;padding-bottom:10px;border-bottom:2px solid var(--brd);display:flex;align-items:center;gap:8px}
+.card h3 .ico{font-size:18px}
+
+/* TABLES */
+table{width:100%;border-collapse:collapse;font-size:12.5px}
+thead{position:sticky;top:0;z-index:2}
+th{background:linear-gradient(135deg,var(--p1),#153554);color:#fff;padding:11px 12px;text-align:left;font-weight:700;font-size:11.5px;text-transform:uppercase;letter-spacing:.3px}
+td{padding:10px 12px;border-bottom:1px solid var(--brd)}
+tbody tr{transition:.15s}
+tbody tr:hover{background:#f0fdfa}
+tbody tr:nth-child(even){background:#f8fafc}
+tbody tr:nth-child(even):hover{background:#f0fdfa}
+.mono{font-family:'Cascadia Code','Fira Code',monospace;font-size:12px}
+.badge{display:inline-block;padding:3px 10px;border-radius:20px;font-size:10.5px;font-weight:700}
+.b-blue{background:#dbeafe;color:#1e40af}
+.b-green{background:#dcfce7;color:#166534}
+.b-amber{background:#fef3c7;color:#92400e}
+.b-pink{background:#fce7f3;color:#9d174d}
+.b-purple{background:#e0e7ff;color:#3730a3}
+.b-teal{background:#ccfbf1;color:#115e59}
+.right{text-align:right}
+
+/* DL */
+.dl{display:grid;grid-template-columns:260px 1fr;font-size:13px}
+.dl dt{padding:10px 14px;background:#f8fafc;border-bottom:1px solid var(--brd);font-weight:600;color:var(--txt2)}
+.dl dd{padding:10px 14px;border-bottom:1px solid var(--brd)}
+
+/* SEARCH */
+.search-bar{display:flex;gap:10px;margin-bottom:16px;flex-wrap:wrap;align-items:center}
+.search-bar input,.search-bar select{padding:10px 14px;border:2px solid var(--brd);border-radius:10px;font-size:13px;outline:none;transition:.2s}
+.search-bar input:focus,.search-bar select:focus{border-color:var(--p2);box-shadow:0 0 0 3px rgba(13,148,136,.15)}
+.search-bar input{flex:1;min-width:200px}
+.counter{font-size:12px;color:var(--txt2);font-weight:600}
+
+/* SIMULATOR */
+.sim-grid{display:grid;grid-template-columns:1fr 1fr;gap:20px}
+@media(max-width:768px){.sim-grid{grid-template-columns:1fr}}
+.sim-input{display:flex;flex-direction:column;gap:12px}
+.sim-input label{font-size:13px;font-weight:600;color:var(--txt2)}
+.sim-input select,.sim-input input[type=number]{padding:12px;border:2px solid var(--brd);border-radius:10px;font-size:14px;outline:none}
+.sim-input select:focus,.sim-input input[type=number]:focus{border-color:var(--p2)}
+.sim-btn{padding:14px 28px;background:linear-gradient(135deg,var(--p1),var(--p2));color:#fff;border:none;border-radius:12px;font-size:14px;font-weight:700;cursor:pointer;transition:.2s;margin-top:8px}
+.sim-btn:hover{transform:translateY(-2px);box-shadow:0 6px 20px var(--glow)}
+.sim-result{background:linear-gradient(135deg,#f0fdfa,#ecfdf5);border:2px solid #99f6e4;border-radius:14px;padding:20px}
+.sim-line{display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px dashed #d1fae5;font-size:13px}
+.sim-line.total{border-top:2px solid var(--p2);border-bottom:none;font-weight:800;font-size:15px;padding-top:12px;margin-top:4px}
+.sim-line .neg{color:var(--err)} .sim-line .pos{color:var(--ok)}
+
+/* CHATBOT */
+.chat-btn{position:fixed;bottom:24px;right:24px;width:60px;height:60px;border-radius:50%;background:linear-gradient(135deg,var(--p1),var(--p2));color:#fff;border:none;font-size:26px;cursor:pointer;z-index:300;box-shadow:0 4px 24px var(--glow);animation:pulse 2s infinite;display:flex;align-items:center;justify-content:center;transition:.2s}
+.chat-btn:hover{transform:scale(1.1)}
+@keyframes pulse{0%,100%{box-shadow:0 4px 24px var(--glow)}50%{box-shadow:0 4px 40px rgba(13,148,136,.7),0 0 60px rgba(13,148,136,.3)}}
+.chat-btn .dot{position:absolute;top:4px;right:4px;width:14px;height:14px;background:#22c55e;border-radius:50%;border:2px solid #fff;animation:dotPulse 1.5s infinite}
+@keyframes dotPulse{0%,100%{transform:scale(1)}50%{transform:scale(1.3)}}
+
+.chat-panel{position:fixed;bottom:96px;right:24px;width:420px;max-height:560px;background:rgba(255,255,255,.97);backdrop-filter:blur(20px);border-radius:20px;box-shadow:0 12px 48px rgba(0,0,0,.2);z-index:300;display:none;flex-direction:column;overflow:hidden;border:1px solid rgba(255,255,255,.3)}
+.chat-panel.open{display:flex;animation:chatIn .3s ease}
+@keyframes chatIn{from{opacity:0;transform:translateY(20px) scale(.95)}to{opacity:1;transform:none}}
+.chat-head{background:linear-gradient(135deg,var(--p1),var(--p2));color:#fff;padding:18px 20px}
+.chat-head h4{font-size:15px;font-weight:700}
+.chat-head p{font-size:11px;opacity:.8;margin-top:3px}
+.chat-body{flex:1;overflow-y:auto;padding:16px;display:flex;flex-direction:column;gap:10px;max-height:370px}
+.msg{max-width:88%;padding:11px 15px;border-radius:14px;font-size:13px;line-height:1.55}
+.msg.bot{background:#f0fdfa;color:var(--txt);align-self:flex-start;border-bottom-left-radius:4px;border:1px solid #ccfbf1}
+.msg.user{background:linear-gradient(135deg,var(--p1),var(--p2));color:#fff;align-self:flex-end;border-bottom-right-radius:4px}
+.chat-input{display:flex;border-top:1px solid var(--brd);padding:12px}
+.chat-input input{flex:1;border:2px solid var(--brd);border-radius:10px;padding:10px 14px;font-size:13px;outline:none}
+.chat-input input:focus{border-color:var(--p2)}
+.chat-input button{margin-left:8px;background:linear-gradient(135deg,var(--p1),var(--p2));color:#fff;border:none;border-radius:10px;padding:10px 18px;cursor:pointer;font-weight:700;font-size:13px;transition:.2s}
+.chat-input button:hover{transform:scale(1.05)}
+
+footer{background:linear-gradient(135deg,var(--p1),#0f2942);color:rgba(255,255,255,.7);padding:16px;text-align:center;font-size:11px}
+
+@media(max-width:600px){
+    .chat-panel{width:calc(100% - 32px);right:16px;bottom:90px}
+    .kpi-row{grid-template-columns:1fr 1fr}
+    .dl{grid-template-columns:1fr}
+    .sim-grid{grid-template-columns:1fr}
+}
+</style>
+</head>
+<body>
+
+<div class="top">
+    <div>
+        <h1>AUTOTRANSPORTES MORAVIA S.A.</h1>
+        <div class="sub">Ruta N&deg;40 &bull; San Jos&eacute; &ndash; Moravia &ndash; Paracito y Ramales</div>
+    </div>
+    <div class="top-badge">2025-2026</div>
+</div>
+
+<div class="tabs" id="tabBar">
+    <div class="tab active" data-t="resumen">Resumen</div>
+    <div class="tab" data-t="ramales">Ramales</div>
+    <div class="tab" data-t="flota">Flota</div>
+    <div class="tab" data-t="operativo">Operativo</div>
+    <div class="tab" data-t="costos">Costos</div>
+    <div class="tab" data-t="choferes">Choferes</div>
+    <div class="tab" data-t="simulador">Simulador</div>
+    <div class="tab" data-t="indicadores">Indicadores</div>
+</div>
+
+<!-- RESUMEN -->
+<div class="page active" id="resumen">
+    <div class="kpi-row" id="kpiResumen"></div>
+    <div class="card"><h3><span class="ico">🏢</span> Datos del Operador</h3>
+        <div class="dl">
+            <dt>Raz&oacute;n Social</dt><dd>AUTOTRANSPORTES MORAVIA, S.A.</dd>
+            <dt>Ruta</dt><dd>N&deg;40 &mdash; San Jos&eacute; &ndash; Moravia &ndash; Paracito y Ramales</dd>
+            <dt>Tipo Empresa</dt><dd>Grande (36+ unidades)</dd>
+            <dt>Flota &Oacute;ptima CTP</dt><dd>66 unidades</dd>
+            <dt>Ramales Autorizados</dt><dd>12 (A &ndash; L)</dd>
+            <dt>Demanda Normalizada</dt><dd>611,813 pax/mes</dd>
+            <dt>Resoluci&oacute;n CTP</dt><dd>Art. 3.8, Sesi&oacute;n 39-2024 (17/10/2024)</dd>
+            <dt>Vigencia Modelo</dt><dd>1&deg; de mayo de 2026</dd>
+            <dt>V&iacute;as</dt><dd>100% asfalto en todos los recorridos</dd>
+        </div>
+    </div>
+    <div class="card"><h3><span class="ico">📊</span> Indicadores Econ&oacute;micos</h3>
+        <div class="dl">
+            <dt>Tipo de Cambio</dt><dd class="mono">&cent;485.00 / US$1</dd>
+            <dt>Precio Di&eacute;sel</dt><dd class="mono">&cent;553.46 / litro</dd>
+            <dt>Consumo Di&eacute;sel</dt><dd class="mono">0.47 l/km</dd>
+            <dt>Cargas Sociales</dt><dd class="mono">48.21%</dd>
+            <dt>Canon ARESEP</dt><dd class="mono">&cent;940,549 / a&ntilde;o por bus</dd>
+            <dt>Canon CTP</dt><dd class="mono">&cent;287,017 / a&ntilde;o por bus</dd>
+        </div>
+    </div>
+</div>
+
+<!-- RAMALES -->
+<div class="page" id="ramales"><div class="card"><h3><span class="ico">🚌</span> Rendimiento por Ramal (datos reales 2025)</h3><div style="overflow-x:auto"><table id="tblRamales"><thead><tr><th>Ramal</th><th>C&oacute;d.</th><th class="right">Pasajeros</th><th class="right">Sinpe%</th><th class="right">C&eacute;dulas%</th><th class="right">Recaudaci&oacute;n</th><th class="right">Km</th><th class="right">Carreras</th><th class="right">Tarifa</th></tr></thead><tbody></tbody></table></div></div></div>
+
+<!-- FLOTA -->
+<div class="page" id="flota">
+    <div class="search-bar"><input type="text" id="fSearch" placeholder="Buscar N&deg;, placa, marca..." oninput="filterFlota()"><select id="fBrand" onchange="filterFlota()"><option value="">Todas las marcas</option></select><span class="counter" id="fCount"></span></div>
+    <div class="card"><h3><span class="ico">🚐</span> Inventario y Rendimiento por Unidad</h3><div style="overflow-x:auto"><table id="tblFlota"><thead><tr><th>N&deg;</th><th>Marca</th><th>Placa</th><th>Modelo</th><th>Edad</th><th>Status</th><th class="right">Pax Total</th><th class="right">Km Total</th><th class="right">Sinpe%</th><th class="right">C&eacute;dulas%</th><th class="right">Colecta Neta</th></tr></thead><tbody></tbody></table></div></div>
+</div>
+
+<!-- OPERATIVO -->
+<div class="page" id="operativo">
+    <div class="kpi-row" id="kpiOp"></div>
+    <div class="card"><h3><span class="ico">📅</span> Carreras Semanales por Ramal (CTP Autorizado)</h3><div style="overflow-x:auto"><table id="tblOp"><thead><tr><th>Ramal</th><th>Descripci&oacute;n</th><th class="right">L-V (ida+vuelta)</th><th class="right">S&aacute;bado</th><th class="right">Domingo</th><th class="right">Total Semanal</th><th class="right">Total Mensual (est.)</th></tr></thead><tbody></tbody></table></div></div>
+    <div class="card"><h3><span class="ico">🔧</span> Recursos Humanos Necesarios (seg&uacute;n modelo CTP)</h3>
+        <div class="dl" id="dlRRHH"></div>
+    </div>
+</div>
+
+<!-- COSTOS -->
+<div class="page" id="costos">
+    <div class="kpi-row" id="kpiCostos"></div>
+    <div class="card"><h3><span class="ico">💰</span> Salarios Mensuales</h3><table id="tblSalarios"><thead><tr><th>Puesto</th><th>Salario Base</th><th>+ Cargas Sociales (48.21%)</th><th>Costo Total</th><th>Cantidad Necesaria</th><th>Costo Total Mensual</th></tr></thead><tbody></tbody></table></div>
+    <div class="card"><h3><span class="ico">⛽</span> Costos de Insumos por Bus / Mes</h3><table id="tblInsumos"><thead><tr><th>Insumo</th><th>Valor</th><th>Detalle</th></tr></thead><tbody></tbody></table></div>
+    <div class="card"><h3><span class="ico">🛡️</span> Seguros, Impuestos y C&aacute;nones (por bus / a&ntilde;o)</h3><table id="tblSeguros"><thead><tr><th>Concepto</th><th>Monto</th><th>Periodicidad</th><th>Mensualizado</th></tr></thead><tbody></tbody></table></div>
+</div>
+
+<!-- CHOFERES -->
+<div class="page" id="choferes"><div class="card"><h3><span class="ico">👨‍✈️</span> Top 25 Conductores por Pasajeros Movilizados</h3><div style="overflow-x:auto"><table id="tblChoferes"><thead><tr><th>#</th><th>Nombre</th><th class="right">Pasajeros</th><th class="right">Sinpe</th><th class="right">D&iacute;as Trabajados</th><th class="right">Carreras</th><th class="right">Km</th><th class="right">Pax/D&iacute;a</th></tr></thead><tbody></tbody></table></div></div></div>
+
+<!-- SIMULADOR -->
+<div class="page" id="simulador">
+    <div class="card"><h3><span class="ico">🧮</span> Simulador de Costos por Carrera</h3>
+        <div class="sim-grid">
+            <div class="sim-input">
+                <label>Seleccionar Ramal</label>
+                <select id="simRamal"></select>
+                <label>Carreras por d&iacute;a (ida y vuelta)</label>
+                <input type="number" id="simCarreras" value="5" min="1" max="30">
+                <label>D&iacute;as de operaci&oacute;n / mes</label>
+                <input type="number" id="simDias" value="26" min="1" max="31">
+                <button class="sim-btn" onclick="runSim()">Calcular Escenario</button>
+            </div>
+            <div class="sim-result" id="simResult">
+                <p style="color:var(--txt2);text-align:center;padding:40px 0">Selecciona un ramal y presiona <strong>Calcular</strong></p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- INDICADORES -->
+<div class="page" id="indicadores">
+    <div class="card"><h3><span class="ico">📈</span> Indicadores Clave por Ramal</h3><div style="overflow-x:auto"><table id="tblInd"><thead><tr><th>Ramal</th><th class="right">% Sinpe</th><th class="right">% C&eacute;dulas</th><th class="right">% Cortes&iacute;as</th><th class="right">Km/Carrera</th><th class="right">Pax/Carrera</th><th class="right">Recauda/Carrera</th></tr></thead><tbody></tbody></table></div></div>
+    <div class="card"><h3><span class="ico">🔢</span> Par&aacute;metros Operativos CTP</h3>
+        <div class="dl" id="dlParams"></div>
+    </div>
+    <div class="card"><h3><span class="ico">🔄</span> Comisiones Sinpe por Mes</h3><div style="overflow-x:auto"><table id="tblCom"><thead><tr><th>Mes</th><th class="right">Total Comisi&oacute;n</th><th class="right">D&iacute;as</th><th class="right">Promedio/D&iacute;a</th></tr></thead><tbody></tbody></table></div></div>
+</div>
+
+<footer>AUTOTRANSPORTES MORAVIA S.A. &bull; Ruta 40 &bull; CTP Art. 3.8 (23/10/2024) &bull; Modelo Tarifario 2026</footer>
+
+<!-- CHATBOT -->
+<button class="chat-btn" id="chatBtn" title="Asistente AMSA">💬<span class="dot"></span></button>
+<div class="chat-panel" id="chatPanel">
+    <div class="chat-head"><h4>Asistente AMSA Ruta 40</h4><p>Pregunta sobre buses, ramales, costos, choferes o simula escenarios</p></div>
+    <div class="chat-body" id="chatBody">
+        <div class="msg bot">Hola, soy el asistente de <strong>AMSA Ruta 40</strong>. Puedo ayudarte con:<br>• <em>bus 01</em> &mdash; datos de un bus<br>• <em>dulce nombre</em> &mdash; datos de un ramal<br>• <em>sinpe los sitios</em> &mdash; % Sinpe<br>• <em>top choferes</em> &mdash; mejores conductores<br>• <em>5 carreras dulce nombre</em> &mdash; simular costos<br>• <em>cuantos mecanicos</em> &mdash; datos operativos<br>• <em>comisiones marzo</em> &mdash; comisiones Sinpe</div>
+    </div>
+    <div class="chat-input"><input type="text" id="chatIn" placeholder="Escribe tu consulta..."><button onclick="sendChat()">Enviar</button></div>
+</div>
+
+<script>
+// === PARAMS ===
+const P={consumo:0.47,diesel:553.46,salChofer:422357,salDesp:323347,salMec:363788,cs:0.4821,jornadas:2.3547,mecXbus:0.1788,despXbus:0.30,adminRatio:0.10,kiImprod:0.10,llanta:245200,llantasXbus:6,cambioLlantaKm:61000,canonAresep:940549,canonCTP:287017,soa:82480,primaA:78532,primaC:58320,rtv:7944,flota:66,ramales:12,demanda:611813,tc:485};
+
+const RC={
+'Dulce Nombre':{c:'A',di:12.60,dv:12.50,fl:22,dem:223289,cl:'Urb.Plano',lvIda:98,lvVta:98,sab:128,dom:92},
+'Romilios':{c:'B',di:11.03,dv:10.83,fl:2,dem:12074,cl:'Urb.Plano',lvIda:12,lvVta:12,sab:16,dom:12},
+'Gallera':{c:'C',di:14.24,dv:13.98,fl:4,dem:18146,cl:'Urb.Plano',lvIda:12,lvVta:12,sab:16,dom:12},
+'Los Sitios':{c:'D',di:12.83,dv:12.46,fl:9,dem:73626,cl:'Urb.NPlano',lvIda:14,lvVta:14,sab:16,dom:12},
+'La Isla':{c:'E',di:9.77,dv:9.38,fl:4,dem:30921,cl:'Urb.NPlano',lvIda:43,lvVta:44,sab:72,dom:46},
+'San Rafael':{c:'F',di:11.99,dv:12.19,fl:3,dem:3864,cl:'Urb.Plano',lvIda:26,lvVta:26,sab:40,dom:24},
+'Tornillal':{c:'G',di:14.51,dv:14.67,fl:6,dem:116287,cl:'Urb.NPlano',lvIda:23,lvVta:24,sab:40,dom:27},
+'Calle Mendez':{c:'H',di:14.86,dv:15.02,fl:6,dem:0,cl:'Urb.NPlano',lvIda:23,lvVta:23,sab:36,dom:24},
+'Platanares Canal':{c:'I',di:12.47,dv:12.64,fl:5,dem:117276,cl:'Urb.NPlano',lvIda:24,lvVta:24,sab:40,dom:26},
+'Manantial':{c:'J',di:13.92,dv:14.97,fl:6,dem:0,cl:'Urb.NPlano',lvIda:15,lvVta:15,sab:0,dom:0},
+'El Moral Cipres':{c:'K',di:12.62,dv:13.15,fl:2,dem:16330,cl:'Urb.Plano',lvIda:23,lvVta:23,sab:38,dom:24},
+'San Jeronimo':{c:'L',di:13.96,dv:14.12,fl:1,dem:0,cl:'Urb.NPlano',lvIda:10,lvVta:13,sab:12,dom:12}
+};
+
+let DATA={};
+const fmt=n=>n!=null?Math.round(n).toLocaleString('es-CR'):'—';
+const fmtC=n=>'₡'+fmt(n);
+const fmtP=n=>n!=null?(n*100).toFixed(1)+'%':'—';
+const fmtP2=(a,b)=>b>0?((a/b)*100).toFixed(1)+'%':'—';
+
+// === TABS ===
+document.querySelectorAll('.tab').forEach(t=>{
+    t.addEventListener('click',()=>{
+        document.querySelectorAll('.tab').forEach(x=>x.classList.remove('active'));
+        document.querySelectorAll('.page').forEach(x=>x.classList.remove('active'));
+        t.classList.add('active');
+        document.getElementById(t.dataset.t).classList.add('active');
+    });
+});
+
+// === CHAT TOGGLE ===
+document.getElementById('chatBtn').onclick=()=>{document.getElementById('chatPanel').classList.toggle('open');document.getElementById('chatIn').focus()};
+document.getElementById('chatIn').addEventListener('keydown',e=>{if(e.key==='Enter')sendChat()});
+
+// === LOAD DATA ===
+fetch('./data.json').then(r=>r.json()).then(d=>{DATA=d;buildAll()}).catch(e=>{document.getElementById('resumen').innerHTML='<div class="card"><h3>Error</h3><p>No se pudo cargar data.json: '+e.message+'</p></div>'});
+
+function buildAll(){
+    buildResumen();buildRamales();buildFlota();buildOperativo();buildCostos();buildChoferes();buildIndicadores();buildSimSelect();
+}
+
+function buildResumen(){
+    const totalPax=DATA.ramales.reduce((s,r)=>s+r.marcas_netas,0);
+    const totalCol=DATA.ramales.reduce((s,r)=>s+r.colecta_neta,0);
+    const totalKm=DATA.ramales.reduce((s,r)=>s+r.km,0);
+    const totalSinpe=DATA.ramales.reduce((s,r)=>s+r.sinpe,0);
+    const totalMarcas=DATA.ramales.reduce((s,r)=>s+r.marcas,0);
+    document.getElementById('kpiResumen').innerHTML=`
+        <div class="kpi"><div class="icon">👥</div><div class="val">${fmt(totalPax)}</div><div class="lbl">Pasajeros Netos (2025)</div></div>
+        <div class="kpi"><div class="icon">💰</div><div class="val">${fmtC(totalCol)}</div><div class="lbl">Recaudaci&oacute;n Neta</div></div>
+        <div class="kpi"><div class="icon">🛣️</div><div class="val">${fmt(totalKm)} km</div><div class="lbl">Kil&oacute;metros Recorridos</div></div>
+        <div class="kpi"><div class="icon">📱</div><div class="val">${fmtP2(totalSinpe,totalMarcas)}</div><div class="lbl">Pagos Sinpe</div></div>
+        <div class="kpi"><div class="icon">🚌</div><div class="val">66</div><div class="lbl">Flota Optimizada</div></div>
+        <div class="kpi"><div class="icon">🗺️</div><div class="val">12</div><div class="lbl">Ramales (A-L)</div></div>`;
+}
+
+function buildRamales(){
+    const tarifas={};DATA.tarifas.forEach(t=>{tarifas[t.RamalU]=t.tarifa});
+    let html='';
+    DATA.ramales.forEach(r=>{
+        const cod=RC[r.RamalU]?RC[r.RamalU].c:'—';
+        const tarifa=tarifas[r.RamalU]||0;
+        html+=`<tr><td><strong>${r.RamalU}</strong></td><td>${cod}</td><td class="right mono">${fmt(r.marcas_netas)}</td><td class="right mono">${fmtP2(r.sinpe,r.marcas)}</td><td class="right mono">${fmtP2(r.cedulas_cant,r.marcas)}</td><td class="right mono">${fmtC(r.colecta_neta)}</td><td class="right mono">${fmt(r.km)}</td><td class="right mono">${fmt(r.carreras)}</td><td class="right mono">${fmtC(tarifa)}</td></tr>`;
+    });
+    document.querySelector('#tblRamales tbody').innerHTML=html;
+}
+
+function buildFlota(){
+    const busMap={};DATA.buses.forEach(b=>{busMap[b.Unidad]=b});
+    const brands=new Set();
+    let html='';
+    DATA.flota.forEach(f=>{
+        brands.add(f.MARCA);
+        const b=busMap[f.Unidad]||{};
+        const bc=f.MARCA==='BLK'?'b-blue':f.MARCA==='VOCHO'?'b-pink':f.MARCA==='ANKAI'?'b-green':f.MARCA==='DAEWOO'?'b-amber':'b-purple';
+        html+=`<tr data-u="${f.Unidad}" data-m="${f.MARCA}" data-p="${f.PLACA}"><td>${f.Unidad}</td><td><span class="badge ${bc}">${f.MARCA}</span></td><td class="mono">${f.PLACA||'—'}</td><td>${f.MODELO||'—'}</td><td>${f['Edad de flota']||'—'}</td><td>${f.STATUS||'—'}</td><td class="right mono">${fmt(b.marcas_netas)}</td><td class="right mono">${fmt(b.km)}</td><td class="right mono">${b.marcas>0?fmtP2(b.sinpe,b.marcas):'—'}</td><td class="right mono">${b.marcas>0?fmtP2(b.cedulas_cant,b.marcas):'—'}</td><td class="right mono">${fmtC(b.colecta_neta||0)}</td></tr>`;
+    });
+    document.querySelector('#tblFlota tbody').innerHTML=html;
+    const sel=document.getElementById('fBrand');
+    [...brands].sort().forEach(b=>{const o=document.createElement('option');o.value=b;o.textContent=b;sel.appendChild(o)});
+    filterFlota();
+}
+
+function filterFlota(){
+    const q=document.getElementById('fSearch').value.toLowerCase();
+    const br=document.getElementById('fBrand').value;
+    let c=0;
+    document.querySelectorAll('#tblFlota tbody tr').forEach(r=>{
+        const u=r.dataset.u,m=r.dataset.m,p=(r.dataset.p||'').toLowerCase();
+        const show=(!q||u.includes(q)||m.toLowerCase().includes(q)||p.includes(q))&&(!br||m===br);
+        r.style.display=show?'':'none';if(show)c++;
+    });
+    document.getElementById('fCount').textContent=c+' unidades';
+}
+
+function buildOperativo(){
+    let html='',totW=0,totM=0;
+    Object.entries(RC).forEach(([n,r])=>{
+        const lv=r.lvIda+r.lvVta;
+        const week=lv*5+r.sab+r.dom;
+        const month=Math.round(week*4.33);
+        totW+=week;totM+=month;
+        html+=`<tr><td><strong>${r.c}</strong></td><td>${n}</td><td class="right mono">${lv}</td><td class="right mono">${r.sab}</td><td class="right mono">${r.dom}</td><td class="right mono"><strong>${fmt(week)}</strong></td><td class="right mono">${fmt(month)}</td></tr>`;
+    });
+    html+=`<tr style="background:#f0fdfa;font-weight:700"><td colspan="2">TOTAL</td><td colspan="3"></td><td class="right mono">${fmt(totW)}</td><td class="right mono">${fmt(totM)}</td></tr>`;
+    document.querySelector('#tblOp tbody').innerHTML=html;
+
+    const mec=Math.round(P.flota*P.mecXbus);
+    const desp=Math.round(P.flota*P.despXbus);
+    const chof=Math.round(P.flota*P.jornadas);
+    const admin=Math.round(P.flota*P.adminRatio);
+    document.getElementById('kpiOp').innerHTML=`
+        <div class="kpi"><div class="icon">🔧</div><div class="val">${fmt(totW)}</div><div class="lbl">Carreras / Semana (total)</div></div>
+        <div class="kpi"><div class="icon">👨‍✈️</div><div class="val">${chof}</div><div class="lbl">Choferes Necesarios</div></div>
+        <div class="kpi"><div class="icon">🔩</div><div class="val">${mec}</div><div class="lbl">Mec&aacute;nicos Necesarios</div></div>
+        <div class="kpi"><div class="icon">📋</div><div class="val">${desp}</div><div class="lbl">Despachadores Necesarios</div></div>`;
+    document.getElementById('dlRRHH').innerHTML=`
+        <dt>Choferes (${P.jornadas} jornadas/bus × 66)</dt><dd><strong>${chof}</strong> choferes</dd>
+        <dt>Mec&aacute;nicos (${P.mecXbus}/bus × 66)</dt><dd><strong>${mec}</strong> mec&aacute;nicos</dd>
+        <dt>Despachadores (${P.despXbus}/bus × 66)</dt><dd><strong>${desp}</strong> despachadores</dd>
+        <dt>Personal Administrativo (10% flota)</dt><dd><strong>${admin}</strong> personas</dd>
+        <dt>Total Personal Estimado</dt><dd><strong>${chof+mec+desp+admin}</strong> personas</dd>
+        <dt>Costo Salarial Mensual (con CS)</dt><dd class="mono"><strong>${fmtC(chof*P.salChofer*(1+P.cs)+mec*P.salMec*(1+P.cs)+desp*P.salDesp*(1+P.cs))}</strong></dd>`;
+}
+
+function buildCostos(){
+    const mec=Math.round(P.flota*P.mecXbus),desp=Math.round(P.flota*P.despXbus),chof=Math.round(P.flota*P.jornadas);
+    const costoChof=P.salChofer*(1+P.cs),costoDesp=P.salDesp*(1+P.cs),costoMec=P.salMec*(1+P.cs);
+    document.querySelector('#tblSalarios tbody').innerHTML=`
+        <tr><td>Chofer</td><td class="mono">${fmtC(P.salChofer)}</td><td class="mono">${fmtC(P.salChofer*P.cs)}</td><td class="mono">${fmtC(costoChof)}</td><td>${chof}</td><td class="mono"><strong>${fmtC(costoChof*chof)}</strong></td></tr>
+        <tr><td>Despachador</td><td class="mono">${fmtC(P.salDesp)}</td><td class="mono">${fmtC(P.salDesp*P.cs)}</td><td class="mono">${fmtC(costoDesp)}</td><td>${desp}</td><td class="mono"><strong>${fmtC(costoDesp*desp)}</strong></td></tr>
+        <tr><td>Mec&aacute;nico</td><td class="mono">${fmtC(P.salMec)}</td><td class="mono">${fmtC(P.salMec*P.cs)}</td><td class="mono">${fmtC(costoMec)}</td><td>${mec}</td><td class="mono"><strong>${fmtC(costoMec*mec)}</strong></td></tr>
+        <tr style="background:#f0fdfa;font-weight:700"><td colspan="4">TOTAL PLANILLA MENSUAL</td><td>${chof+desp+mec}</td><td class="mono">${fmtC(costoChof*chof+costoDesp*desp+costoMec*mec)}</td></tr>`;
+
+    // Avg km/month per bus
+    const avgKmMes=DATA.buses.reduce((s,b)=>s+b.km,0)/DATA.buses.filter(b=>b.km>0).length/16*1; // approx
+    const kmMesBus=2500; // reasonable estimate
+    const dieselMes=kmMesBus*P.consumo*P.diesel;
+    const llantasMes=(P.llantasXbus*P.llanta)/P.cambioLlantaKm*kmMesBus;
+    document.querySelector('#tblInsumos tbody').innerHTML=`
+        <tr><td>Di&eacute;sel</td><td class="mono">${fmtC(dieselMes)}</td><td>~2,500 km/mes × 0.47 l/km × ₡553.46</td></tr>
+        <tr><td>Llantas (prorrateo)</td><td class="mono">${fmtC(llantasMes)}</td><td>6 llantas × ₡245,200 / 61,000 km × km/mes</td></tr>
+        <tr><td>Aceite Motor</td><td class="mono">${fmtC(30*3767/10000*kmMesBus)}</td><td>30L × ₡3,767/L cada 10,000 km</td></tr>
+        <tr><td>Aceite Caja</td><td class="mono">${fmtC(16*4091/50000*kmMesBus)}</td><td>16L × ₡4,091/L cada 50,000 km</td></tr>
+        <tr><td>Aceite Diferencial</td><td class="mono">${fmtC(17*4310/30000*kmMesBus)}</td><td>17L × ₡4,310/L cada 30,000 km</td></tr>
+        <tr><td>Filtro Combustible</td><td class="mono">${fmtC(41121/16500*kmMesBus)}</td><td>₡41,121 cada 16,500 km</td></tr>
+        <tr><td>Bater&iacute;as (prorrateo)</td><td class="mono">${fmtC(2*169839/15)}</td><td>2 × ₡169,839 cada 15 meses</td></tr>
+        <tr><td>Limpieza (int+ext+motor)</td><td class="mono">${fmtC(267*60+2673*15+20049*0.5)}</td><td>60 int + 15 ext + 0.5 motor/mes</td></tr>
+        <tr style="background:#f0fdfa;font-weight:700"><td>TOTAL ESTIMADO / BUS / MES</td><td class="mono">${fmtC(dieselMes+llantasMes+30*3767/10000*kmMesBus+16*4091/50000*kmMesBus+17*4310/30000*kmMesBus+41121/16500*kmMesBus+2*169839/15+267*60+2673*15+20049*0.5)}</td><td></td></tr>`;
+
+    document.querySelector('#tblSeguros tbody').innerHTML=`
+        <tr><td>SOA</td><td class="mono">${fmtC(P.soa)}</td><td>Anual</td><td class="mono">${fmtC(P.soa/12)}</td></tr>
+        <tr><td>Prima A</td><td class="mono">${fmtC(P.primaA)}</td><td>Semestral</td><td class="mono">${fmtC(P.primaA/6)}</td></tr>
+        <tr><td>Prima C</td><td class="mono">${fmtC(P.primaC)}</td><td>Semestral</td><td class="mono">${fmtC(P.primaC/6)}</td></tr>
+        <tr><td>RTV</td><td class="mono">${fmtC(P.rtv)}</td><td>Semestral</td><td class="mono">${fmtC(P.rtv/6)}</td></tr>
+        <tr><td>Canon ARESEP</td><td class="mono">${fmtC(P.canonAresep)}</td><td>Anual</td><td class="mono">${fmtC(P.canonAresep/12)}</td></tr>
+        <tr><td>Canon CTP</td><td class="mono">${fmtC(P.canonCTP)}</td><td>Anual</td><td class="mono">${fmtC(P.canonCTP/12)}</td></tr>
+        <tr style="background:#f0fdfa;font-weight:700"><td>TOTAL / BUS / MES</td><td></td><td></td><td class="mono">${fmtC(P.soa/12+P.primaA/6+P.primaC/6+P.rtv/6+P.canonAresep/12+P.canonCTP/12)}</td></tr>`;
+
+    document.getElementById('kpiCostos').innerHTML=`
+        <div class="kpi"><div class="icon">⛽</div><div class="val">${fmtC(dieselMes)}</div><div class="lbl">Di&eacute;sel / Bus / Mes</div></div>
+        <div class="kpi"><div class="icon">👔</div><div class="val">${fmtC(costoChof)}</div><div class="lbl">Costo Chofer (c/ CS)</div></div>
+        <div class="kpi"><div class="icon">🔧</div><div class="val">${fmtC(llantasMes)}</div><div class="lbl">Llantas / Bus / Mes</div></div>
+        <div class="kpi"><div class="icon">🛡️</div><div class="val">${fmtC(P.soa/12+P.primaA/6+P.primaC/6+P.rtv/6+P.canonAresep/12+P.canonCTP/12)}</div><div class="lbl">Seguros+Canon / Bus / Mes</div></div>`;
+}
+
+function buildChoferes(){
+    let html='';
+    DATA.choferes.forEach((c,i)=>{
+        html+=`<tr><td>${i+1}</td><td><strong>${c.Chofer}</strong></td><td class="right mono">${fmt(c.marcas_netas)}</td><td class="right mono">${fmt(c.sinpe)}</td><td class="right mono">${fmt(c.dias)}</td><td class="right mono">${fmt(c.carreras)}</td><td class="right mono">${fmt(c.km)}</td><td class="right mono">${c.dias>0?fmt(Math.round(c.marcas_netas/c.dias)):'—'}</td></tr>`;
+    });
+    document.querySelector('#tblChoferes tbody').innerHTML=html;
+}
+
+function buildIndicadores(){
+    const tarifas={};DATA.tarifas.forEach(t=>{tarifas[t.RamalU]=t.tarifa});
+    let html='';
+    DATA.ramales.forEach(r=>{
+        const sinpeP=r.marcas>0?(r.sinpe/r.marcas*100).toFixed(1):'0';
+        const cedP=r.marcas>0?(r.cedulas_cant/r.marcas*100).toFixed(1):'0';
+        const cortP=r.marcas>0?(r.cortesias/r.marcas*100).toFixed(1):'0';
+        const kmCar=r.carreras>0?(r.km/r.carreras).toFixed(1):'—';
+        const paxCar=r.carreras>0?Math.round(r.marcas_netas/r.carreras):'—';
+        const recCar=r.carreras>0?fmtC(Math.round(r.colecta_neta/r.carreras)):'—';
+        html+=`<tr><td><strong>${r.RamalU}</strong></td><td class="right mono">${sinpeP}%</td><td class="right mono">${cedP}%</td><td class="right mono">${cortP}%</td><td class="right mono">${kmCar}</td><td class="right mono">${paxCar}</td><td class="right mono">${recCar}</td></tr>`;
+    });
+    document.querySelector('#tblInd tbody').innerHTML=html;
+
+    document.getElementById('dlParams').innerHTML=`
+        <dt>Consumo di&eacute;sel</dt><dd class="mono">0.47 l/km</dd>
+        <dt>Precio di&eacute;sel</dt><dd class="mono">₡553.46 / litro</dd>
+        <dt>Jornadas laborales / bus</dt><dd class="mono">2.3547</dd>
+        <dt>Mec&aacute;nicos / bus</dt><dd class="mono">0.1788 → ${Math.round(P.flota*P.mecXbus)} para 66 buses</dd>
+        <dt>Despachadores / bus</dt><dd class="mono">0.30 → ${Math.round(P.flota*P.despXbus)} para 66 buses</dd>
+        <dt>Km improductivo</dt><dd class="mono">10%</dd>
+        <dt>Llantas / bus</dt><dd class="mono">6 unidades, cambio cada 61,000 km</dd>
+        <dt>Vida &uacute;til estimada llanta</dt><dd class="mono">~${fmt(P.cambioLlantaKm)} km ≈ ${(P.cambioLlantaKm/2500).toFixed(0)} meses</dd>
+        <dt>Cargas Sociales</dt><dd class="mono">48.21%</dd>`;
+
+    let comHtml='';
+    DATA.comisiones.forEach(c=>{
+        comHtml+=`<tr><td>${c.Mes}</td><td class="right mono">${fmtC(c.total)}</td><td class="right mono">${c.dias}</td><td class="right mono">${fmtC(Math.round(c.total/c.dias))}</td></tr>`;
+    });
+    document.querySelector('#tblCom tbody').innerHTML=comHtml;
+}
+
+function buildSimSelect(){
+    const sel=document.getElementById('simRamal');
+    Object.keys(RC).forEach(n=>{const o=document.createElement('option');o.value=n;o.textContent=`${RC[n].c} – ${n}`;sel.appendChild(o)});
+}
+
+function runSim(){
+    const ramalN=document.getElementById('simRamal').value;
+    const carreras=parseInt(document.getElementById('simCarreras').value)||5;
+    const diasMes=parseInt(document.getElementById('simDias').value)||26;
+    const r=RC[ramalN];if(!r)return;
+    const tarifas={};DATA.tarifas.forEach(t=>{tarifas[t.RamalU]=t.tarifa});
+    const tarifa=tarifas[ramalN]||455;
+
+    const kmDia=carreras*(r.di+r.dv)*1.10; // +10% improductivo
+    const kmMes=kmDia*diasMes;
+    const dieselDia=kmDia*P.consumo*P.diesel;
+    const dieselMes=dieselDia*diasMes;
+    const salDia=P.salChofer*(1+P.cs)/26*P.jornadas; // per bus
+    const salMes=salDia*diasMes;
+    const llantaDia=(P.llantasXbus*P.llanta)/P.cambioLlantaKm*kmDia;
+    const llantaMes=llantaDia*diasMes;
+    const segurosDia=(P.soa+P.primaA*2+P.primaC*2+P.rtv*2+P.canonAresep+P.canonCTP)/365;
+    const segurosMes=segurosDia*30;
+    const mantenDia=kmDia*0.0661*100; // repuestos coefficient
+    const mantenMes=mantenDia*diasMes;
+    const costoDia=dieselDia+salDia+llantaDia+segurosDia+mantenDia;
+    const costoMes=dieselMes+salMes+llantaMes+segurosMes+mantenMes;
+
+    // Revenue estimate
+    const rd=DATA.ramales.find(x=>x.RamalU===ramalN);
+    const paxPorCarrera=rd&&rd.carreras>0?Math.round(rd.marcas_netas/rd.carreras):40;
+    const ingresoDia=carreras*paxPorCarrera*tarifa;
+    const ingresoMes=ingresoDia*diasMes;
+    const margenDia=ingresoDia-costoDia;
+    const margenMes=ingresoMes-costoMes;
+
+    document.getElementById('simResult').innerHTML=`
+        <h4 style="margin-bottom:12px;color:var(--p1)">📊 ${r.c} – ${ramalN} | ${carreras} carreras/d&iacute;a × ${diasMes} d&iacute;as</h4>
+        <div style="font-size:12px;color:var(--txt2);margin-bottom:10px">Km/d&iacute;a: ${kmDia.toFixed(0)} (incl. 10% improd.) | Km/mes: ${fmt(Math.round(kmMes))} | ~${paxPorCarrera} pax/carrera</div>
+        <strong style="font-size:13px">COSTOS:</strong>
+        <div class="sim-line"><span>⛽ Di&eacute;sel</span><span class="mono">${fmtC(dieselMes)}</span></div>
+        <div class="sim-line"><span>👨‍✈️ Salario chofer (c/ CS)</span><span class="mono">${fmtC(salMes)}</span></div>
+        <div class="sim-line"><span>🔧 Llantas (prorrateo)</span><span class="mono">${fmtC(llantaMes)}</span></div>
+        <div class="sim-line"><span>🛡️ Seguros / C&aacute;nones</span><span class="mono">${fmtC(segurosMes)}</span></div>
+        <div class="sim-line"><span>🔩 Repuestos / Mantenimiento</span><span class="mono">${fmtC(mantenMes)}</span></div>
+        <div class="sim-line total"><span>COSTO TOTAL / MES</span><span class="mono">${fmtC(costoMes)}</span></div>
+        <div style="margin-top:16px"><strong style="font-size:13px">INGRESOS:</strong></div>
+        <div class="sim-line"><span>🎫 Recaudaci&oacute;n estimada</span><span class="mono">${fmtC(ingresoMes)}</span></div>
+        <div class="sim-line total"><span>MARGEN ESTIMADO</span><span class="mono ${margenMes>=0?'pos':'neg'}">${fmtC(margenMes)}</span></div>
+        <div style="margin-top:12px;font-size:12px;color:var(--txt2)">Costo por carrera: ${fmtC(Math.round(costoDia/carreras))} | Costo por d&iacute;a: ${fmtC(Math.round(costoDia))} | Costo por km: ${fmtC(Math.round(costoDia/kmDia))}</div>`;
+}
+
+// === CHATBOT ===
+function findBus(n){return DATA.buses?DATA.buses.find(b=>b.Unidad===n):null}
+function findFlota(n){return DATA.flota?DATA.flota.find(f=>f.Unidad===n):null}
+function findRamal(q){
+    q=q.toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g,'');
+    return DATA.ramales?DATA.ramales.find(r=>r.RamalU.toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g,'').includes(q)):null;
+}
+
+function chatAnswer(q){
+    const ql=q.toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g,'');
+
+    // Bus lookup
+    const busM=ql.match(/(?:bus|unidad|n[°º]?)\s*(\d{1,3})/)||ql.match(/^(\d{1,3})$/);
+    if(busM){
+        const n=parseInt(busM[1]);const b=findBus(n);const f=findFlota(n);
+        if(b&&f) return `<strong>Bus N°${n}</strong><br>Marca: ${f.MARCA} | Placa: ${f.PLACA} | Modelo: ${f.MODELO} | Edad: ${f['Edad de flota']} años<br>Pasajeros: ${fmt(b.marcas_netas)} | Km: ${fmt(b.km)} | Colecta: ${fmtC(b.colecta_neta)}<br>Sinpe: ${b.marcas>0?fmtP2(b.sinpe,b.marcas):'—'} | Cédulas: ${b.marcas>0?fmtP2(b.cedulas_cant,b.marcas):'—'}<br>Carreras: ${fmt(b.carreras)} | Días: ${b.dias}<br>Diésel estimado/mes: ${fmtC(Math.round(b.km/b.dias*30*P.consumo*P.diesel))}`;
+        if(b) return `<strong>Bus N°${n}</strong>: ${fmt(b.marcas_netas)} pasajeros, ${fmt(b.km)} km, ${fmtC(b.colecta_neta)} colecta.`;
+        return `No encontré el bus N°${n}.`;
+    }
+
+    // Placa
+    const placaM=ql.match(/sjb\s*(\d+)/);
+    if(placaM){
+        const f=DATA.flota.find(x=>(x.PLACA||'').replace(/\s/g,'').includes(placaM[1]));
+        if(f){const b=findBus(f.Unidad);return `<strong>Placa SJB ${placaM[1]}</strong> → Bus N°${f.Unidad}, ${f.MARCA}, Modelo ${f.MODELO}${b?'<br>Pasajeros: '+fmt(b.marcas_netas)+' | Km: '+fmt(b.km):''}`;}
+        return `No encontré placa SJB ${placaM[1]}.`;
+    }
+
+    // Marca
+    const marcaM=ql.match(/\b(blk|ankai|vocho|daewoo|hentong)\b/);
+    if(marcaM&&!ql.match(/flota|cuant|total/)){
+        const marca=marcaM[1].toUpperCase();
+        const lista=DATA.flota.filter(f=>f.MARCA===marca);
+        return `<strong>${marca}</strong>: ${lista.length} unidades<br>${lista.slice(0,10).map(f=>`• N°${f.Unidad} – ${f.PLACA} (${f.MODELO})`).join('<br>')}${lista.length>10?'<br>... y '+(lista.length-10)+' más':''}`;
+    }
+
+    // Simulación
+    const simM=ql.match(/(\d+)\s*carrera/);
+    if(simM){
+        const carr=parseInt(simM[1]);
+        const ramalNames=Object.keys(RC);
+        const rn=ramalNames.find(n=>ql.includes(n.toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g,'')));
+        if(rn){
+            const r=RC[rn];const kmDia=carr*(r.di+r.dv)*1.10;
+            const costDiesel=kmDia*P.consumo*P.diesel;
+            const costSalario=P.salChofer*(1+P.cs)/26*P.jornadas;
+            const costTotal=costDiesel+costSalario+(P.llantasXbus*P.llanta/P.cambioLlantaKm*kmDia)+(P.soa+P.primaA*2+P.primaC*2+P.rtv*2+P.canonAresep+P.canonCTP)/365;
+            return `<strong>Simulación: ${carr} carreras en ${rn}</strong><br>Km/día: ${kmDia.toFixed(0)} (incl. improd.)<br>⛽ Diésel: ${fmtC(Math.round(costDiesel))}<br>👨‍✈️ Salario: ${fmtC(Math.round(costSalario))}<br>💰 Costo total/día: ~${fmtC(Math.round(costTotal))}<br>📅 Costo mensual (26 días): ~${fmtC(Math.round(costTotal*26))}`;
+        }
+    }
+
+    // Sinpe
+    if(ql.match(/sinpe|pago electronico/)){
+        const rn=Object.keys(RC).find(n=>ql.includes(n.toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g,'')));
+        if(rn){const r=findRamal(rn);if(r) return `<strong>Sinpe en ${rn}:</strong> ${fmtP2(r.sinpe,r.marcas)} (${fmt(r.sinpe)} pagos Sinpe de ${fmt(r.marcas)} marcas totales)`;}
+        let resp='<strong>% Sinpe por ramal:</strong><br>';
+        DATA.ramales.slice(0,12).forEach(r=>{resp+=`• ${r.RamalU}: ${fmtP2(r.sinpe,r.marcas)}<br>`});
+        return resp;
+    }
+
+    // Cedulas / adulto mayor
+    if(ql.match(/cedula|adulto mayor|adultos/)){
+        const rn=Object.keys(RC).find(n=>ql.includes(n.toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g,'')));
+        if(rn){const r=findRamal(rn);if(r) return `<strong>Cédulas/Adulto Mayor en ${rn}:</strong> ${fmtP2(r.cedulas_cant,r.marcas)} (${fmt(r.cedulas_cant)} cédulas, monto: ${fmtC(r.cedulas_monto)})`;}
+        let resp='<strong>% Cédulas por ramal:</strong><br>';
+        DATA.ramales.slice(0,12).forEach(r=>{resp+=`• ${r.RamalU}: ${fmtP2(r.cedulas_cant,r.marcas)}<br>`});
+        return resp;
+    }
+
+    // Comisiones
+    if(ql.match(/comision/)){
+        const meses=['enero','febrero','marzo','abril','mayo','junio','julio','agosto','septiembre','octubre','noviembre','diciembre'];
+        const mesI=meses.findIndex(m=>ql.includes(m));
+        if(mesI>=0){
+            const mesStr=String(mesI+1).padStart(2,'0');
+            const cs=DATA.comisiones.filter(c=>c.Mes.endsWith('-'+mesStr));
+            if(cs.length>0){return cs.map(c=>`<strong>Comisiones Sinpe ${c.Mes}:</strong> ${fmtC(c.total)} (${c.dias} días, prom: ${fmtC(Math.round(c.total/c.dias))}/día)`).join('<br>');}
+        }
+        return '<strong>Comisiones Sinpe:</strong><br>'+DATA.comisiones.slice(-6).map(c=>`• ${c.Mes}: ${fmtC(c.total)}`).join('<br>');
+    }
+
+    // Top choferes
+    if(ql.match(/top|mejor|chofer|conductor/)){
+        let resp='<strong>Top 5 Choferes (pasajeros):</strong><br>';
+        DATA.choferes.slice(0,5).forEach((c,i)=>{resp+=`${i+1}. ${c.Chofer}: ${fmt(c.marcas_netas)} pax (${c.dias} días)<br>`});
+        return resp;
+    }
+
+    // Mecanicos
+    if(ql.match(/mecanico/)) return `Necesitas <strong>${Math.round(P.flota*P.mecXbus)} mecánicos</strong> (coeficiente 0.1788 × 66 buses). Salario: ${fmtC(P.salMec)} + CS = ${fmtC(Math.round(P.salMec*(1+P.cs)))}/mes c/u.`;
+    if(ql.match(/despachador|chequeador/)) return `Necesitas <strong>${Math.round(P.flota*P.despXbus)} despachadores</strong> (coeficiente 0.30 × 66 buses). Salario: ${fmtC(P.salDesp)} + CS = ${fmtC(Math.round(P.salDesp*(1+P.cs)))}/mes c/u.`;
+    if(ql.match(/llanta/)) return `Cada bus usa <strong>6 llantas</strong> a ₡245,200 c/u. Se cambian cada 61,000 km (~${(61000/2500).toFixed(0)} meses). Flota completa: ~${fmt(P.flota*P.llantasXbus)} llantas/ciclo = ${fmtC(P.flota*P.llantasXbus*P.llanta)}.`;
+    if(ql.match(/diesel|combustible/)) return `Consumo: <strong>0.47 l/km</strong> × ₡553.46 = <strong>₡260/km</strong>. Bus promedio ~2,500 km/mes = ~${fmtC(2500*P.consumo*P.diesel)}/mes en diésel.`;
+    if(ql.match(/salario|sueldo/)) return `Salarios mensuales:<br>• Chofer: ${fmtC(P.salChofer)} (+ CS = ${fmtC(Math.round(P.salChofer*(1+P.cs)))})<br>• Despachador: ${fmtC(P.salDesp)} (+ CS = ${fmtC(Math.round(P.salDesp*(1+P.cs)))})<br>• Mecánico: ${fmtC(P.salMec)} (+ CS = ${fmtC(Math.round(P.salMec*(1+P.cs)))})`;
+    if(ql.match(/carrera.*semana|semana.*carrera/)){
+        let t=0;Object.values(RC).forEach(r=>{t+=(r.lvIda+r.lvVta)*5+r.sab+r.dom});
+        return `Total carreras semanales (todos los ramales): <strong>${fmt(t)}</strong> (L-V + Sáb + Dom). Mensual estimado: ${fmt(Math.round(t*4.33))}.`;
+    }
+    if(ql.match(/flota|buses|unidades|vehiculo/)) return `Flota: <strong>66 unidades</strong>. Marcas: BLK (30), VOCHO (14), ANKAI (10), DAEWOO (8), HENTONG (2). Distribución: A=22, D=9, G/H/J=6 c/u, I=5, C/E=4, F=3, B/K=2, L=1.`;
+    if(ql.match(/ramal|recorrido/)){
+        let resp='<strong>Ramales Ruta 40:</strong><br>';
+        Object.entries(RC).forEach(([n,r])=>{resp+=`• ${r.c} – ${n}: ${r.fl} buses, ${r.di}km<br>`});
+        return resp;
+    }
+
+    // Ramal directo
+    const rn=Object.keys(RC).find(n=>ql.includes(n.toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g,'')));
+    if(rn){
+        const r=RC[rn];const rd=findRamal(rn);const tarifas={};DATA.tarifas.forEach(t=>{tarifas[t.RamalU]=t.tarifa});
+        let resp=`<strong>Ramal ${r.c} – ${rn}</strong><br>Distancia: ${r.di}km ida / ${r.dv}km vuelta | ${r.cl}<br>Flota: ${r.fl} buses | Demanda CTP: ${fmt(r.dem)} pax/mes`;
+        if(rd) resp+=`<br><br><em>Datos reales 2025:</em><br>Pasajeros: ${fmt(rd.marcas_netas)} | Sinpe: ${fmtP2(rd.sinpe,rd.marcas)} | Cédulas: ${fmtP2(rd.cedulas_cant,rd.marcas)}<br>Recaudación: ${fmtC(rd.colecta_neta)} | Km: ${fmt(rd.km)}`;
+        return resp;
+    }
+
+    return 'No entendí la consulta. Prueba con:<br>• <em>bus 01</em> – datos de un bus<br>• <em>dulce nombre</em> – datos ramal<br>• <em>sinpe los sitios</em> – % pago electrónico<br>• <em>5 carreras dulce nombre</em> – simular costos<br>• <em>cuantos mecanicos</em> – personal<br>• <em>top choferes</em> – mejores conductores<br>• <em>comisiones marzo</em> – comisiones Sinpe';
+}
+
+function sendChat(){
+    const input=document.getElementById('chatIn');
+    const q=input.value.trim();if(!q)return;
+    const body=document.getElementById('chatBody');
+    body.innerHTML+=`<div class="msg user">${q}</div>`;
+    input.value='';
+    setTimeout(()=>{body.innerHTML+=`<div class="msg bot">${chatAnswer(q)}</div>`;body.scrollTop=body.scrollHeight},200);
+}
+</script>
+</body>
+</html>

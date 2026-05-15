@@ -1,0 +1,48 @@
+Procesando: Bus080_2026-04-16_05-57-00_20.mov
+❌ Timeout: video muy largo o API lento
+Procesando: Bus080_2026-04-16_05-57-21_20.mov
+❌ API no disponible en http://localhost:8000
+Procesando: Bus080_2026-04-16_05-57-42_20.mov
+❌ API no disponible en http://localhost:8000
+Procesando: Bus080_2026-04-16_05-58-03_20.mov
+❌ API no disponible en http://localhost:8000
+Procesando: Bus080_2026-04-16_05-58-24_20.mov
+❌ API no disponible en http://localhost:8000
+Procesando: Bus080_2026-04-16_05-58-45_20.mov
+❌ API no disponible en http://localhost:8000
+Procesando: Bus080_2026-04-16_05-59-06_20.mov
+❌ API no disponible en http://localhost:8000
+Procesando: Bus080_2026-04-16_05-59-27_20.mov
+❌ API no disponible en http://localhost:8000
+Procesando: Bus080_2026-04-16_05-59-48_20.mov
+❌ API no disponible en http://localhost:8000
+Procesando: Bus080_2026-04-16_06-00-09_20.mov
+❌ API no disponible en http://localhost:8000
+Procesando: Bus080_2026-04-16_06-00-30_20.mov
+❌ API no disponible en http://localhost:8000
+Procesando: Bus080_2026-04-16_06-00-51_20.mov
+❌ API no disponible en http://localhost:8000
+Procesando: Bus080_2026-04-16_06-01-12_20.mov
+❌ API no disponible en http://localhost:8000
+Procesando: Bus080_2026-04-16_06-01-33_20.mov
+❌ API no disponible en http://localhost:8000
+Procesando: Bus080_2026-04-16_06-01-54_20.mov
+❌ API no disponible en http://localhost:8000
+Procesando: Bus080_2026-04-16_06-02-15_20.mov
+❌ API no disponible en http://localhost:8000
+Procesando: Bus080_2026-04-16_06-02-36_20.mov
+❌ API no disponible en http://localhost:8000
+Procesando: Bus080_2026-04-16_06-02-57_20.mov
+❌ API no disponible en http://localhost:8000
+Procesando: Bus080_2026-04-16_06-03-18_20.mov
+❌ API no disponible en http://localhost:8000
+Procesando: Bus080_2026-04-16_06-03-39_20.mov
+❌ API no disponible en http://localhost:8000
+Procesando: Bus080_2026-04-16_06-04-00_20.mov
+❌ API no disponible en http://localhost:8000
+Procesando: Bus080_2026-04-16_06-04-21_20.mov
+❌ API no disponible en http://localhost:8000
+Procesando: Bus080_2026-04-16_06-04-42_20.mov
+❌ API no disponible en http://localhost:8000
+Procesando: Bus080_2026-04-16_06-05-03_20.mov
+❌ API no disponible en http://localhost:8000

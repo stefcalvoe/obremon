@@ -1,0 +1,1992 @@
+‚úÖ Modelo fine-tuned cargado: ./models/yolov8m_aforador/weights/best.pt
+============================================================
+ üöÄ AFORADOR AMSA IA - API SERVER
+============================================================
+üìç http://localhost:8000
+üìö Docs: http://localhost:8000/docs
+============================================================
+INFO:     Started server process [4828]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+INFO:     Uvicorn running on http://0.0.0.0:8000 (Press CTRL+C to quit)
+INFO:     127.0.0.1:49928 - "GET /health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49940 - "GET /health HTTP/1.1" 200 OK
+
+0: 384x640 1 person, 5268.9ms
+Speed: 415.4ms preprocess, 5268.9ms inference, 15.2ms postprocess per image at shape (1, 3, 384, 640)
+
+0: 384x640 1 person, 6923.2ms
+Speed: 45.3ms preprocess, 6923.2ms inference, 20.4ms postprocess per image at shape (1, 3, 384, 640)
+
+0: 384x640 1 person, 5765.5ms
+Speed: 35.1ms preprocess, 5765.5ms inference, 12.1ms postprocess per image at shape (1, 3, 384, 640)
+
+0: 384x640 1 person, 1 remote, 5569.7ms
+Speed: 14.5ms preprocess, 5569.7ms inference, 14.4ms postprocess per image at shape (1, 3, 384, 640)
+
+0: 384x640 1 person, 1 remote, 3476.5ms
+Speed: 6.1ms preprocess, 3476.5ms inference, 6.1ms postprocess per image at shape (1, 3, 384, 640)
+
+0: 384x640 1 person, 1 remote, 2600.7ms
+Speed: 8.6ms preprocess, 2600.7ms inference, 3.8ms postprocess per image at shape (1, 3, 384, 640)
+
+0: 384x640 1 person, 1 remote, 3805.2ms
+Speed: 9.6ms preprocess, 3805.2ms inference, 4.0ms postprocess per image at shape (1, 3, 384, 640)
+
+0: 384x640 1 person, 2802.9ms
+Speed: 9.4ms preprocess, 2802.9ms inference, 5.8ms postprocess per image at shape (1, 3, 384, 640)
+
+0: 384x640 1 person, 3287.3ms
+Speed: 9.2ms preprocess, 3287.3ms inference, 5.9ms postprocess per image at shape (1, 3, 384, 640)
+
+0: 384x640 1 person, 2596.7ms
+Speed: 9.9ms preprocess, 2596.7ms inference, 5.7ms postprocess per image at shape (1, 3, 384, 640)
+
+0: 384x640 1 person, 1 remote, 2929.1ms
+Speed: 9.1ms preprocess, 2929.1ms inference, 4.6ms postprocess per image at shape (1, 3, 384, 640)
+
+0: 384x640 1 person, 2627.9ms
+Speed: 13.8ms preprocess, 2627.9ms inference, 3.7ms postprocess per image at shape (1, 3, 384, 640)
+
+0: 384x640 1 person, 3203.9ms
+Speed: 11.9ms preprocess, 3203.9ms inference, 2.7ms postprocess per image at shape (1, 3, 384, 640)
+
+0: 384x640 1 person, 2927.5ms
+Speed: 6.4ms preprocess, 2927.5ms inference, 9.5ms postprocess per image at shape (1, 3, 384, 640)
+
+0: 384x640 1 person, 3803.0ms
+Speed: 7.4ms preprocess, 3803.0ms inference, 6.0ms postprocess per image at shape (1, 3, 384, 640)
+
+0: 384x640 1 person, 3099.2ms
+Speed: 8.2ms preprocess, 3099.2ms inference, 16.5ms postprocess per image at shape (1, 3, 384, 640)
+
+0: 384x640 1 person, 2919.6ms
+Speed: 7.9ms preprocess, 2919.6ms inference, 3.4ms postprocess per image at shape (1, 3, 384, 640)
+
+0: 384x640 1 person, 3213.3ms
+Speed: 13.6ms preprocess, 3213.3ms inference, 4.9ms postprocess per image at shape (1, 3, 384, 640)
+
+0: 384x640 1 person, 2457.9ms
+Speed: 7.0ms preprocess, 2457.9ms inference, 5.6ms postprocess per image at shape (1, 3, 384, 640)
+
+0: 384x640 1 person, 3162.3ms
+Speed: 6.6ms preprocess, 3162.3ms inference, 3.9ms postprocess per image at shape (1, 3, 384, 640)
+
+0: 384x640 1 person, 2864.6ms
+Speed: 12.1ms preprocess, 2864.6ms inference, 14.6ms postprocess per image at shape (1, 3, 384, 640)
+
+0: 384x640 1 person, 3058.3ms
+Speed: 8.8ms preprocess, 3058.3ms inference, 7.3ms postprocess per image at shape (1, 3, 384, 640)
+
+0: 384x640 1 person, 2395.9ms
+Speed: 11.4ms preprocess, 2395.9ms inference, 4.4ms postprocess per image at shape (1, 3, 384, 640)
+
+0: 384x640 1 person, 5539.7ms
+Speed: 11.7ms preprocess, 5539.7ms inference, 11.0ms postprocess per image at shape (1, 3, 384, 640)
+
+0: 384x640 1 person, 5431.3ms
+Speed: 6.3ms preprocess, 5431.3ms inference, 11.2ms postprocess per image at shape (1, 3, 384, 640)
+
+0: 384x640 1 person, 5961.7ms
+Speed: 18.9ms preprocess, 5961.7ms inference, 13.3ms postprocess per image at shape (1, 3, 384, 640)
+
+0: 384x640 1 person, 6392.2ms
+Speed: 14.6ms preprocess, 6392.2ms inference, 7.7ms postprocess per image at shape (1, 3, 384, 640)
+
+0: 384x640 1 person, 5482.3ms
+Speed: 13.7ms preprocess, 5482.3ms inference, 17.2ms postprocess per image at shape (1, 3, 384, 640)
+
+0: 384x640 1 person, 8728.3ms
+Speed: 14.3ms preprocess, 8728.3ms inference, 10.6ms postprocess per image at shape (1, 3, 384, 640)
+
+0: 384x640 1 person, 3398.5ms
+Speed: 12.1ms preprocess, 3398.5ms inference, 4.2ms postprocess per image at shape (1, 3, 384, 640)
+
+0: 384x640 1 person, 8311.8ms
+Speed: 5.8ms preprocess, 8311.8ms inference, 29.9ms postprocess per image at shape (1, 3, 384, 640)
+
+0: 384x640 2 persons, 6016.5ms
+Speed: 35.7ms preprocess, 6016.5ms inference, 33.1ms postprocess per image at shape (1, 3, 384, 640)
+
+0: 384x640 1 person, 3678.1ms
+Speed: 49.3ms preprocess, 3678.1ms inference, 3.5ms postprocess per image at shape (1, 3, 384, 640)
+
+0: 384x640 1 person, 3899.2ms
+Speed: 15.7ms preprocess, 3899.2ms inference, 2.1ms postprocess per image at shape (1, 3, 384, 640)
+
+0: 384x640 2 persons, 4034.0ms
+Speed: 7.6ms preprocess, 4034.0ms inference, 60.7ms postprocess per image at shape (1, 3, 384, 640)
+
+0: 384x640 2 persons, 2997.5ms
+Speed: 66.0ms preprocess, 2997.5ms inference, 2.1ms postprocess per image at shape (1, 3, 384, 640)
+
+0: 384x640 2 persons, 3734.1ms
+Speed: 13.3ms preprocess, 3734.1ms inference, 4.3ms postprocess per image at shape (1, 3, 384, 640)
+
+0: 384x640 2 persons, 3099.1ms
+Speed: 10.8ms preprocess, 3099.1ms inference, 8.7ms postprocess per image at shape (1, 3, 384, 640)
+
+0: 384x640 2 persons, 5037.8ms
+Speed: 6.3ms preprocess, 5037.8ms inference, 68.4ms postprocess per image at shape (1, 3, 384, 640)
+
+0: 384x640 1 person, 4450.1ms
+Speed: 76.3ms preprocess, 4450.1ms inference, 16.3ms postprocess per image at shape (1, 3, 384, 640)
+
+0: 384x640 1 person, 6199.7ms
+Speed: 10.5ms preprocess, 6199.7ms inference, 48.7ms postprocess per image at shape (1, 3, 384, 640)
+
+0: 384x640 1 person, 1 bus, 4423.9ms
+Speed: 15.3ms preprocess, 4423.9ms inference, 11.1ms postprocess per image at shape (1, 3, 384, 640)
+
+0: 384x640 1 person, 4583.6ms
+Speed: 41.0ms preprocess, 4583.6ms inference, 1.8ms postprocess per image at shape (1, 3, 384, 640)
+
+0: 384x640 2 persons, 715.6ms
+Speed: 4.4ms preprocess, 715.6ms inference, 1.6ms postprocess per image at shape (1, 3, 384, 640)
+
+0: 384x640 2 persons, 657.2ms
+Speed: 2.5ms preprocess, 657.2ms inference, 1.7ms postprocess per image at shape (1, 3, 384, 640)
+
+0: 384x640 3 persons, 633.2ms
+Speed: 3.0ms preprocess, 633.2ms inference, 1.7ms postprocess per image at shape (1, 3, 384, 640)
+
+0: 384x640 2 persons, 1 tv, 860.0ms
+Speed: 3.4ms preprocess, 860.0ms inference, 1.9ms postprocess per image at shape (1, 3, 384, 640)
+
+0: 384x640 2 persons, 647.8ms
+Speed: 3.2ms preprocess, 647.8ms inference, 1.6ms postprocess per image at shape (1, 3, 384, 640)
+
+0: 384x640 2 persons, 1 bus, 640.6ms
+Speed: 2.9ms preprocess, 640.6ms inference, 1.4ms postprocess per image at shape (1, 3, 384, 640)
+
+0: 384x640 2 persons, 759.3ms
+Speed: 3.2ms preprocess, 759.3ms inference, 1.5ms postprocess per image at shape (1, 3, 384, 640)
+
+0: 384x640 3 persons, 611.4ms
+Speed: 3.2ms preprocess, 611.4ms inference, 1.1ms postprocess per image at shape (1, 3, 384, 640)
+
+0: 384x640 2 persons, 1 bus, 619.8ms
+Speed: 2.9ms preprocess, 619.8ms inference, 1.4ms postprocess per image at shape (1, 3, 384, 640)
+
+0: 384x640 2 persons, 1 bus, 642.1ms
+Speed: 2.6ms preprocess, 642.1ms inference, 1.6ms postprocess per image at shape (1, 3, 384, 640)
+
+0: 384x640 2 persons, 624.5ms
+Speed: 3.4ms preprocess, 624.5ms inference, 1.4ms postprocess per image at shape (1, 3, 384, 640)
+
+0: 384x640 2 persons, 618.6ms
+Speed: 2.4ms preprocess, 618.6ms inference, 1.5ms postprocess per image at shape (1, 3, 384, 640)
+
+0: 384x640 2 persons, 620.8ms
+Speed: 3.1ms preprocess, 620.8ms inference, 1.4ms postprocess per image at shape (1, 3, 384, 640)
+
+0: 384x640 2 persons, 624.4ms
+Speed: 2.7ms preprocess, 624.4ms inference, 1.4ms postprocess per image at shape (1, 3, 384, 640)
+
+0: 384x640 3 persons, 1 bus, 1 handbag, 711.5ms
+Speed: 3.0ms preprocess, 711.5ms inference, 1.6ms postprocess per image at shape (1, 3, 384, 640)
+
+0: 384x640 3 persons, 1 bus, 2 handbags, 716.4ms
+Speed: 3.0ms preprocess, 716.4ms inference, 4.0ms postprocess per image at shape (1, 3, 384, 640)
+
+0: 384x640 3 persons, 1 bus, 3 handbags, 1 book, 670.3ms
+Speed: 3.4ms preprocess, 670.3ms inference, 1.6ms postprocess per image at shape (1, 3, 384, 640)
+
+0: 384x640 3 persons, 1 suitcase, 704.1ms
+Speed: 2.5ms preprocess, 704.1ms inference, 2.9ms postprocess per image at shape (1, 3, 384, 640)
+
+0: 384x640 3 persons, 1 handbag, 727.4ms
+Speed: 4.1ms preprocess, 727.4ms inference, 2.0ms postprocess per image at shape (1, 3, 384, 640)
+
+0: 384x640 3 persons, 1 tv, 1013.8ms
+Speed: 2.4ms preprocess, 1013.8ms inference, 1.1ms postprocess per image at shape (1, 3, 384, 640)
+
+0: 384x640 4 persons, 1 handbag, 1130.6ms
+Speed: 3.1ms preprocess, 1130.6ms inference, 9.7ms postprocess per image at shape (1, 3, 384, 640)
+
+0: 384x640 2 persons, 705.8ms
+Speed: 2.6ms preprocess, 705.8ms inference, 1.6ms postprocess per image at shape (1, 3, 384, 640)
+
+0: 384x640 2 persons, 660.7ms
+Speed: 2.9ms preprocess, 660.7ms inference, 1.5ms postprocess per image at shape (1, 3, 384, 640)
+
+0: 384x640 3 persons, 1 bus, 638.5ms
+Speed: 2.9ms preprocess, 638.5ms inference, 1.5ms postprocess per image at shape (1, 3, 384, 640)
+
+0: 384x640 3 persons, 1 handbag, 910.7ms
+Speed: 3.4ms preprocess, 910.7ms inference, 1.5ms postprocess per image at shape (1, 3, 384, 640)
+
+0: 384x640 2 persons, 1 bus, 1 backpack, 689.2ms
+Speed: 2.9ms preprocess, 689.2ms inference, 1.8ms postprocess per image at shape (1, 3, 384, 640)
+
+0: 384x640 3 persons, 1561.4ms
+Speed: 3.6ms preprocess, 1561.4ms inference, 1.9ms postprocess per image at shape (1, 3, 384, 640)
+
+0: 384x640 3 persons, 1 bus, 1 backpack, 1 handbag, 736.7ms
+Speed: 3.6ms preprocess, 736.7ms inference, 1.6ms postprocess per image at shape (1, 3, 384, 640)
+
+0: 384x640 3 persons, 1 backpack, 678.0ms
+Speed: 3.7ms preprocess, 678.0ms inference, 1.8ms postprocess per image at shape (1, 3, 384, 640)
+
+0: 384x640 2 persons, 1 truck, 689.3ms
+Speed: 3.6ms preprocess, 689.3ms inference, 1.8ms postprocess per image at shape (1, 3, 384, 640)
+
+0: 384x640 2 persons, 1 bus, 649.9ms
+Speed: 5.7ms preprocess, 649.9ms inference, 1.5ms postprocess per image at shape (1, 3, 384, 640)
+
+0: 384x640 2 persons, 1 bus, 1 cell phone, 676.0ms
+Speed: 3.0ms preprocess, 676.0ms inference, 1.6ms postprocess per image at shape (1, 3, 384, 640)
+
+0: 384x640 3 persons, 1 cell phone, 628.0ms
+Speed: 2.4ms preprocess, 628.0ms inference, 1.6ms postprocess per image at shape (1, 3, 384, 640)
+
+0: 384x640 2 persons, 1 cell phone, 648.4ms
+Speed: 3.0ms preprocess, 648.4ms inference, 1.5ms postprocess per image at shape (1, 3, 384, 640)
+
+0: 384x640 3 persons, 714.6ms
+Speed: 2.9ms preprocess, 714.6ms inference, 1.1ms postprocess per image at shape (1, 3, 384, 640)
+
+0: 384x640 3 persons, 1 bus, 1 skis, 621.9ms
+Speed: 3.4ms preprocess, 621.9ms inference, 1.5ms postprocess per image at shape (1, 3, 384, 640)
+
+0: 384x640 3 persons, 1 bus, 1 cell phone, 702.8ms
+Speed: 2.9ms preprocess, 702.8ms inference, 1.5ms postprocess per image at shape (1, 3, 384, 640)
+
+0: 384x640 3 persons, 3 skiss, 1 cell phone, 610.3ms
+Speed: 3.0ms preprocess, 610.3ms inference, 1.7ms postprocess per image at shape (1, 3, 384, 640)
+
+0: 384x640 5 persons, 3 skiss, 1 cell phone, 630.0ms
+Speed: 2.9ms preprocess, 630.0ms inference, 2.5ms postprocess per image at shape (1, 3, 384, 640)
+
+0: 384x640 4 persons, 2 skiss, 1 cell phone, 641.0ms
+Speed: 2.7ms preprocess, 641.0ms inference, 1.9ms postprocess per image at shape (1, 3, 384, 640)
+
+0: 384x640 5 persons, 633.3ms
+Speed: 3.5ms preprocess, 633.3ms inference, 1.5ms postprocess per image at shape (1, 3, 384, 640)
+
+0: 384x640 5 persons, 616.6ms
+Speed: 2.9ms preprocess, 616.6ms inference, 1.1ms postprocess per image at shape (1, 3, 384, 640)
+
+0: 384x640 6 persons, 1 cell phone, 764.0ms
+Speed: 2.9ms preprocess, 764.0ms inference, 1.2ms postprocess per image at shape (1, 3, 384, 640)
+
+0: 384x640 4 persons, 1 cell phone, 631.2ms
+Speed: 3.1ms preprocess, 631.2ms inference, 1.1ms postprocess per image at shape (1, 3, 384, 640)
+
+0: 384x640 5 persons, 1 cell phone, 637.2ms
+Speed: 3.2ms preprocess, 637.2ms inference, 1.5ms postprocess per image at shape (1, 3, 384, 640)
+
+0: 384x640 6 persons, 2 cell phones, 628.8ms
+Speed: 3.0ms preprocess, 628.8ms inference, 1.1ms postprocess per image at shape (1, 3, 384, 640)
+
+0: 384x640 4 persons, 1 cell phone, 611.1ms
+Speed: 4.4ms preprocess, 611.1ms inference, 1.5ms postprocess per image at shape (1, 3, 384, 640)
+
+0: 384x640 3 persons, 1 skis, 1 cell phone, 613.6ms
+Speed: 2.6ms preprocess, 613.6ms inference, 1.6ms postprocess per image at shape (1, 3, 384, 640)
+
+0: 384x640 3 persons, 1 backpack, 1 skis, 1 cell phone, 631.2ms
+Speed: 2.9ms preprocess, 631.2ms inference, 1.7ms postprocess per image at shape (1, 3, 384, 640)
+
+0: 384x640 4 persons, 1 skis, 1 cell phone, 609.1ms
+Speed: 3.0ms preprocess, 609.1ms inference, 1.5ms postprocess per image at shape (1, 3, 384, 640)
+
+0: 384x640 4 persons, 2 cell phones, 726.7ms
+Speed: 2.9ms preprocess, 726.7ms inference, 1.1ms postprocess per image at shape (1, 3, 384, 640)
+
+0: 384x640 5 persons, 1 skis, 2 cell phones, 614.9ms
+Speed: 3.0ms preprocess, 614.9ms inference, 1.6ms postprocess per image at shape (1, 3, 384, 640)
+
+0: 384x640 5 persons, 1 skis, 2 cell phones, 622.6ms
+Speed: 3.2ms preprocess, 622.6ms inference, 1.5ms postprocess per image at shape (1, 3, 384, 640)
+
+0: 384x640 5 persons, 1 backpack, 2 cell phones, 615.4ms
+Speed: 3.0ms preprocess, 615.4ms inference, 2.2ms postprocess per image at shape (1, 3, 384, 640)
+
+0: 384x640 5 persons, 2 cell phones, 603.3ms
+Speed: 3.2ms preprocess, 603.3ms inference, 1.5ms postprocess per image at shape (1, 3, 384, 640)
+
+0: 384x640 5 persons, 1 backpack, 2 cell phones, 676.7ms
+Speed: 3.6ms preprocess, 676.7ms inference, 1.1ms postprocess per image at shape (1, 3, 384, 640)
+
+0: 384x640 5 persons, 1 backpack, 2 cell phones, 619.5ms
+Speed: 2.4ms preprocess, 619.5ms inference, 1.5ms postprocess per image at shape (1, 3, 384, 640)
+
+0: 384x640 6 persons, 1 backpack, 1 handbag, 1 cell phone, 664.3ms
+Speed: 3.2ms preprocess, 664.3ms inference, 3.1ms postprocess per image at shape (1, 3, 384, 640)
+
+0: 384x640 5 persons, 1 traffic light, 1 backpack, 1 cell phone, 1005.9ms
+Speed: 3.4ms preprocess, 1005.9ms inference, 2.4ms postprocess per image at shape (1, 3, 384, 640)
+
+0: 384x640 5 persons, 1 skis, 1 cell phone, 636.3ms
+Speed: 3.9ms preprocess, 636.3ms inference, 1.1ms postprocess per image at shape (1, 3, 384, 640)
+
+0: 384x640 6 persons, 1 cell phone, 669.9ms
+Speed: 2.3ms preprocess, 669.9ms inference, 1.6ms postprocess per image at shape (1, 3, 384, 640)
+
+0: 384x640 5 persons, 1 cell phone, 629.3ms
+Speed: 3.2ms preprocess, 629.3ms inference, 1.1ms postprocess per image at shape (1, 3, 384, 640)
+
+0: 384x640 4 persons, 655.7ms
+Speed: 3.0ms preprocess, 655.7ms inference, 1.7ms postprocess per image at shape (1, 3, 384, 640)
+
+0: 384x640 5 persons, 645.4ms
+Speed: 3.0ms preprocess, 645.4ms inference, 1.1ms postprocess per image at shape (1, 3, 384, 640)
+
+0: 384x640 4 persons, 1074.0ms
+Speed: 3.3ms preprocess, 1074.0ms inference, 2.5ms postprocess per image at shape (1, 3, 384, 640)
+
+0: 384x640 4 persons, 759.1ms
+Speed: 3.9ms preprocess, 759.1ms inference, 1.8ms postprocess per image at shape (1, 3, 384, 640)
+
+0: 384x640 4 persons, 673.8ms
+Speed: 2.3ms preprocess, 673.8ms inference, 1.3ms postprocess per image at shape (1, 3, 384, 640)
+
+0: 384x640 5 persons, 896.3ms
+Speed: 3.4ms preprocess, 896.3ms inference, 2.1ms postprocess per image at shape (1, 3, 384, 640)
+
+0: 384x640 5 persons, 638.3ms
+Speed: 2.9ms preprocess, 638.3ms inference, 1.2ms postprocess per image at shape (1, 3, 384, 640)
+
+0: 384x640 5 persons, 658.2ms
+Speed: 3.2ms preprocess, 658.2ms inference, 1.9ms postprocess per image at shape (1, 3, 384, 640)
+
+0: 384x640 5 persons, 630.2ms
+Speed: 3.8ms preprocess, 630.2ms inference, 1.1ms postprocess per image at shape (1, 3, 384, 640)
+
+0: 384x640 4 persons, 1371.9ms
+Speed: 3.4ms preprocess, 1371.9ms inference, 2.4ms postprocess per image at shape (1, 3, 384, 640)
+
+0: 384x640 3 persons, 1 backpack, 755.2ms
+Speed: 6.8ms preprocess, 755.2ms inference, 1.5ms postprocess per image at shape (1, 3, 384, 640)
+
+0: 384x640 3 persons, 1 bus, 634.0ms
+Speed: 2.6ms preprocess, 634.0ms inference, 1.1ms postprocess per image at shape (1, 3, 384, 640)
+
+0: 384x640 3 persons, 1 bus, 662.9ms
+Speed: 3.6ms preprocess, 662.9ms inference, 2.1ms postprocess per image at shape (1, 3, 384, 640)
+
+0: 384x640 2 persons, 1 bus, 1 skis, 676.6ms
+Speed: 3.1ms preprocess, 676.6ms inference, 1.5ms postprocess per image at shape (1, 3, 384, 640)
+
+0: 384x640 4 persons, 1 bus, 645.3ms
+Speed: 3.0ms preprocess, 645.3ms inference, 1.0ms postprocess per image at shape (1, 3, 384, 640)
+
+0: 384x640 4 persons, 605.0ms
+Speed: 3.4ms preprocess, 605.0ms inference, 2.9ms postprocess per image at shape (1, 3, 384, 640)
+
+0: 384x640 6 persons, 640.4ms
+Speed: 3.2ms preprocess, 640.4ms inference, 1.5ms postprocess per image at shape (1, 3, 384, 640)
+
+0: 384x640 4 persons, 985.0ms
+Speed: 3.3ms preprocess, 985.0ms inference, 3.6ms postprocess per image at shape (1, 3, 384, 640)
+
+0: 384x640 5 persons, 630.2ms
+Speed: 3.2ms preprocess, 630.2ms inference, 1.0ms postprocess per image at shape (1, 3, 384, 640)
+
+0: 384x640 3 persons, 650.2ms
+Speed: 2.9ms preprocess, 650.2ms inference, 1.8ms postprocess per image at shape (1, 3, 384, 640)
+
+0: 384x640 3 persons, 1 cow, 977.5ms
+Speed: 3.7ms preprocess, 977.5ms inference, 1.5ms postprocess per image at shape (1, 3, 384, 640)
+
+0: 384x640 3 persons, 1205.8ms
+Speed: 3.5ms preprocess, 1205.8ms inference, 2.7ms postprocess per image at shape (1, 3, 384, 640)
+
+0: 384x640 4 persons, 642.8ms
+Speed: 3.3ms preprocess, 642.8ms inference, 1.5ms postprocess per image at shape (1, 3, 384, 640)
+
+0: 384x640 3 persons, 1 suitcase, 796.6ms
+Speed: 3.0ms preprocess, 796.6ms inference, 1.7ms postprocess per image at shape (1, 3, 384, 640)
+
+0: 384x640 3 persons, 1 handbag, 665.5ms
+Speed: 2.8ms preprocess, 665.5ms inference, 1.6ms postprocess per image at shape (1, 3, 384, 640)
+
+0: 384x640 4 persons, 2 handbags, 701.1ms
+Speed: 3.2ms preprocess, 701.1ms inference, 1.6ms postprocess per image at shape (1, 3, 384, 640)
+
+0: 384x640 5 persons, 1 handbag, 1005.0ms
+Speed: 3.6ms preprocess, 1005.0ms inference, 1.7ms postprocess per image at shape (1, 3, 384, 640)
+
+0: 384x640 3 persons, 1 handbag, 1090.0ms
+Speed: 4.0ms preprocess, 1090.0ms inference, 10.6ms postprocess per image at shape (1, 3, 384, 640)
+
+0: 384x640 3 persons, 1 handbag, 1 suitcase, 727.1ms
+Speed: 6.7ms preprocess, 727.1ms inference, 2.2ms postprocess per image at shape (1, 3, 384, 640)
+
+0: 384x640 3 persons, 1 handbag, 1 suitcase, 785.8ms
+Speed: 3.4ms preprocess, 785.8ms inference, 1.8ms postprocess per image at shape (1, 3, 384, 640)
+
+0: 384x640 3 persons, 691.7ms
+Speed: 2.9ms preprocess, 691.7ms inference, 1.9ms postprocess per image at shape (1, 3, 384, 640)
+
+0: 384x640 3 persons, 1 handbag, 682.2ms
+Speed: 3.1ms preprocess, 682.2ms inference, 1.5ms postprocess per image at shape (1, 3, 384, 640)
+
+0: 384x640 3 persons, 968.3ms
+Speed: 3.3ms preprocess, 968.3ms inference, 1.4ms postprocess per image at shape (1, 3, 384, 640)
+
+0: 384x640 4 persons, 1 handbag, 624.3ms
+Speed: 2.9ms preprocess, 624.3ms inference, 1.5ms postprocess per image at shape (1, 3, 384, 640)
+
+0: 384x640 4 persons, 869.4ms
+Speed: 3.5ms preprocess, 869.4ms inference, 1.4ms postprocess per image at shape (1, 3, 384, 640)
+
+0: 384x640 4 persons, 1 truck, 626.9ms
+Speed: 2.5ms preprocess, 626.9ms inference, 1.5ms postprocess per image at shape (1, 3, 384, 640)
+
+0: 384x640 4 persons, 1 truck, 1111.9ms
+Speed: 2.3ms preprocess, 1111.9ms inference, 2.0ms postprocess per image at shape (1, 3, 384, 640)
+
+0: 384x640 4 persons, 1 truck, 1 handbag, 804.3ms
+Speed: 5.4ms preprocess, 804.3ms inference, 1.6ms postprocess per image at shape (1, 3, 384, 640)
+
+0: 384x640 4 persons, 1 truck, 844.8ms
+Speed: 3.4ms preprocess, 844.8ms inference, 1.9ms postprocess per image at shape (1, 3, 384, 640)
+
+0: 384x640 4 persons, 1 bench, 1 handbag, 925.4ms
+Speed: 3.1ms preprocess, 925.4ms inference, 1.0ms postprocess per image at shape (1, 3, 384, 640)
+
+0: 384x640 4 persons, 1 handbag, 640.0ms
+Speed: 2.9ms preprocess, 640.0ms inference, 1.1ms postprocess per image at shape (1, 3, 384, 640)
+
+0: 384x640 4 persons, 1 bench, 1 remote, 903.8ms
+Speed: 2.9ms preprocess, 903.8ms inference, 1.2ms postprocess per image at shape (1, 3, 384, 640)
+
+0: 384x640 4 persons, 1 car, 1 bench, 2 handbags, 1196.0ms
+Speed: 3.0ms preprocess, 1196.0ms inference, 2.4ms postprocess per image at shape (1, 3, 384, 640)
+
+0: 384x640 4 persons, 1 car, 2 handbags, 980.6ms
+Speed: 3.5ms preprocess, 980.6ms inference, 2.1ms postprocess per image at shape (1, 3, 384, 640)
+
+0: 384x640 4 persons, 1003.1ms
+Speed: 4.6ms preprocess, 1003.1ms inference, 1.9ms postprocess per image at shape (1, 3, 384, 640)
+
+0: 384x640 4 persons, 1 truck, 757.0ms
+Speed: 4.3ms preprocess, 757.0ms inference, 1.4ms postprocess per image at shape (1, 3, 384, 640)
+
+0: 384x640 5 persons, 622.7ms
+Speed: 2.4ms preprocess, 622.7ms inference, 1.5ms postprocess per image at shape (1, 3, 384, 640)
+
+0: 384x640 3 persons, 1 truck, 643.1ms
+Speed: 2.9ms preprocess, 643.1ms inference, 2.3ms postprocess per image at shape (1, 3, 384, 640)
+
+0: 384x640 3 persons, 1 bus, 629.9ms
+Speed: 3.1ms preprocess, 629.9ms inference, 1.6ms postprocess per image at shape (1, 3, 384, 640)
+
+0: 384x640 5 persons, 1 bus, 714.4ms
+Speed: 4.9ms preprocess, 714.4ms inference, 1.0ms postprocess per image at shape (1, 3, 384, 640)
+
+0: 384x640 5 persons, 616.1ms
+Speed: 2.4ms preprocess, 616.1ms inference, 1.1ms postprocess per image at shape (1, 3, 384, 640)
+
+0: 384x640 4 persons, 613.7ms
+Speed: 3.0ms preprocess, 613.7ms inference, 1.6ms postprocess per image at shape (1, 3, 384, 640)
+
+0: 384x640 4 persons, 1 bus, 618.8ms
+Speed: 3.0ms preprocess, 618.8ms inference, 1.5ms postprocess per image at shape (1, 3, 384, 640)
+
+0: 384x640 4 persons, 1 bus, 618.1ms
+Speed: 2.9ms preprocess, 618.1ms inference, 1.5ms postprocess per image at shape (1, 3, 384, 640)
+INFO:     127.0.0.1:49942 - "POST /predict_video HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50152 - "GET /health HTTP/1.1" 200 OK
+
+0: 384x640 1 person, 6522.3ms
+Speed: 14.5ms preprocess, 6522.3ms inference, 16.1ms postprocess per image at shape (1, 3, 384, 640)
+
+0: 384x640 1 person, 6820.4ms
+Speed: 13.8ms preprocess, 6820.4ms inference, 18.6ms postprocess per image at shape (1, 3, 384, 640)
+
+0: 384x640 1 person, 7243.0ms
+Speed: 27.4ms preprocess, 7243.0ms inference, 33.6ms postprocess per image at shape (1, 3, 384, 640)
+
+0: 384x640 1 person, 1 remote, 4749.0ms
+Speed: 182.4ms preprocess, 4749.0ms inference, 8.6ms postprocess per image at shape (1, 3, 384, 640)
+
+0: 384x640 1 person, 1 remote, 3340.7ms
+Speed: 12.2ms preprocess, 3340.7ms inference, 5.3ms postprocess per image at shape (1, 3, 384, 640)
+
+0: 384x640 1 person, 1 remote, 5943.6ms
+Speed: 9.3ms preprocess, 5943.6ms inference, 20.2ms postprocess per image at shape (1, 3, 384, 640)
+
+0: 384x640 1 person, 1 remote, 7442.9ms
+Speed: 19.8ms preprocess, 7442.9ms inference, 18.5ms postprocess per image at shape (1, 3, 384, 640)
+
+0: 384x640 1 person, 4644.4ms
+Speed: 45.1ms preprocess, 4644.4ms inference, 10.7ms postprocess per image at shape (1, 3, 384, 640)
+
+0: 384x640 1 person, 5181.2ms
+Speed: 7.6ms preprocess, 5181.2ms inference, 3.3ms postprocess per image at shape (1, 3, 384, 640)
+
+0: 384x640 1 person, 5097.7ms
+Speed: 13.7ms preprocess, 5097.7ms inference, 16.3ms postprocess per image at shape (1, 3, 384, 640)
+
+0: 384x640 1 person, 1 remote, 6778.2ms
+Speed: 8.2ms preprocess, 6778.2ms inference, 19.2ms postprocess per image at shape (1, 3, 384, 640)
+
+0: 384x640 1 person, 3925.8ms
+Speed: 22.7ms preprocess, 3925.8ms inference, 11.8ms postprocess per image at shape (1, 3, 384, 640)
+
+0: 384x640 1 person, 3694.0ms
+Speed: 14.5ms preprocess, 3694.0ms inference, 20.4ms postprocess per image at shape (1, 3, 384, 640)
+
+0: 384x640 1 person, 6893.3ms
+Speed: 10.0ms preprocess, 6893.3ms inference, 4.8ms postprocess per image at shape (1, 3, 384, 640)
+
+0: 384x640 1 person, 6003.2ms
+Speed: 8.5ms preprocess, 6003.2ms inference, 13.1ms postprocess per image at shape (1, 3, 384, 640)
+
+0: 384x640 1 person, 5223.6ms
+Speed: 9.0ms preprocess, 5223.6ms inference, 9.0ms postprocess per image at shape (1, 3, 384, 640)
+
+0: 384x640 1 person, 6853.6ms
+Speed: 17.3ms preprocess, 6853.6ms inference, 12.7ms postprocess per image at shape (1, 3, 384, 640)
+
+0: 384x640 1 person, 5420.3ms
+Speed: 5.2ms preprocess, 5420.3ms inference, 5.4ms postprocess per image at shape (1, 3, 384, 640)
+
+0: 384x640 1 person, 3565.6ms
+Speed: 10.4ms preprocess, 3565.6ms inference, 9.6ms postprocess per image at shape (1, 3, 384, 640)
+
+0: 384x640 1 person, 5782.7ms
+Speed: 46.2ms preprocess, 5782.7ms inference, 48.2ms postprocess per image at shape (1, 3, 384, 640)
+
+0: 384x640 1 person, 6101.9ms
+Speed: 32.3ms preprocess, 6101.9ms inference, 7.5ms postprocess per image at shape (1, 3, 384, 640)
+
+0: 384x640 1 person, 6114.6ms
+Speed: 11.4ms preprocess, 6114.6ms inference, 13.7ms postprocess per image at shape (1, 3, 384, 640)
+
+0: 384x640 1 person, 6130.3ms
+Speed: 21.4ms preprocess, 6130.3ms inference, 4.9ms postprocess per image at shape (1, 3, 384, 640)
+
+0: 384x640 1 person, 4143.2ms
+Speed: 6.5ms preprocess, 4143.2ms inference, 11.3ms postprocess per image at shape (1, 3, 384, 640)
+
+0: 384x640 1 person, 5975.3ms
+Speed: 8.3ms preprocess, 5975.3ms inference, 5.7ms postprocess per image at shape (1, 3, 384, 640)
+
+0: 384x640 1 person, 5742.8ms
+Speed: 38.8ms preprocess, 5742.8ms inference, 6.7ms postprocess per image at shape (1, 3, 384, 640)
+
+0: 384x640 1 person, 3725.3ms
+Speed: 42.8ms preprocess, 3725.3ms inference, 16.3ms postprocess per image at shape (1, 3, 384, 640)
+
+0: 384x640 1 person, 3453.8ms
+Speed: 12.3ms preprocess, 3453.8ms inference, 8.2ms postprocess per image at shape (1, 3, 384, 640)
+
+0: 384x640 1 person, 6082.0ms
+Speed: 5.5ms preprocess, 6082.0ms inference, 5.8ms postprocess per image at shape (1, 3, 384, 640)
+
+0: 384x640 1 person, 6275.2ms
+Speed: 13.6ms preprocess, 6275.2ms inference, 8.3ms postprocess per image at shape (1, 3, 384, 640)
+
+0: 384x640 1 person, 6120.0ms
+Speed: 49.9ms preprocess, 6120.0ms inference, 4.8ms postprocess per image at shape (1, 3, 384, 640)
+
+0: 384x640 2 persons, 7557.3ms
+Speed: 25.4ms preprocess, 7557.3ms inference, 5.5ms postprocess per image at shape (1, 3, 384, 640)
+
+0: 384x640 1 person, 8158.6ms
+Speed: 38.9ms preprocess, 8158.6ms inference, 115.0ms postprocess per image at shape (1, 3, 384, 640)
+
+0: 384x640 1 person, 13574.0ms
+Speed: 71.5ms preprocess, 13574.0ms inference, 3.3ms postprocess per image at shape (1, 3, 384, 640)
+
+0: 384x640 2 persons, 1926.8ms
+Speed: 6.5ms preprocess, 1926.8ms inference, 3.4ms postprocess per image at shape (1, 3, 384, 640)
+
+0: 384x640 2 persons, 2584.6ms
+Speed: 7.2ms preprocess, 2584.6ms inference, 7.4ms postprocess per image at shape (1, 3, 384, 640)
+
+0: 384x640 2 persons, 1798.2ms
+Speed: 13.8ms preprocess, 1798.2ms inference, 2.3ms postprocess per image at shape (1, 3, 384, 640)
+
+0: 384x640 2 persons, 1667.9ms
+Speed: 9.3ms preprocess, 1667.9ms inference, 3.4ms postprocess per image at shape (1, 3, 384, 640)
+
+0: 384x640 2 persons, 2234.8ms
+Speed: 4.0ms preprocess, 2234.8ms inference, 2.0ms postprocess per image at shape (1, 3, 384, 640)
+
+0: 384x640 1 person, 4050.4ms
+Speed: 7.8ms preprocess, 4050.4ms inference, 15.7ms postprocess per image at shape (1, 3, 384, 640)
+
+0: 384x640 1 person, 2664.5ms
+Speed: 6.9ms preprocess, 2664.5ms inference, 8.4ms postprocess per image at shape (1, 3, 384, 640)
+
+0: 384x640 1 person, 1 bus, 2240.7ms
+Speed: 8.6ms preprocess, 2240.7ms inference, 3.1ms postprocess per image at shape (1, 3, 384, 640)
+
+0: 384x640 1 person, 2123.0ms
+Speed: 7.0ms preprocess, 2123.0ms inference, 5.0ms postprocess per image at shape (1, 3, 384, 640)
+
+0: 384x640 2 persons, 2574.7ms
+Speed: 4.1ms preprocess, 2574.7ms inference, 7.3ms postprocess per image at shape (1, 3, 384, 640)
+
+0: 384x640 2 persons, 2197.8ms
+Speed: 15.0ms preprocess, 2197.8ms inference, 2.3ms postprocess per image at shape (1, 3, 384, 640)
+
+0: 384x640 3 persons, 2497.5ms
+Speed: 16.1ms preprocess, 2497.5ms inference, 2.0ms postprocess per image at shape (1, 3, 384, 640)
+
+0: 384x640 2 persons, 1 tv, 2281.3ms
+Speed: 8.6ms preprocess, 2281.3ms inference, 2.3ms postprocess per image at shape (1, 3, 384, 640)
+
+0: 384x640 2 persons, 2179.4ms
+Speed: 9.4ms preprocess, 2179.4ms inference, 4.3ms postprocess per image at shape (1, 3, 384, 640)
+
+0: 384x640 2 persons, 1 bus, 2730.0ms
+Speed: 4.3ms preprocess, 2730.0ms inference, 2.5ms postprocess per image at shape (1, 3, 384, 640)
+
+0: 384x640 2 persons, 2455.8ms
+Speed: 6.5ms preprocess, 2455.8ms inference, 5.4ms postprocess per image at shape (1, 3, 384, 640)
+
+0: 384x640 3 persons, 2411.9ms
+Speed: 6.1ms preprocess, 2411.9ms inference, 3.0ms postprocess per image at shape (1, 3, 384, 640)
+
+0: 384x640 2 persons, 1 bus, 2431.5ms
+Speed: 6.5ms preprocess, 2431.5ms inference, 8.7ms postprocess per image at shape (1, 3, 384, 640)
+
+0: 384x640 2 persons, 1 bus, 2134.3ms
+Speed: 15.4ms preprocess, 2134.3ms inference, 10.5ms postprocess per image at shape (1, 3, 384, 640)
+
+0: 384x640 2 persons, 1949.3ms
+Speed: 8.9ms preprocess, 1949.3ms inference, 2.1ms postprocess per image at shape (1, 3, 384, 640)
+
+0: 384x640 2 persons, 2170.9ms
+Speed: 6.4ms preprocess, 2170.9ms inference, 3.5ms postprocess per image at shape (1, 3, 384, 640)
+
+0: 384x640 2 persons, 2749.5ms
+Speed: 9.1ms preprocess, 2749.5ms inference, 117.9ms postprocess per image at shape (1, 3, 384, 640)
+
+0: 384x640 2 persons, 4501.8ms
+Speed: 310.0ms preprocess, 4501.8ms inference, 4.6ms postprocess per image at shape (1, 3, 384, 640)
+
+0: 384x640 3 persons, 1 bus, 1 handbag, 3481.3ms
+Speed: 5.3ms preprocess, 3481.3ms inference, 7.4ms postprocess per image at shape (1, 3, 384, 640)
+
+0: 384x640 3 persons, 1 bus, 2 handbags, 3436.6ms
+Speed: 14.0ms preprocess, 3436.6ms inference, 16.1ms postprocess per image at shape (1, 3, 384, 640)
+
+0: 384x640 3 persons, 1 bus, 3 handbags, 1 book, 12364.3ms
+Speed: 45.7ms preprocess, 12364.3ms inference, 2.8ms postprocess per image at shape (1, 3, 384, 640)
+
+0: 384x640 3 persons, 1 suitcase, 4117.3ms
+Speed: 15.3ms preprocess, 4117.3ms inference, 9.1ms postprocess per image at shape (1, 3, 384, 640)
+
+0: 384x640 3 persons, 1 handbag, 8896.5ms
+Speed: 10.5ms preprocess, 8896.5ms inference, 5.9ms postprocess per image at shape (1, 3, 384, 640)
+
+0: 384x640 3 persons, 1 tv, 2758.7ms
+Speed: 6.8ms preprocess, 2758.7ms inference, 6.9ms postprocess per image at shape (1, 3, 384, 640)
+
+0: 384x640 4 persons, 1 handbag, 4960.0ms
+Speed: 7.6ms preprocess, 4960.0ms inference, 2.9ms postprocess per image at shape (1, 3, 384, 640)
+
+0: 384x640 2 persons, 3988.4ms
+Speed: 14.2ms preprocess, 3988.4ms inference, 2.8ms postprocess per image at shape (1, 3, 384, 640)
+
+0: 384x640 2 persons, 3534.4ms
+Speed: 8.5ms preprocess, 3534.4ms inference, 3.9ms postprocess per image at shape (1, 3, 384, 640)
+
+0: 384x640 3 persons, 1 bus, 3917.6ms
+Speed: 19.6ms preprocess, 3917.6ms inference, 7.6ms postprocess per image at shape (1, 3, 384, 640)
+
+0: 384x640 3 persons, 1 handbag, 7100.3ms
+Speed: 8.6ms preprocess, 7100.3ms inference, 5.5ms postprocess per image at shape (1, 3, 384, 640)
+
+0: 384x640 2 persons, 1 bus, 1 backpack, 5278.0ms
+Speed: 11.0ms preprocess, 5278.0ms inference, 7.4ms postprocess per image at shape (1, 3, 384, 640)
+
+0: 384x640 3 persons, 2449.5ms
+Speed: 8.6ms preprocess, 2449.5ms inference, 3.7ms postprocess per image at shape (1, 3, 384, 640)
+
+0: 384x640 3 persons, 1 bus, 1 backpack, 1 handbag, 3231.8ms
+Speed: 7.1ms preprocess, 3231.8ms inference, 2.9ms postprocess per image at shape (1, 3, 384, 640)
+
+0: 384x640 3 persons, 1 backpack, 2541.4ms
+Speed: 7.2ms preprocess, 2541.4ms inference, 5.1ms postprocess per image at shape (1, 3, 384, 640)
+
+0: 384x640 2 persons, 1 truck, 4050.9ms
+Speed: 7.2ms preprocess, 4050.9ms inference, 8.2ms postprocess per image at shape (1, 3, 384, 640)
+
+0: 384x640 2 persons, 1 bus, 4539.1ms
+Speed: 10.9ms preprocess, 4539.1ms inference, 9.1ms postprocess per image at shape (1, 3, 384, 640)
+
+0: 384x640 2 persons, 1 bus, 1 cell phone, 3432.5ms
+Speed: 7.6ms preprocess, 3432.5ms inference, 6.1ms postprocess per image at shape (1, 3, 384, 640)
+
+0: 384x640 3 persons, 1 cell phone, 3757.3ms
+Speed: 6.0ms preprocess, 3757.3ms inference, 9.9ms postprocess per image at shape (1, 3, 384, 640)
+
+0: 384x640 2 persons, 1 cell phone, 7779.2ms
+Speed: 10.7ms preprocess, 7779.2ms inference, 16.0ms postprocess per image at shape (1, 3, 384, 640)
+
+0: 384x640 3 persons, 4083.6ms
+Speed: 17.5ms preprocess, 4083.6ms inference, 5.1ms postprocess per image at shape (1, 3, 384, 640)
+
+0: 384x640 3 persons, 1 bus, 1 skis, 2482.6ms
+Speed: 13.8ms preprocess, 2482.6ms inference, 4.6ms postprocess per image at shape (1, 3, 384, 640)
+
+0: 384x640 3 persons, 1 bus, 1 cell phone, 7114.5ms
+Speed: 19.2ms preprocess, 7114.5ms inference, 26.4ms postprocess per image at shape (1, 3, 384, 640)
+
+0: 384x640 3 persons, 3 skiss, 1 cell phone, 12715.4ms
+Speed: 38.7ms preprocess, 12715.4ms inference, 24.4ms postprocess per image at shape (1, 3, 384, 640)
+
+0: 384x640 5 persons, 3 skiss, 1 cell phone, 9512.8ms
+Speed: 22.1ms preprocess, 9512.8ms inference, 2.0ms postprocess per image at shape (1, 3, 384, 640)
+
+0: 384x640 4 persons, 2 skiss, 1 cell phone, 7164.6ms
+Speed: 13.2ms preprocess, 7164.6ms inference, 4.9ms postprocess per image at shape (1, 3, 384, 640)
+
+0: 384x640 5 persons, 4476.8ms
+Speed: 21.5ms preprocess, 4476.8ms inference, 4.9ms postprocess per image at shape (1, 3, 384, 640)
+
+0: 384x640 5 persons, 2878.1ms
+Speed: 6.4ms preprocess, 2878.1ms inference, 41.7ms postprocess per image at shape (1, 3, 384, 640)
+
+0: 384x640 6 persons, 1 cell phone, 13961.1ms
+Speed: 7.4ms preprocess, 13961.1ms inference, 2.9ms postprocess per image at shape (1, 3, 384, 640)
+
+0: 384x640 4 persons, 1 cell phone, 13280.8ms
+Speed: 8.6ms preprocess, 13280.8ms inference, 14.3ms postprocess per image at shape (1, 3, 384, 640)
+
+0: 384x640 5 persons, 1 cell phone, 8334.7ms
+Speed: 15.6ms preprocess, 8334.7ms inference, 10.2ms postprocess per image at shape (1, 3, 384, 640)
+
+0: 384x640 6 persons, 2 cell phones, 3273.7ms
+Speed: 11.0ms preprocess, 3273.7ms inference, 2.1ms postprocess per image at shape (1, 3, 384, 640)
+
+0: 384x640 4 persons, 1 cell phone, 2033.4ms
+Speed: 6.8ms preprocess, 2033.4ms inference, 5.2ms postprocess per image at shape (1, 3, 384, 640)
+
+0: 384x640 3 persons, 1 skis, 1 cell phone, 8905.0ms
+Speed: 3.4ms preprocess, 8905.0ms inference, 16.6ms postprocess per image at shape (1, 3, 384, 640)
+
+0: 384x640 3 persons, 1 backpack, 1 skis, 1 cell phone, 18067.8ms
+Speed: 10.4ms preprocess, 18067.8ms inference, 8.4ms postprocess per image at shape (1, 3, 384, 640)
+
+0: 384x640 4 persons, 1 skis, 1 cell phone, 13750.6ms
+Speed: 11.5ms preprocess, 13750.6ms inference, 464.4ms postprocess per image at shape (1, 3, 384, 640)
+
+0: 384x640 4 persons, 2 cell phones, 5049.8ms
+Speed: 37.1ms preprocess, 5049.8ms inference, 4.2ms postprocess per image at shape (1, 3, 384, 640)
+
+0: 384x640 5 persons, 1 skis, 2 cell phones, 8276.6ms
+Speed: 15.1ms preprocess, 8276.6ms inference, 54.9ms postprocess per image at shape (1, 3, 384, 640)
+
+0: 384x640 5 persons, 1 skis, 2 cell phones, 2979.8ms
+Speed: 84.6ms preprocess, 2979.8ms inference, 5.4ms postprocess per image at shape (1, 3, 384, 640)
+
+0: 384x640 5 persons, 1 backpack, 2 cell phones, 2909.7ms
+Speed: 8.2ms preprocess, 2909.7ms inference, 16.6ms postprocess per image at shape (1, 3, 384, 640)
+
+0: 384x640 5 persons, 2 cell phones, 3526.1ms
+Speed: 11.5ms preprocess, 3526.1ms inference, 14.8ms postprocess per image at shape (1, 3, 384, 640)
+
+0: 384x640 5 persons, 1 backpack, 2 cell phones, 4899.3ms
+Speed: 11.5ms preprocess, 4899.3ms inference, 10.6ms postprocess per image at shape (1, 3, 384, 640)
+
+0: 384x640 5 persons, 1 backpack, 2 cell phones, 4549.6ms
+Speed: 34.9ms preprocess, 4549.6ms inference, 12.1ms postprocess per image at shape (1, 3, 384, 640)
+
+0: 384x640 6 persons, 1 backpack, 1 handbag, 1 cell phone, 3120.3ms
+Speed: 11.4ms preprocess, 3120.3ms inference, 6.6ms postprocess per image at shape (1, 3, 384, 640)
+
+0: 384x640 5 persons, 1 traffic light, 1 backpack, 1 cell phone, 8060.9ms
+Speed: 11.3ms preprocess, 8060.9ms inference, 8.8ms postprocess per image at shape (1, 3, 384, 640)
+
+0: 384x640 5 persons, 1 skis, 1 cell phone, 8471.9ms
+Speed: 8.1ms preprocess, 8471.9ms inference, 12.0ms postprocess per image at shape (1, 3, 384, 640)
+
+0: 384x640 6 persons, 1 cell phone, 2649.9ms
+Speed: 41.7ms preprocess, 2649.9ms inference, 9.0ms postprocess per image at shape (1, 3, 384, 640)
+
+0: 384x640 5 persons, 1 cell phone, 7647.0ms
+Speed: 11.3ms preprocess, 7647.0ms inference, 4.9ms postprocess per image at shape (1, 3, 384, 640)
+
+0: 384x640 4 persons, 2807.6ms
+Speed: 6.8ms preprocess, 2807.6ms inference, 4.5ms postprocess per image at shape (1, 3, 384, 640)
+
+0: 384x640 5 persons, 4666.9ms
+Speed: 8.0ms preprocess, 4666.9ms inference, 5.5ms postprocess per image at shape (1, 3, 384, 640)
+
+0: 384x640 4 persons, 8320.2ms
+Speed: 10.2ms preprocess, 8320.2ms inference, 6.8ms postprocess per image at shape (1, 3, 384, 640)
+
+0: 384x640 4 persons, 9668.1ms
+Speed: 7.1ms preprocess, 9668.1ms inference, 18.4ms postprocess per image at shape (1, 3, 384, 640)
+
+0: 384x640 4 persons, 10660.1ms
+Speed: 29.7ms preprocess, 10660.1ms inference, 44.7ms postprocess per image at shape (1, 3, 384, 640)
+
+0: 384x640 5 persons, 2859.1ms
+Speed: 10.6ms preprocess, 2859.1ms inference, 2.6ms postprocess per image at shape (1, 3, 384, 640)
+
+0: 384x640 5 persons, 3387.1ms
+Speed: 6.3ms preprocess, 3387.1ms inference, 2.0ms postprocess per image at shape (1, 3, 384, 640)
+
+0: 384x640 5 persons, 2656.1ms
+Speed: 5.3ms preprocess, 2656.1ms inference, 8.3ms postprocess per image at shape (1, 3, 384, 640)
+
+0: 384x640 5 persons, 2035.8ms
+Speed: 17.3ms preprocess, 2035.8ms inference, 3.9ms postprocess per image at shape (1, 3, 384, 640)
+
+0: 384x640 4 persons, 4285.7ms
+Speed: 7.3ms preprocess, 4285.7ms inference, 1.9ms postprocess per image at shape (1, 3, 384, 640)
+
+0: 384x640 3 persons, 1 backpack, 2887.1ms
+Speed: 12.2ms preprocess, 2887.1ms inference, 9.0ms postprocess per image at shape (1, 3, 384, 640)
+
+0: 384x640 3 persons, 1 bus, 4746.9ms
+Speed: 3.6ms preprocess, 4746.9ms inference, 5.3ms postprocess per image at shape (1, 3, 384, 640)
+
+0: 384x640 3 persons, 1 bus, 4048.2ms
+Speed: 4.5ms preprocess, 4048.2ms inference, 15.5ms postprocess per image at shape (1, 3, 384, 640)
+
+0: 384x640 2 persons, 1 bus, 1 skis, 9400.8ms
+Speed: 20.6ms preprocess, 9400.8ms inference, 2.4ms postprocess per image at shape (1, 3, 384, 640)
+
+0: 384x640 4 persons, 1 bus, 6737.8ms
+Speed: 7.4ms preprocess, 6737.8ms inference, 4.9ms postprocess per image at shape (1, 3, 384, 640)
+
+0: 384x640 4 persons, 7916.3ms
+Speed: 7.0ms preprocess, 7916.3ms inference, 8.9ms postprocess per image at shape (1, 3, 384, 640)
+
+0: 384x640 6 persons, 2457.5ms
+Speed: 7.9ms preprocess, 2457.5ms inference, 4.2ms postprocess per image at shape (1, 3, 384, 640)
+
+0: 384x640 4 persons, 2538.4ms
+Speed: 7.0ms preprocess, 2538.4ms inference, 4.1ms postprocess per image at shape (1, 3, 384, 640)
+
+0: 384x640 5 persons, 3567.9ms
+Speed: 7.0ms preprocess, 3567.9ms inference, 4.0ms postprocess per image at shape (1, 3, 384, 640)
+
+0: 384x640 3 persons, 11878.4ms
+Speed: 66.2ms preprocess, 11878.4ms inference, 7.7ms postprocess per image at shape (1, 3, 384, 640)
+
+0: 384x640 3 persons, 1 cow, 17116.2ms
+Speed: 14.7ms preprocess, 17116.2ms inference, 33.2ms postprocess per image at shape (1, 3, 384, 640)
+
+0: 384x640 3 persons, 7143.1ms
+Speed: 18.0ms preprocess, 7143.1ms inference, 12.5ms postprocess per image at shape (1, 3, 384, 640)
+
+0: 384x640 4 persons, 8236.5ms
+Speed: 16.1ms preprocess, 8236.5ms inference, 21.0ms postprocess per image at shape (1, 3, 384, 640)
+
+0: 384x640 3 persons, 1 suitcase, 6026.4ms
+Speed: 27.4ms preprocess, 6026.4ms inference, 2.5ms postprocess per image at shape (1, 3, 384, 640)
+
+0: 384x640 3 persons, 1 handbag, 1546.0ms
+Speed: 4.8ms preprocess, 1546.0ms inference, 2.2ms postprocess per image at shape (1, 3, 384, 640)
+
+0: 384x640 4 persons, 2 handbags, 1254.1ms
+Speed: 3.4ms preprocess, 1254.1ms inference, 2.1ms postprocess per image at shape (1, 3, 384, 640)
+
+0: 384x640 5 persons, 1 handbag, 1016.1ms
+Speed: 3.7ms preprocess, 1016.1ms inference, 1.5ms postprocess per image at shape (1, 3, 384, 640)
+
+0: 384x640 3 persons, 1 handbag, 876.5ms
+Speed: 8.7ms preprocess, 876.5ms inference, 2.0ms postprocess per image at shape (1, 3, 384, 640)
+
+0: 384x640 3 persons, 1 handbag, 1 suitcase, 991.8ms
+Speed: 3.5ms preprocess, 991.8ms inference, 1.9ms postprocess per image at shape (1, 3, 384, 640)
+
+0: 384x640 3 persons, 1 handbag, 1 suitcase, 959.2ms
+Speed: 4.1ms preprocess, 959.2ms inference, 8.6ms postprocess per image at shape (1, 3, 384, 640)
+
+0: 384x640 3 persons, 1448.1ms
+Speed: 27.9ms preprocess, 1448.1ms inference, 1.7ms postprocess per image at shape (1, 3, 384, 640)
+
+0: 384x640 3 persons, 1 handbag, 705.5ms
+Speed: 5.5ms preprocess, 705.5ms inference, 2.0ms postprocess per image at shape (1, 3, 384, 640)
+
+0: 384x640 3 persons, 1119.5ms
+Speed: 3.3ms preprocess, 1119.5ms inference, 1.9ms postprocess per image at shape (1, 3, 384, 640)
+
+0: 384x640 4 persons, 1 handbag, 1674.6ms
+Speed: 3.3ms preprocess, 1674.6ms inference, 3.1ms postprocess per image at shape (1, 3, 384, 640)
+
+0: 384x640 4 persons, 778.5ms
+Speed: 3.7ms preprocess, 778.5ms inference, 1.6ms postprocess per image at shape (1, 3, 384, 640)
+
+0: 384x640 4 persons, 1 truck, 882.2ms
+Speed: 4.1ms preprocess, 882.2ms inference, 3.7ms postprocess per image at shape (1, 3, 384, 640)
+
+0: 384x640 4 persons, 1 truck, 879.8ms
+Speed: 25.3ms preprocess, 879.8ms inference, 1.8ms postprocess per image at shape (1, 3, 384, 640)
+
+0: 384x640 4 persons, 1 truck, 1 handbag, 811.5ms
+Speed: 3.5ms preprocess, 811.5ms inference, 2.3ms postprocess per image at shape (1, 3, 384, 640)
+
+0: 384x640 4 persons, 1 truck, 661.6ms
+Speed: 3.3ms preprocess, 661.6ms inference, 1.6ms postprocess per image at shape (1, 3, 384, 640)
+
+0: 384x640 4 persons, 1 bench, 1 handbag, 949.6ms
+Speed: 3.5ms preprocess, 949.6ms inference, 1.7ms postprocess per image at shape (1, 3, 384, 640)
+
+0: 384x640 4 persons, 1 handbag, 883.5ms
+Speed: 3.8ms preprocess, 883.5ms inference, 2.7ms postprocess per image at shape (1, 3, 384, 640)
+
+0: 384x640 4 persons, 1 bench, 1 remote, 967.6ms
+Speed: 4.0ms preprocess, 967.6ms inference, 2.4ms postprocess per image at shape (1, 3, 384, 640)
+
+0: 384x640 4 persons, 1 car, 1 bench, 2 handbags, 736.9ms
+Speed: 3.2ms preprocess, 736.9ms inference, 1.6ms postprocess per image at shape (1, 3, 384, 640)
+
+0: 384x640 4 persons, 1 car, 2 handbags, 1001.8ms
+Speed: 3.8ms preprocess, 1001.8ms inference, 20.8ms postprocess per image at shape (1, 3, 384, 640)
+
+0: 384x640 4 persons, 1003.7ms
+Speed: 11.2ms preprocess, 1003.7ms inference, 1.7ms postprocess per image at shape (1, 3, 384, 640)
+
+0: 384x640 4 persons, 1 truck, 768.8ms
+Speed: 3.5ms preprocess, 768.8ms inference, 1.5ms postprocess per image at shape (1, 3, 384, 640)
+
+0: 384x640 5 persons, 663.2ms
+Speed: 3.0ms preprocess, 663.2ms inference, 1.5ms postprocess per image at shape (1, 3, 384, 640)
+
+0: 384x640 3 persons, 1 truck, 642.4ms
+Speed: 3.0ms preprocess, 642.4ms inference, 1.2ms postprocess per image at shape (1, 3, 384, 640)
+
+0: 384x640 3 persons, 1 bus, 643.9ms
+Speed: 6.3ms preprocess, 643.9ms inference, 1.7ms postprocess per image at shape (1, 3, 384, 640)
+
+0: 384x640 5 persons, 1 bus, 1035.6ms
+Speed: 3.8ms preprocess, 1035.6ms inference, 2.6ms postprocess per image at shape (1, 3, 384, 640)
+
+0: 384x640 5 persons, 2810.8ms
+Speed: 3.5ms preprocess, 2810.8ms inference, 1.6ms postprocess per image at shape (1, 3, 384, 640)
+
+0: 384x640 4 persons, 1272.5ms
+Speed: 3.6ms preprocess, 1272.5ms inference, 2.8ms postprocess per image at shape (1, 3, 384, 640)
+
+0: 384x640 4 persons, 1 bus, 1210.9ms
+Speed: 19.1ms preprocess, 1210.9ms inference, 1.9ms postprocess per image at shape (1, 3, 384, 640)
+
+0: 384x640 4 persons, 1 bus, 1108.2ms
+Speed: 3.4ms preprocess, 1108.2ms inference, 2.3ms postprocess per image at shape (1, 3, 384, 640)
+INFO:     127.0.0.1:50154 - "POST /predict_video HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50213 - "GET /health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50253 - "GET /health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50261 - "GET /health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50267 - "GET /health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50270 - "GET /health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50275 - "GET /health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50280 - "GET /health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50285 - "GET /health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50290 - "GET /health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50295 - "GET /health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50302 - "GET /health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50308 - "GET /health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50324 - "GET /health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50329 - "GET /health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50334 - "GET /health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50338 - "GET /health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50343 - "GET /health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50348 - "GET /health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50351 - "GET /health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50356 - "GET /health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50362 - "GET /health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50366 - "GET /health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50370 - "GET /health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50378 - "GET /health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50387 - "GET /health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50389 - "GET /health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50400 - "GET /health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50415 - "GET /health HTTP/1.1" 200 OK
+
+0: 384x640 4 persons, 4493.2ms
+Speed: 6.4ms preprocess, 4493.2ms inference, 3.7ms postprocess per image at shape (1, 3, 384, 640)
+INFO:     127.0.0.1:50382 - "POST /predict HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50422 - "GET /health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50432 - "GET /health HTTP/1.1" 200 OK
+
+0: 384x640 1 person, 1126.4ms
+Speed: 3.3ms preprocess, 1126.4ms inference, 2.3ms postprocess per image at shape (1, 3, 384, 640)
+
+0: 384x640 1 person, 1339.1ms
+Speed: 5.8ms preprocess, 1339.1ms inference, 2.4ms postprocess per image at shape (1, 3, 384, 640)
+
+0: 384x640 1 person, 1599.3ms
+Speed: 4.6ms preprocess, 1599.3ms inference, 4.8ms postprocess per image at shape (1, 3, 384, 640)
+
+0: 384x640 1 person, 1 remote, 1012.4ms
+Speed: 4.9ms preprocess, 1012.4ms inference, 1.4ms postprocess per image at shape (1, 3, 384, 640)
+
+0: 384x640 1 person, 1 remote, 749.8ms
+Speed: 3.2ms preprocess, 749.8ms inference, 1.7ms postprocess per image at shape (1, 3, 384, 640)
+
+0: 384x640 1 person, 1 remote, 893.0ms
+Speed: 3.2ms preprocess, 893.0ms inference, 3.1ms postprocess per image at shape (1, 3, 384, 640)
+
+0: 384x640 1 person, 1 remote, 854.4ms
+Speed: 4.3ms preprocess, 854.4ms inference, 1.9ms postprocess per image at shape (1, 3, 384, 640)
+
+0: 384x640 1 person, 2492.9ms
+Speed: 3.3ms preprocess, 2492.9ms inference, 2.2ms postprocess per image at shape (1, 3, 384, 640)
+
+0: 384x640 1 person, 1385.8ms
+Speed: 3.6ms preprocess, 1385.8ms inference, 1.9ms postprocess per image at shape (1, 3, 384, 640)
+
+0: 384x640 1 person, 685.5ms
+Speed: 3.9ms preprocess, 685.5ms inference, 1.8ms postprocess per image at shape (1, 3, 384, 640)
+
+0: 384x640 1 person, 1 remote, 729.0ms
+Speed: 4.1ms preprocess, 729.0ms inference, 1.8ms postprocess per image at shape (1, 3, 384, 640)
+
+0: 384x640 1 person, 713.1ms
+Speed: 8.9ms preprocess, 713.1ms inference, 1.3ms postprocess per image at shape (1, 3, 384, 640)
+
+0: 384x640 1 person, 790.3ms
+Speed: 3.0ms preprocess, 790.3ms inference, 1.5ms postprocess per image at shape (1, 3, 384, 640)
+
+0: 384x640 1 person, 745.8ms
+Speed: 2.9ms preprocess, 745.8ms inference, 1.5ms postprocess per image at shape (1, 3, 384, 640)
+
+0: 384x640 1 person, 618.1ms
+Speed: 3.0ms preprocess, 618.1ms inference, 1.1ms postprocess per image at shape (1, 3, 384, 640)
+
+0: 384x640 1 person, 687.3ms
+Speed: 2.4ms preprocess, 687.3ms inference, 1.6ms postprocess per image at shape (1, 3, 384, 640)
+
+0: 384x640 1 person, 688.0ms
+Speed: 2.3ms preprocess, 688.0ms inference, 1.5ms postprocess per image at shape (1, 3, 384, 640)
+
+0: 384x640 1 person, 679.9ms
+Speed: 3.0ms preprocess, 679.9ms inference, 1.6ms postprocess per image at shape (1, 3, 384, 640)
+
+0: 384x640 1 person, 907.1ms
+Speed: 3.5ms preprocess, 907.1ms inference, 1.5ms postprocess per image at shape (1, 3, 384, 640)
+
+0: 384x640 1 person, 1816.3ms
+Speed: 3.0ms preprocess, 1816.3ms inference, 1.6ms postprocess per image at shape (1, 3, 384, 640)
+
+0: 384x640 1 person, 870.4ms
+Speed: 3.4ms preprocess, 870.4ms inference, 1.5ms postprocess per image at shape (1, 3, 384, 640)
+
+0: 384x640 1 person, 1055.7ms
+Speed: 2.3ms preprocess, 1055.7ms inference, 2.0ms postprocess per image at shape (1, 3, 384, 640)
+
+0: 384x640 1 person, 1066.7ms
+Speed: 16.0ms preprocess, 1066.7ms inference, 1.7ms postprocess per image at shape (1, 3, 384, 640)
+
+0: 384x640 1 person, 853.6ms
+Speed: 3.3ms preprocess, 853.6ms inference, 1.7ms postprocess per image at shape (1, 3, 384, 640)
+
+0: 384x640 1 person, 630.6ms
+Speed: 3.2ms preprocess, 630.6ms inference, 1.5ms postprocess per image at shape (1, 3, 384, 640)
+
+0: 384x640 1 person, 806.6ms
+Speed: 3.6ms preprocess, 806.6ms inference, 1.1ms postprocess per image at shape (1, 3, 384, 640)
+
+0: 384x640 1 person, 672.5ms
+Speed: 2.8ms preprocess, 672.5ms inference, 1.5ms postprocess per image at shape (1, 3, 384, 640)
+
+0: 384x640 1 person, 762.7ms
+Speed: 3.3ms preprocess, 762.7ms inference, 2.3ms postprocess per image at shape (1, 3, 384, 640)
+
+0: 384x640 1 person, 976.4ms
+Speed: 2.5ms preprocess, 976.4ms inference, 1.8ms postprocess per image at shape (1, 3, 384, 640)
+
+0: 384x640 1 person, 780.7ms
+Speed: 8.6ms preprocess, 780.7ms inference, 1.5ms postprocess per image at shape (1, 3, 384, 640)
+
+0: 384x640 1 person, 660.8ms
+Speed: 3.1ms preprocess, 660.8ms inference, 1.0ms postprocess per image at shape (1, 3, 384, 640)
+
+0: 384x640 2 persons, 867.3ms
+Speed: 2.8ms preprocess, 867.3ms inference, 2.6ms postprocess per image at shape (1, 3, 384, 640)
+
+0: 384x640 1 person, 1088.2ms
+Speed: 12.6ms preprocess, 1088.2ms inference, 1.6ms postprocess per image at shape (1, 3, 384, 640)
+
+0: 384x640 1 person, 907.4ms
+Speed: 3.2ms preprocess, 907.4ms inference, 1.6ms postprocess per image at shape (1, 3, 384, 640)
+
+0: 384x640 2 persons, 641.1ms
+Speed: 3.0ms preprocess, 641.1ms inference, 1.2ms postprocess per image at shape (1, 3, 384, 640)
+
+0: 384x640 2 persons, 623.1ms
+Speed: 3.0ms preprocess, 623.1ms inference, 1.2ms postprocess per image at shape (1, 3, 384, 640)
+
+0: 384x640 2 persons, 617.3ms
+Speed: 2.8ms preprocess, 617.3ms inference, 1.7ms postprocess per image at shape (1, 3, 384, 640)
+
+0: 384x640 2 persons, 871.5ms
+Speed: 4.0ms preprocess, 871.5ms inference, 1.6ms postprocess per image at shape (1, 3, 384, 640)
+
+0: 384x640 2 persons, 1114.6ms
+Speed: 3.0ms preprocess, 1114.6ms inference, 2.3ms postprocess per image at shape (1, 3, 384, 640)
+
+0: 384x640 1 person, 679.3ms
+Speed: 3.6ms preprocess, 679.3ms inference, 1.1ms postprocess per image at shape (1, 3, 384, 640)
+
+0: 384x640 1 person, 676.0ms
+Speed: 2.3ms preprocess, 676.0ms inference, 2.5ms postprocess per image at shape (1, 3, 384, 640)
+
+0: 384x640 1 person, 1 bus, 844.0ms
+Speed: 3.1ms preprocess, 844.0ms inference, 4.1ms postprocess per image at shape (1, 3, 384, 640)
+
+0: 384x640 1 person, 750.7ms
+Speed: 3.4ms preprocess, 750.7ms inference, 1.8ms postprocess per image at shape (1, 3, 384, 640)
+
+0: 384x640 2 persons, 836.9ms
+Speed: 3.4ms preprocess, 836.9ms inference, 1.5ms postprocess per image at shape (1, 3, 384, 640)
+
+0: 384x640 2 persons, 846.0ms
+Speed: 3.0ms preprocess, 846.0ms inference, 1.7ms postprocess per image at shape (1, 3, 384, 640)
+
+0: 384x640 3 persons, 986.3ms
+Speed: 75.9ms preprocess, 986.3ms inference, 1.7ms postprocess per image at shape (1, 3, 384, 640)
+
+0: 384x640 2 persons, 1 tv, 807.5ms
+Speed: 2.4ms preprocess, 807.5ms inference, 1.7ms postprocess per image at shape (1, 3, 384, 640)
+
+0: 384x640 2 persons, 633.7ms
+Speed: 3.4ms preprocess, 633.7ms inference, 1.6ms postprocess per image at shape (1, 3, 384, 640)
+
+0: 384x640 2 persons, 1 bus, 1318.1ms
+Speed: 3.1ms preprocess, 1318.1ms inference, 1.6ms postprocess per image at shape (1, 3, 384, 640)
+
+0: 384x640 2 persons, 843.7ms
+Speed: 3.1ms preprocess, 843.7ms inference, 7.5ms postprocess per image at shape (1, 3, 384, 640)
+
+0: 384x640 3 persons, 969.3ms
+Speed: 3.8ms preprocess, 969.3ms inference, 2.2ms postprocess per image at shape (1, 3, 384, 640)
+
+0: 384x640 2 persons, 1 bus, 779.7ms
+Speed: 3.7ms preprocess, 779.7ms inference, 2.4ms postprocess per image at shape (1, 3, 384, 640)
+
+0: 384x640 2 persons, 1 bus, 863.2ms
+Speed: 9.0ms preprocess, 863.2ms inference, 1.8ms postprocess per image at shape (1, 3, 384, 640)
+
+0: 384x640 2 persons, 675.1ms
+Speed: 3.1ms preprocess, 675.1ms inference, 1.6ms postprocess per image at shape (1, 3, 384, 640)
+
+0: 384x640 2 persons, 651.5ms
+Speed: 3.2ms preprocess, 651.5ms inference, 1.2ms postprocess per image at shape (1, 3, 384, 640)
+
+0: 384x640 2 persons, 633.0ms
+Speed: 3.0ms preprocess, 633.0ms inference, 1.7ms postprocess per image at shape (1, 3, 384, 640)
+
+0: 384x640 2 persons, 637.7ms
+Speed: 2.4ms preprocess, 637.7ms inference, 1.6ms postprocess per image at shape (1, 3, 384, 640)
+
+0: 384x640 3 persons, 1 bus, 1 handbag, 816.1ms
+Speed: 3.1ms preprocess, 816.1ms inference, 2.6ms postprocess per image at shape (1, 3, 384, 640)
+
+0: 384x640 3 persons, 1 bus, 2 handbags, 890.5ms
+Speed: 4.2ms preprocess, 890.5ms inference, 2.8ms postprocess per image at shape (1, 3, 384, 640)
+
+0: 384x640 3 persons, 1 bus, 3 handbags, 1 book, 1290.4ms
+Speed: 4.7ms preprocess, 1290.4ms inference, 1.8ms postprocess per image at shape (1, 3, 384, 640)
+
+0: 384x640 3 persons, 1 suitcase, 777.9ms
+Speed: 3.4ms preprocess, 777.9ms inference, 1.8ms postprocess per image at shape (1, 3, 384, 640)
+
+0: 384x640 3 persons, 1 handbag, 759.6ms
+Speed: 3.6ms preprocess, 759.6ms inference, 1.2ms postprocess per image at shape (1, 3, 384, 640)
+
+0: 384x640 3 persons, 1 tv, 632.5ms
+Speed: 2.5ms preprocess, 632.5ms inference, 1.2ms postprocess per image at shape (1, 3, 384, 640)
+
+0: 384x640 4 persons, 1 handbag, 639.7ms
+Speed: 3.4ms preprocess, 639.7ms inference, 1.3ms postprocess per image at shape (1, 3, 384, 640)
+
+0: 384x640 2 persons, 754.8ms
+Speed: 3.0ms preprocess, 754.8ms inference, 1.6ms postprocess per image at shape (1, 3, 384, 640)
+
+0: 384x640 2 persons, 634.8ms
+Speed: 2.7ms preprocess, 634.8ms inference, 1.2ms postprocess per image at shape (1, 3, 384, 640)
+
+0: 384x640 3 persons, 1 bus, 796.9ms
+Speed: 3.0ms preprocess, 796.9ms inference, 2.8ms postprocess per image at shape (1, 3, 384, 640)
+
+0: 384x640 3 persons, 1 handbag, 695.9ms
+Speed: 4.5ms preprocess, 695.9ms inference, 1.7ms postprocess per image at shape (1, 3, 384, 640)
+
+0: 384x640 2 persons, 1 bus, 1 backpack, 683.9ms
+Speed: 3.1ms preprocess, 683.9ms inference, 1.8ms postprocess per image at shape (1, 3, 384, 640)
+
+0: 384x640 3 persons, 976.1ms
+Speed: 9.4ms preprocess, 976.1ms inference, 11.2ms postprocess per image at shape (1, 3, 384, 640)
+
+0: 384x640 3 persons, 1 bus, 1 backpack, 1 handbag, 838.7ms
+Speed: 3.4ms preprocess, 838.7ms inference, 1.6ms postprocess per image at shape (1, 3, 384, 640)
+
+0: 384x640 3 persons, 1 backpack, 1032.4ms
+Speed: 3.0ms preprocess, 1032.4ms inference, 7.1ms postprocess per image at shape (1, 3, 384, 640)
+
+0: 384x640 2 persons, 1 truck, 917.5ms
+Speed: 8.6ms preprocess, 917.5ms inference, 1.8ms postprocess per image at shape (1, 3, 384, 640)
+
+0: 384x640 2 persons, 1 bus, 793.5ms
+Speed: 5.9ms preprocess, 793.5ms inference, 1.5ms postprocess per image at shape (1, 3, 384, 640)
+
+0: 384x640 2 persons, 1 bus, 1 cell phone, 793.6ms
+Speed: 2.9ms preprocess, 793.6ms inference, 1.5ms postprocess per image at shape (1, 3, 384, 640)
+
+0: 384x640 3 persons, 1 cell phone, 639.9ms
+Speed: 3.0ms preprocess, 639.9ms inference, 1.5ms postprocess per image at shape (1, 3, 384, 640)
+
+0: 384x640 2 persons, 1 cell phone, 627.9ms
+Speed: 3.2ms preprocess, 627.9ms inference, 2.1ms postprocess per image at shape (1, 3, 384, 640)
+
+0: 384x640 3 persons, 755.7ms
+Speed: 3.1ms preprocess, 755.7ms inference, 6.2ms postprocess per image at shape (1, 3, 384, 640)
+
+0: 384x640 3 persons, 1 bus, 1 skis, 1124.3ms
+Speed: 3.2ms preprocess, 1124.3ms inference, 6.4ms postprocess per image at shape (1, 3, 384, 640)
+
+0: 384x640 3 persons, 1 bus, 1 cell phone, 777.5ms
+Speed: 3.1ms preprocess, 777.5ms inference, 1.7ms postprocess per image at shape (1, 3, 384, 640)
+
+0: 384x640 3 persons, 3 skiss, 1 cell phone, 732.9ms
+Speed: 2.4ms preprocess, 732.9ms inference, 1.4ms postprocess per image at shape (1, 3, 384, 640)
+
+0: 384x640 5 persons, 3 skiss, 1 cell phone, 987.4ms
+Speed: 3.2ms preprocess, 987.4ms inference, 2.1ms postprocess per image at shape (1, 3, 384, 640)
+
+0: 384x640 4 persons, 2 skiss, 1 cell phone, 1179.0ms
+Speed: 4.7ms preprocess, 1179.0ms inference, 2.3ms postprocess per image at shape (1, 3, 384, 640)
+
+0: 384x640 5 persons, 822.2ms
+Speed: 5.1ms preprocess, 822.2ms inference, 1.6ms postprocess per image at shape (1, 3, 384, 640)
+
+0: 384x640 5 persons, 624.3ms
+Speed: 2.5ms preprocess, 624.3ms inference, 2.2ms postprocess per image at shape (1, 3, 384, 640)
+
+0: 384x640 6 persons, 1 cell phone, 907.8ms
+Speed: 3.0ms preprocess, 907.8ms inference, 1.9ms postprocess per image at shape (1, 3, 384, 640)
+
+0: 384x640 4 persons, 1 cell phone, 737.9ms
+Speed: 3.4ms preprocess, 737.9ms inference, 1.9ms postprocess per image at shape (1, 3, 384, 640)
+
+0: 384x640 5 persons, 1 cell phone, 765.6ms
+Speed: 3.3ms preprocess, 765.6ms inference, 1.5ms postprocess per image at shape (1, 3, 384, 640)
+
+0: 384x640 6 persons, 2 cell phones, 618.7ms
+Speed: 2.4ms preprocess, 618.7ms inference, 1.2ms postprocess per image at shape (1, 3, 384, 640)
+
+0: 384x640 4 persons, 1 cell phone, 763.3ms
+Speed: 3.7ms preprocess, 763.3ms inference, 1.5ms postprocess per image at shape (1, 3, 384, 640)
+
+0: 384x640 3 persons, 1 skis, 1 cell phone, 631.5ms
+Speed: 3.6ms preprocess, 631.5ms inference, 2.8ms postprocess per image at shape (1, 3, 384, 640)
+
+0: 384x640 3 persons, 1 backpack, 1 skis, 1 cell phone, 1555.6ms
+Speed: 3.0ms preprocess, 1555.6ms inference, 12.6ms postprocess per image at shape (1, 3, 384, 640)
+
+0: 384x640 4 persons, 1 skis, 1 cell phone, 980.7ms
+Speed: 6.9ms preprocess, 980.7ms inference, 1.1ms postprocess per image at shape (1, 3, 384, 640)
+
+0: 384x640 4 persons, 2 cell phones, 804.7ms
+Speed: 2.6ms preprocess, 804.7ms inference, 1.2ms postprocess per image at shape (1, 3, 384, 640)
+
+0: 384x640 5 persons, 1 skis, 2 cell phones, 895.2ms
+Speed: 2.5ms preprocess, 895.2ms inference, 3.0ms postprocess per image at shape (1, 3, 384, 640)
+
+0: 384x640 5 persons, 1 skis, 2 cell phones, 1102.3ms
+Speed: 5.1ms preprocess, 1102.3ms inference, 1.5ms postprocess per image at shape (1, 3, 384, 640)
+
+0: 384x640 5 persons, 1 backpack, 2 cell phones, 1321.9ms
+Speed: 3.4ms preprocess, 1321.9ms inference, 2.8ms postprocess per image at shape (1, 3, 384, 640)
+
+0: 384x640 5 persons, 2 cell phones, 716.6ms
+Speed: 17.8ms preprocess, 716.6ms inference, 11.6ms postprocess per image at shape (1, 3, 384, 640)
+
+0: 384x640 5 persons, 1 backpack, 2 cell phones, 783.1ms
+Speed: 23.4ms preprocess, 783.1ms inference, 1.5ms postprocess per image at shape (1, 3, 384, 640)
+
+0: 384x640 5 persons, 1 backpack, 2 cell phones, 674.8ms
+Speed: 2.8ms preprocess, 674.8ms inference, 2.3ms postprocess per image at shape (1, 3, 384, 640)
+
+0: 384x640 6 persons, 1 backpack, 1 handbag, 1 cell phone, 1288.9ms
+Speed: 23.1ms preprocess, 1288.9ms inference, 1.6ms postprocess per image at shape (1, 3, 384, 640)
+
+0: 384x640 5 persons, 1 traffic light, 1 backpack, 1 cell phone, 852.5ms
+Speed: 5.4ms preprocess, 852.5ms inference, 1.6ms postprocess per image at shape (1, 3, 384, 640)
+
+0: 384x640 5 persons, 1 skis, 1 cell phone, 1099.7ms
+Speed: 3.4ms preprocess, 1099.7ms inference, 1.5ms postprocess per image at shape (1, 3, 384, 640)
+
+0: 384x640 6 persons, 1 cell phone, 939.2ms
+Speed: 3.4ms preprocess, 939.2ms inference, 1.6ms postprocess per image at shape (1, 3, 384, 640)
+
+0: 384x640 5 persons, 1 cell phone, 1055.1ms
+Speed: 3.5ms preprocess, 1055.1ms inference, 12.5ms postprocess per image at shape (1, 3, 384, 640)
+
+0: 384x640 4 persons, 869.4ms
+Speed: 4.2ms preprocess, 869.4ms inference, 1.5ms postprocess per image at shape (1, 3, 384, 640)
+
+0: 384x640 5 persons, 853.9ms
+Speed: 2.3ms preprocess, 853.9ms inference, 1.1ms postprocess per image at shape (1, 3, 384, 640)
+
+0: 384x640 4 persons, 626.5ms
+Speed: 3.4ms preprocess, 626.5ms inference, 1.4ms postprocess per image at shape (1, 3, 384, 640)
+
+0: 384x640 4 persons, 617.5ms
+Speed: 2.4ms preprocess, 617.5ms inference, 2.4ms postprocess per image at shape (1, 3, 384, 640)
+
+0: 384x640 4 persons, 871.0ms
+Speed: 3.0ms preprocess, 871.0ms inference, 1.8ms postprocess per image at shape (1, 3, 384, 640)
+
+0: 384x640 5 persons, 688.1ms
+Speed: 3.0ms preprocess, 688.1ms inference, 1.0ms postprocess per image at shape (1, 3, 384, 640)
+
+0: 384x640 5 persons, 632.3ms
+Speed: 2.9ms preprocess, 632.3ms inference, 1.0ms postprocess per image at shape (1, 3, 384, 640)
+
+0: 384x640 5 persons, 824.5ms
+Speed: 2.9ms preprocess, 824.5ms inference, 2.2ms postprocess per image at shape (1, 3, 384, 640)
+
+0: 384x640 5 persons, 988.3ms
+Speed: 3.4ms preprocess, 988.3ms inference, 1.9ms postprocess per image at shape (1, 3, 384, 640)
+
+0: 384x640 4 persons, 1074.1ms
+Speed: 3.5ms preprocess, 1074.1ms inference, 1.5ms postprocess per image at shape (1, 3, 384, 640)
+
+0: 384x640 3 persons, 1 backpack, 844.2ms
+Speed: 2.9ms preprocess, 844.2ms inference, 1.5ms postprocess per image at shape (1, 3, 384, 640)
+
+0: 384x640 3 persons, 1 bus, 728.6ms
+Speed: 9.3ms preprocess, 728.6ms inference, 1.0ms postprocess per image at shape (1, 3, 384, 640)
+
+0: 384x640 3 persons, 1 bus, 773.0ms
+Speed: 3.0ms preprocess, 773.0ms inference, 1.5ms postprocess per image at shape (1, 3, 384, 640)
+
+0: 384x640 2 persons, 1 bus, 1 skis, 763.3ms
+Speed: 2.9ms preprocess, 763.3ms inference, 1.6ms postprocess per image at shape (1, 3, 384, 640)
+
+0: 384x640 4 persons, 1 bus, 724.7ms
+Speed: 3.7ms preprocess, 724.7ms inference, 1.1ms postprocess per image at shape (1, 3, 384, 640)
+
+0: 384x640 4 persons, 629.5ms
+Speed: 2.9ms preprocess, 629.5ms inference, 1.2ms postprocess per image at shape (1, 3, 384, 640)
+
+0: 384x640 6 persons, 862.5ms
+Speed: 3.0ms preprocess, 862.5ms inference, 1.4ms postprocess per image at shape (1, 3, 384, 640)
+
+0: 384x640 4 persons, 763.2ms
+Speed: 3.0ms preprocess, 763.2ms inference, 1.1ms postprocess per image at shape (1, 3, 384, 640)
+
+0: 384x640 5 persons, 623.8ms
+Speed: 2.9ms preprocess, 623.8ms inference, 1.4ms postprocess per image at shape (1, 3, 384, 640)
+
+0: 384x640 3 persons, 657.2ms
+Speed: 3.0ms preprocess, 657.2ms inference, 1.1ms postprocess per image at shape (1, 3, 384, 640)
+
+0: 384x640 3 persons, 1 cow, 1010.7ms
+Speed: 2.4ms preprocess, 1010.7ms inference, 1.1ms postprocess per image at shape (1, 3, 384, 640)
+
+0: 384x640 3 persons, 739.2ms
+Speed: 2.9ms preprocess, 739.2ms inference, 1.6ms postprocess per image at shape (1, 3, 384, 640)
+
+0: 384x640 4 persons, 623.6ms
+Speed: 2.4ms preprocess, 623.6ms inference, 1.6ms postprocess per image at shape (1, 3, 384, 640)
+
+0: 384x640 3 persons, 1 suitcase, 661.4ms
+Speed: 2.9ms preprocess, 661.4ms inference, 2.0ms postprocess per image at shape (1, 3, 384, 640)
+
+0: 384x640 3 persons, 1 handbag, 651.8ms
+Speed: 4.1ms preprocess, 651.8ms inference, 1.5ms postprocess per image at shape (1, 3, 384, 640)
+
+0: 384x640 4 persons, 2 handbags, 616.4ms
+Speed: 3.0ms preprocess, 616.4ms inference, 1.5ms postprocess per image at shape (1, 3, 384, 640)
+
+0: 384x640 5 persons, 1 handbag, 635.8ms
+Speed: 2.4ms preprocess, 635.8ms inference, 1.5ms postprocess per image at shape (1, 3, 384, 640)
+
+0: 384x640 3 persons, 1 handbag, 623.8ms
+Speed: 2.9ms preprocess, 623.8ms inference, 1.6ms postprocess per image at shape (1, 3, 384, 640)
+
+0: 384x640 3 persons, 1 handbag, 1 suitcase, 734.3ms
+Speed: 3.0ms preprocess, 734.3ms inference, 1.4ms postprocess per image at shape (1, 3, 384, 640)
+
+0: 384x640 3 persons, 1 handbag, 1 suitcase, 619.0ms
+Speed: 3.1ms preprocess, 619.0ms inference, 1.1ms postprocess per image at shape (1, 3, 384, 640)
+
+0: 384x640 3 persons, 595.4ms
+Speed: 2.5ms preprocess, 595.4ms inference, 1.1ms postprocess per image at shape (1, 3, 384, 640)
+
+0: 384x640 3 persons, 1 handbag, 615.6ms
+Speed: 3.1ms preprocess, 615.6ms inference, 1.4ms postprocess per image at shape (1, 3, 384, 640)
+
+0: 384x640 3 persons, 618.1ms
+Speed: 3.1ms preprocess, 618.1ms inference, 1.5ms postprocess per image at shape (1, 3, 384, 640)
+
+0: 384x640 4 persons, 1 handbag, 612.6ms
+Speed: 3.5ms preprocess, 612.6ms inference, 1.4ms postprocess per image at shape (1, 3, 384, 640)
+
+0: 384x640 4 persons, 639.5ms
+Speed: 2.9ms preprocess, 639.5ms inference, 1.1ms postprocess per image at shape (1, 3, 384, 640)
+
+0: 384x640 4 persons, 1 truck, 609.3ms
+Speed: 3.1ms preprocess, 609.3ms inference, 1.5ms postprocess per image at shape (1, 3, 384, 640)
+
+0: 384x640 4 persons, 1 truck, 1000.9ms
+Speed: 3.0ms preprocess, 1000.9ms inference, 2.7ms postprocess per image at shape (1, 3, 384, 640)
+
+0: 384x640 4 persons, 1 truck, 1 handbag, 1992.6ms
+Speed: 3.2ms preprocess, 1992.6ms inference, 2.1ms postprocess per image at shape (1, 3, 384, 640)
+
+0: 384x640 4 persons, 1 truck, 1185.9ms
+Speed: 4.2ms preprocess, 1185.9ms inference, 2.4ms postprocess per image at shape (1, 3, 384, 640)
+
+0: 384x640 4 persons, 1 bench, 1 handbag, 1064.7ms
+Speed: 3.9ms preprocess, 1064.7ms inference, 2.3ms postprocess per image at shape (1, 3, 384, 640)
+
+0: 384x640 4 persons, 1 handbag, 1280.7ms
+Speed: 3.7ms preprocess, 1280.7ms inference, 2.1ms postprocess per image at shape (1, 3, 384, 640)
+
+0: 384x640 4 persons, 1 bench, 1 remote, 1189.3ms
+Speed: 3.6ms preprocess, 1189.3ms inference, 1.6ms postprocess per image at shape (1, 3, 384, 640)
+
+0: 384x640 4 persons, 1 car, 1 bench, 2 handbags, 1085.1ms
+Speed: 11.8ms preprocess, 1085.1ms inference, 2.7ms postprocess per image at shape (1, 3, 384, 640)
+
+0: 384x640 4 persons, 1 car, 2 handbags, 951.7ms
+Speed: 2.5ms preprocess, 951.7ms inference, 1.6ms postprocess per image at shape (1, 3, 384, 640)
+
+0: 384x640 4 persons, 854.0ms
+Speed: 4.2ms preprocess, 854.0ms inference, 1.4ms postprocess per image at shape (1, 3, 384, 640)
+
+0: 384x640 4 persons, 1 truck, 1158.1ms
+Speed: 3.3ms preprocess, 1158.1ms inference, 1.3ms postprocess per image at shape (1, 3, 384, 640)
+
+0: 384x640 5 persons, 1193.8ms
+Speed: 14.5ms preprocess, 1193.8ms inference, 2.3ms postprocess per image at shape (1, 3, 384, 640)
+
+0: 384x640 3 persons, 1 truck, 1273.3ms
+Speed: 3.5ms preprocess, 1273.3ms inference, 10.8ms postprocess per image at shape (1, 3, 384, 640)
+
+0: 384x640 3 persons, 1 bus, 759.9ms
+Speed: 6.2ms preprocess, 759.9ms inference, 1.6ms postprocess per image at shape (1, 3, 384, 640)
+
+0: 384x640 5 persons, 1 bus, 717.0ms
+Speed: 3.2ms preprocess, 717.0ms inference, 1.7ms postprocess per image at shape (1, 3, 384, 640)
+
+0: 384x640 5 persons, 821.9ms
+Speed: 3.1ms preprocess, 821.9ms inference, 1.3ms postprocess per image at shape (1, 3, 384, 640)
+
+0: 384x640 4 persons, 710.1ms
+Speed: 5.9ms preprocess, 710.1ms inference, 1.5ms postprocess per image at shape (1, 3, 384, 640)
+
+0: 384x640 4 persons, 1 bus, 1009.9ms
+Speed: 3.0ms preprocess, 1009.9ms inference, 1.1ms postprocess per image at shape (1, 3, 384, 640)
+
+0: 384x640 4 persons, 1 bus, 1091.6ms
+Speed: 3.4ms preprocess, 1091.6ms inference, 12.0ms postprocess per image at shape (1, 3, 384, 640)
+INFO:     127.0.0.1:50437 - "POST /predict_video HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50479 - "GET /health HTTP/1.1" 200 OK
+
+0: 384x640 5 persons, 990.5ms
+Speed: 14.6ms preprocess, 990.5ms inference, 2.0ms postprocess per image at shape (1, 3, 384, 640)
+
+0: 384x640 4 persons, 804.5ms
+Speed: 2.7ms preprocess, 804.5ms inference, 1.7ms postprocess per image at shape (1, 3, 384, 640)
+
+0: 384x640 4 persons, 645.4ms
+Speed: 3.5ms preprocess, 645.4ms inference, 1.5ms postprocess per image at shape (1, 3, 384, 640)
+
+0: 384x640 4 persons, 1 car, 1 truck, 997.3ms
+Speed: 4.2ms preprocess, 997.3ms inference, 2.1ms postprocess per image at shape (1, 3, 384, 640)
+
+0: 384x640 4 persons, 1 truck, 1723.3ms
+Speed: 3.0ms preprocess, 1723.3ms inference, 1.6ms postprocess per image at shape (1, 3, 384, 640)
+
+0: 384x640 4 persons, 1 truck, 1 cell phone, 638.2ms
+Speed: 2.9ms preprocess, 638.2ms inference, 1.5ms postprocess per image at shape (1, 3, 384, 640)
+
+0: 384x640 3 persons, 1 cell phone, 905.7ms
+Speed: 2.6ms preprocess, 905.7ms inference, 1.7ms postprocess per image at shape (1, 3, 384, 640)
+
+0: 384x640 4 persons, 1 cell phone, 805.2ms
+Speed: 3.6ms preprocess, 805.2ms inference, 1.2ms postprocess per image at shape (1, 3, 384, 640)
+
+0: 384x640 3 persons, 1 skis, 1 cell phone, 654.6ms
+Speed: 3.1ms preprocess, 654.6ms inference, 1.5ms postprocess per image at shape (1, 3, 384, 640)
+
+0: 384x640 3 persons, 1 cell phone, 834.0ms
+Speed: 2.9ms preprocess, 834.0ms inference, 1.6ms postprocess per image at shape (1, 3, 384, 640)
+
+0: 384x640 3 persons, 1 cell phone, 1001.6ms
+Speed: 2.5ms preprocess, 1001.6ms inference, 1.1ms postprocess per image at shape (1, 3, 384, 640)
+
+0: 384x640 3 persons, 1 cell phone, 1197.3ms
+Speed: 3.1ms preprocess, 1197.3ms inference, 1.1ms postprocess per image at shape (1, 3, 384, 640)
+
+0: 384x640 4 persons, 1 cell phone, 1311.5ms
+Speed: 3.3ms preprocess, 1311.5ms inference, 1.1ms postprocess per image at shape (1, 3, 384, 640)
+
+0: 384x640 2 persons, 1 motorcycle, 1 airplane, 1 tv, 1 cell phone, 679.2ms
+Speed: 3.4ms preprocess, 679.2ms inference, 1.5ms postprocess per image at shape (1, 3, 384, 640)
+
+0: 384x640 1 person, 1 stop sign, 1 tv, 1 cell phone, 656.3ms
+Speed: 3.4ms preprocess, 656.3ms inference, 1.6ms postprocess per image at shape (1, 3, 384, 640)
+
+0: 384x640 3 persons, 1 skis, 2 cell phones, 624.3ms
+Speed: 2.5ms preprocess, 624.3ms inference, 1.5ms postprocess per image at shape (1, 3, 384, 640)
+
+0: 384x640 2 persons, 1 cell phone, 615.6ms
+Speed: 2.6ms preprocess, 615.6ms inference, 1.5ms postprocess per image at shape (1, 3, 384, 640)
+
+0: 384x640 3 persons, 1 cell phone, 652.6ms
+Speed: 3.2ms preprocess, 652.6ms inference, 1.4ms postprocess per image at shape (1, 3, 384, 640)
+
+0: 384x640 2 persons, 1 cell phone, 1062.1ms
+Speed: 2.9ms preprocess, 1062.1ms inference, 2.0ms postprocess per image at shape (1, 3, 384, 640)
+
+0: 384x640 2 persons, 1 bench, 2 cell phones, 784.8ms
+Speed: 10.0ms preprocess, 784.8ms inference, 1.4ms postprocess per image at shape (1, 3, 384, 640)
+
+0: 384x640 2 persons, 1 cell phone, 1361.7ms
+Speed: 3.3ms preprocess, 1361.7ms inference, 1.5ms postprocess per image at shape (1, 3, 384, 640)
+
+0: 384x640 2 persons, 1 backpack, 1 cell phone, 766.5ms
+Speed: 3.3ms preprocess, 766.5ms inference, 1.5ms postprocess per image at shape (1, 3, 384, 640)
+
+0: 384x640 2 persons, 1 cell phone, 785.3ms
+Speed: 3.7ms preprocess, 785.3ms inference, 1.1ms postprocess per image at shape (1, 3, 384, 640)
+
+0: 384x640 2 persons, 2 skiss, 1 cell phone, 816.9ms
+Speed: 3.2ms preprocess, 816.9ms inference, 1.8ms postprocess per image at shape (1, 3, 384, 640)
+
+0: 384x640 3 persons, 1 skis, 1 cell phone, 624.1ms
+Speed: 3.0ms preprocess, 624.1ms inference, 1.4ms postprocess per image at shape (1, 3, 384, 640)
+
+0: 384x640 1 person, 1 skis, 1 cell phone, 1238.3ms
+Speed: 3.0ms preprocess, 1238.3ms inference, 1.4ms postprocess per image at shape (1, 3, 384, 640)
+
+0: 384x640 2 persons, 1 skis, 2 cell phones, 665.8ms
+Speed: 3.0ms preprocess, 665.8ms inference, 1.5ms postprocess per image at shape (1, 3, 384, 640)
+
+0: 384x640 2 persons, 1 skis, 1 cell phone, 619.9ms
+Speed: 3.4ms preprocess, 619.9ms inference, 2.4ms postprocess per image at shape (1, 3, 384, 640)
+
+0: 384x640 2 persons, 1 skis, 654.3ms
+Speed: 3.0ms preprocess, 654.3ms inference, 1.5ms postprocess per image at shape (1, 3, 384, 640)
+
+0: 384x640 2 persons, 2 skiss, 666.7ms
+Speed: 2.5ms preprocess, 666.7ms inference, 1.4ms postprocess per image at shape (1, 3, 384, 640)
+
+0: 384x640 2 persons, 2 skiss, 607.1ms
+Speed: 3.2ms preprocess, 607.1ms inference, 1.6ms postprocess per image at shape (1, 3, 384, 640)
+
+0: 384x640 2 persons, 1380.2ms
+Speed: 3.4ms preprocess, 1380.2ms inference, 18.5ms postprocess per image at shape (1, 3, 384, 640)
+
+0: 384x640 2 persons, 847.9ms
+Speed: 6.9ms preprocess, 847.9ms inference, 1.5ms postprocess per image at shape (1, 3, 384, 640)
+
+0: 384x640 3 persons, 1 truck, 1 cell phone, 853.1ms
+Speed: 3.0ms preprocess, 853.1ms inference, 7.0ms postprocess per image at shape (1, 3, 384, 640)
+
+0: 384x640 4 persons, 1818.6ms
+Speed: 10.0ms preprocess, 1818.6ms inference, 1.2ms postprocess per image at shape (1, 3, 384, 640)
+
+0: 384x640 4 persons, 2734.8ms
+Speed: 2.5ms preprocess, 2734.8ms inference, 3.1ms postprocess per image at shape (1, 3, 384, 640)
+
+0: 384x640 2 persons, 1275.4ms
+Speed: 4.6ms preprocess, 1275.4ms inference, 1.6ms postprocess per image at shape (1, 3, 384, 640)
+
+0: 384x640 2 persons, 1075.5ms
+Speed: 3.0ms preprocess, 1075.5ms inference, 1.2ms postprocess per image at shape (1, 3, 384, 640)
+
+0: 384x640 2 persons, 635.8ms
+Speed: 2.9ms preprocess, 635.8ms inference, 1.6ms postprocess per image at shape (1, 3, 384, 640)
+
+0: 384x640 2 persons, 1 remote, 826.5ms
+Speed: 3.7ms preprocess, 826.5ms inference, 1.5ms postprocess per image at shape (1, 3, 384, 640)
+
+0: 384x640 2 persons, 1 skis, 1 remote, 727.2ms
+Speed: 2.5ms preprocess, 727.2ms inference, 1.5ms postprocess per image at shape (1, 3, 384, 640)
+
+0: 384x640 2 persons, 1 skis, 1 remote, 1057.5ms
+Speed: 3.3ms preprocess, 1057.5ms inference, 2.0ms postprocess per image at shape (1, 3, 384, 640)
+
+0: 384x640 2 persons, 1 skis, 1 remote, 8033.8ms
+Speed: 4.1ms preprocess, 8033.8ms inference, 25.8ms postprocess per image at shape (1, 3, 384, 640)
+
+0: 384x640 2 persons, 1 banana, 8467.4ms
+Speed: 20.6ms preprocess, 8467.4ms inference, 5.2ms postprocess per image at shape (1, 3, 384, 640)
+
+0: 384x640 2 persons, 8186.6ms
+Speed: 18.9ms preprocess, 8186.6ms inference, 9.8ms postprocess per image at shape (1, 3, 384, 640)
+
+0: 384x640 2 persons, 7058.7ms
+Speed: 27.3ms preprocess, 7058.7ms inference, 18.4ms postprocess per image at shape (1, 3, 384, 640)
+
+0: 384x640 3 persons, 5984.4ms
+Speed: 19.7ms preprocess, 5984.4ms inference, 11.5ms postprocess per image at shape (1, 3, 384, 640)
+
+0: 384x640 2 persons, 5502.5ms
+Speed: 16.1ms preprocess, 5502.5ms inference, 9.5ms postprocess per image at shape (1, 3, 384, 640)
+
+0: 384x640 3 persons, 4208.5ms
+Speed: 11.7ms preprocess, 4208.5ms inference, 91.5ms postprocess per image at shape (1, 3, 384, 640)
+
+0: 384x640 2 persons, 2501.0ms
+Speed: 20.6ms preprocess, 2501.0ms inference, 10.2ms postprocess per image at shape (1, 3, 384, 640)
+
+0: 384x640 2 persons, 4620.0ms
+Speed: 9.6ms preprocess, 4620.0ms inference, 3.3ms postprocess per image at shape (1, 3, 384, 640)
+
+0: 384x640 3 persons, 2645.1ms
+Speed: 8.7ms preprocess, 2645.1ms inference, 7.1ms postprocess per image at shape (1, 3, 384, 640)
+
+0: 384x640 2 persons, 1 remote, 2972.2ms
+Speed: 16.5ms preprocess, 2972.2ms inference, 13.2ms postprocess per image at shape (1, 3, 384, 640)
+
+0: 384x640 1 person, 1 remote, 2970.0ms
+Speed: 98.6ms preprocess, 2970.0ms inference, 8.3ms postprocess per image at shape (1, 3, 384, 640)
+
+0: 384x640 1 person, 3071.1ms
+Speed: 13.1ms preprocess, 3071.1ms inference, 5.4ms postprocess per image at shape (1, 3, 384, 640)
+
+0: 384x640 2 persons, 2316.3ms
+Speed: 12.1ms preprocess, 2316.3ms inference, 2.1ms postprocess per image at shape (1, 3, 384, 640)
+
+0: 384x640 2 persons, 3496.3ms
+Speed: 6.4ms preprocess, 3496.3ms inference, 4.9ms postprocess per image at shape (1, 3, 384, 640)
+
+0: 384x640 1 person, 2151.5ms
+Speed: 12.2ms preprocess, 2151.5ms inference, 2.3ms postprocess per image at shape (1, 3, 384, 640)
+
+0: 384x640 2 persons, 3548.2ms
+Speed: 9.1ms preprocess, 3548.2ms inference, 7.1ms postprocess per image at shape (1, 3, 384, 640)
+
+0: 384x640 2 persons, 2940.2ms
+Speed: 9.6ms preprocess, 2940.2ms inference, 6.9ms postprocess per image at shape (1, 3, 384, 640)
+
+0: 384x640 2 persons, 3431.7ms
+Speed: 7.8ms preprocess, 3431.7ms inference, 4.1ms postprocess per image at shape (1, 3, 384, 640)
+
+0: 384x640 1 person, 2661.5ms
+Speed: 6.6ms preprocess, 2661.5ms inference, 3.4ms postprocess per image at shape (1, 3, 384, 640)
+
+0: 384x640 1 person, 3434.2ms
+Speed: 15.3ms preprocess, 3434.2ms inference, 9.1ms postprocess per image at shape (1, 3, 384, 640)
+
+0: 384x640 1 person, 2394.7ms
+Speed: 12.1ms preprocess, 2394.7ms inference, 6.7ms postprocess per image at shape (1, 3, 384, 640)
+
+0: 384x640 1 person, 2947.6ms
+Speed: 11.4ms preprocess, 2947.6ms inference, 4.8ms postprocess per image at shape (1, 3, 384, 640)
+
+0: 384x640 1 person, 2331.3ms
+Speed: 8.4ms preprocess, 2331.3ms inference, 3.5ms postprocess per image at shape (1, 3, 384, 640)
+
+0: 384x640 1 person, 1 cell phone, 3460.4ms
+Speed: 9.5ms preprocess, 3460.4ms inference, 3.7ms postprocess per image at shape (1, 3, 384, 640)
+
+0: 384x640 1 person, 1 cell phone, 2443.6ms
+Speed: 7.4ms preprocess, 2443.6ms inference, 5.2ms postprocess per image at shape (1, 3, 384, 640)
+
+0: 384x640 1 person, 2316.5ms
+Speed: 10.3ms preprocess, 2316.5ms inference, 6.0ms postprocess per image at shape (1, 3, 384, 640)
+
+0: 384x640 1 person, 3331.9ms
+Speed: 57.0ms preprocess, 3331.9ms inference, 10.3ms postprocess per image at shape (1, 3, 384, 640)
+
+0: 384x640 1 person, 5132.1ms
+Speed: 8.6ms preprocess, 5132.1ms inference, 1.7ms postprocess per image at shape (1, 3, 384, 640)
+
+0: 384x640 1 person, 2951.9ms
+Speed: 11.1ms preprocess, 2951.9ms inference, 1.6ms postprocess per image at shape (1, 3, 384, 640)
+
+0: 384x640 1 person, 1 cell phone, 2103.2ms
+Speed: 13.6ms preprocess, 2103.2ms inference, 3.8ms postprocess per image at shape (1, 3, 384, 640)
+
+0: 384x640 1 person, 2836.9ms
+Speed: 8.3ms preprocess, 2836.9ms inference, 4.7ms postprocess per image at shape (1, 3, 384, 640)
+
+0: 384x640 1 person, 1793.7ms
+Speed: 9.0ms preprocess, 1793.7ms inference, 3.9ms postprocess per image at shape (1, 3, 384, 640)
+
+0: 384x640 1 person, 3030.2ms
+Speed: 6.4ms preprocess, 3030.2ms inference, 4.8ms postprocess per image at shape (1, 3, 384, 640)
+
+0: 384x640 1 person, 2264.9ms
+Speed: 4.4ms preprocess, 2264.9ms inference, 1.4ms postprocess per image at shape (1, 3, 384, 640)
+
+0: 384x640 1 person, 2499.4ms
+Speed: 6.2ms preprocess, 2499.4ms inference, 25.3ms postprocess per image at shape (1, 3, 384, 640)
+
+0: 384x640 1 person, 1904.9ms
+Speed: 10.4ms preprocess, 1904.9ms inference, 1.5ms postprocess per image at shape (1, 3, 384, 640)
+
+0: 384x640 1 person, 1891.2ms
+Speed: 6.3ms preprocess, 1891.2ms inference, 2.1ms postprocess per image at shape (1, 3, 384, 640)
+
+0: 384x640 2 persons, 1 bus, 1369.5ms
+Speed: 13.2ms preprocess, 1369.5ms inference, 3.5ms postprocess per image at shape (1, 3, 384, 640)
+
+0: 384x640 2 persons, 1 cell phone, 2757.5ms
+Speed: 7.8ms preprocess, 2757.5ms inference, 3.5ms postprocess per image at shape (1, 3, 384, 640)
+
+0: 384x640 2 persons, 1 bus, 1 cell phone, 1773.9ms
+Speed: 8.6ms preprocess, 1773.9ms inference, 3.5ms postprocess per image at shape (1, 3, 384, 640)
+
+0: 384x640 2 persons, 1401.8ms
+Speed: 7.2ms preprocess, 1401.8ms inference, 1.6ms postprocess per image at shape (1, 3, 384, 640)
+
+0: 384x640 1 person, 1 cell phone, 1496.9ms
+Speed: 6.2ms preprocess, 1496.9ms inference, 3.6ms postprocess per image at shape (1, 3, 384, 640)
+
+0: 384x640 1 person, 1818.2ms
+Speed: 6.6ms preprocess, 1818.2ms inference, 15.1ms postprocess per image at shape (1, 3, 384, 640)
+
+0: 384x640 1 person, 1 cell phone, 1581.7ms
+Speed: 17.6ms preprocess, 1581.7ms inference, 3.5ms postprocess per image at shape (1, 3, 384, 640)
+
+0: 384x640 1 person, 1503.9ms
+Speed: 3.1ms preprocess, 1503.9ms inference, 4.0ms postprocess per image at shape (1, 3, 384, 640)
+
+0: 384x640 1 person, 1398.7ms
+Speed: 7.5ms preprocess, 1398.7ms inference, 2.1ms postprocess per image at shape (1, 3, 384, 640)
+
+0: 384x640 1 person, 1708.9ms
+Speed: 7.0ms preprocess, 1708.9ms inference, 1.1ms postprocess per image at shape (1, 3, 384, 640)
+
+0: 384x640 1 person, 2207.6ms
+Speed: 6.3ms preprocess, 2207.6ms inference, 1.9ms postprocess per image at shape (1, 3, 384, 640)
+
+0: 384x640 1 person, 1 cell phone, 1847.2ms
+Speed: 2.9ms preprocess, 1847.2ms inference, 1.1ms postprocess per image at shape (1, 3, 384, 640)
+
+0: 384x640 2 persons, 1 cell phone, 1888.9ms
+Speed: 2.6ms preprocess, 1888.9ms inference, 8.1ms postprocess per image at shape (1, 3, 384, 640)
+
+0: 384x640 2 persons, 1 cell phone, 1816.6ms
+Speed: 10.6ms preprocess, 1816.6ms inference, 3.7ms postprocess per image at shape (1, 3, 384, 640)
+
+0: 384x640 2 persons, 1 cell phone, 3673.4ms
+Speed: 9.5ms preprocess, 3673.4ms inference, 4.9ms postprocess per image at shape (1, 3, 384, 640)
+
+0: 384x640 2 persons, 1 cell phone, 4041.3ms
+Speed: 3.3ms preprocess, 4041.3ms inference, 5.8ms postprocess per image at shape (1, 3, 384, 640)
+
+0: 384x640 2 persons, 1 bus, 1 cell phone, 4910.3ms
+Speed: 10.1ms preprocess, 4910.3ms inference, 6.0ms postprocess per image at shape (1, 3, 384, 640)
+
+0: 384x640 2 persons, 1 skateboard, 3468.8ms
+Speed: 6.7ms preprocess, 3468.8ms inference, 2.0ms postprocess per image at shape (1, 3, 384, 640)
+
+0: 384x640 2 persons, 1 skateboard, 2586.5ms
+Speed: 8.8ms preprocess, 2586.5ms inference, 4.4ms postprocess per image at shape (1, 3, 384, 640)
+
+0: 384x640 2 persons, 1 backpack, 1 skateboard, 3313.9ms
+Speed: 11.0ms preprocess, 3313.9ms inference, 4.1ms postprocess per image at shape (1, 3, 384, 640)
+
+0: 384x640 2 persons, 1 backpack, 3527.6ms
+Speed: 10.6ms preprocess, 3527.6ms inference, 3.7ms postprocess per image at shape (1, 3, 384, 640)
+
+0: 384x640 2 persons, 1 bus, 1 skateboard, 5758.9ms
+Speed: 7.4ms preprocess, 5758.9ms inference, 5.4ms postprocess per image at shape (1, 3, 384, 640)
+
+0: 384x640 2 persons, 1 bus, 6628.0ms
+Speed: 15.0ms preprocess, 6628.0ms inference, 3.7ms postprocess per image at shape (1, 3, 384, 640)
+
+0: 384x640 2 persons, 1 bus, 1 cell phone, 5393.1ms
+Speed: 16.2ms preprocess, 5393.1ms inference, 3.1ms postprocess per image at shape (1, 3, 384, 640)
+
+0: 384x640 2 persons, 1 bus, 1 backpack, 4739.1ms
+Speed: 13.7ms preprocess, 4739.1ms inference, 9.5ms postprocess per image at shape (1, 3, 384, 640)
+
+0: 384x640 2 persons, 4791.3ms
+Speed: 33.0ms preprocess, 4791.3ms inference, 11.2ms postprocess per image at shape (1, 3, 384, 640)
+
+0: 384x640 2 persons, 7104.4ms
+Speed: 176.5ms preprocess, 7104.4ms inference, 5.1ms postprocess per image at shape (1, 3, 384, 640)
+
+0: 384x640 2 persons, 1 backpack, 5317.1ms
+Speed: 7.8ms preprocess, 5317.1ms inference, 5.0ms postprocess per image at shape (1, 3, 384, 640)
+
+0: 384x640 2 persons, 4922.7ms
+Speed: 14.4ms preprocess, 4922.7ms inference, 13.8ms postprocess per image at shape (1, 3, 384, 640)
+
+0: 384x640 2 persons, 5969.5ms
+Speed: 13.6ms preprocess, 5969.5ms inference, 69.2ms postprocess per image at shape (1, 3, 384, 640)
+
+0: 384x640 2 persons, 6136.3ms
+Speed: 22.7ms preprocess, 6136.3ms inference, 13.1ms postprocess per image at shape (1, 3, 384, 640)
+
+0: 384x640 2 persons, 4838.1ms
+Speed: 15.3ms preprocess, 4838.1ms inference, 9.2ms postprocess per image at shape (1, 3, 384, 640)
+
+0: 384x640 2 persons, 1 motorcycle, 4000.5ms
+Speed: 5.5ms preprocess, 4000.5ms inference, 17.2ms postprocess per image at shape (1, 3, 384, 640)
+
+0: 384x640 2 persons, 1 backpack, 3444.4ms
+Speed: 85.3ms preprocess, 3444.4ms inference, 1.5ms postprocess per image at shape (1, 3, 384, 640)
+
+0: 384x640 2 persons, 1 motorcycle, 990.9ms
+Speed: 3.9ms preprocess, 990.9ms inference, 4.1ms postprocess per image at shape (1, 3, 384, 640)
+
+0: 384x640 2 persons, 1 motorcycle, 894.5ms
+Speed: 6.6ms preprocess, 894.5ms inference, 2.9ms postprocess per image at shape (1, 3, 384, 640)
+
+0: 384x640 2 persons, 1333.2ms
+Speed: 4.5ms preprocess, 1333.2ms inference, 4.0ms postprocess per image at shape (1, 3, 384, 640)
+
+0: 384x640 2 persons, 1 backpack, 991.7ms
+Speed: 3.7ms preprocess, 991.7ms inference, 2.6ms postprocess per image at shape (1, 3, 384, 640)
+
+0: 384x640 2 persons, 1 car, 1509.9ms
+Speed: 4.1ms preprocess, 1509.9ms inference, 3.8ms postprocess per image at shape (1, 3, 384, 640)
+
+0: 384x640 2 persons, 1 backpack, 4839.6ms
+Speed: 7.2ms preprocess, 4839.6ms inference, 4.7ms postprocess per image at shape (1, 3, 384, 640)
+
+0: 384x640 2 persons, 1 backpack, 1 cell phone, 4857.5ms
+Speed: 12.1ms preprocess, 4857.5ms inference, 24.1ms postprocess per image at shape (1, 3, 384, 640)
+
+0: 384x640 2 persons, 2 backpacks, 1 cell phone, 5864.3ms
+Speed: 15.0ms preprocess, 5864.3ms inference, 19.2ms postprocess per image at shape (1, 3, 384, 640)
+
+0: 384x640 2 persons, 1 backpack, 1 cell phone, 4402.5ms
+Speed: 35.8ms preprocess, 4402.5ms inference, 3.9ms postprocess per image at shape (1, 3, 384, 640)
+
+0: 384x640 2 persons, 1 backpack, 1 cell phone, 4664.6ms
+Speed: 12.6ms preprocess, 4664.6ms inference, 3.7ms postprocess per image at shape (1, 3, 384, 640)
+
+0: 384x640 2 persons, 2 backpacks, 2 cell phones, 5386.2ms
+Speed: 7.9ms preprocess, 5386.2ms inference, 13.5ms postprocess per image at shape (1, 3, 384, 640)
+
+0: 384x640 2 persons, 2 backpacks, 4162.7ms
+Speed: 10.0ms preprocess, 4162.7ms inference, 199.5ms postprocess per image at shape (1, 3, 384, 640)
+
+0: 384x640 2 persons, 1 motorcycle, 1 backpack, 1 cell phone, 4106.4ms
+Speed: 87.2ms preprocess, 4106.4ms inference, 7.1ms postprocess per image at shape (1, 3, 384, 640)
+
+0: 384x640 2 persons, 5025.8ms
+Speed: 14.6ms preprocess, 5025.8ms inference, 3.7ms postprocess per image at shape (1, 3, 384, 640)
+
+0: 384x640 2 persons, 1 backpack, 4806.8ms
+Speed: 20.0ms preprocess, 4806.8ms inference, 6.0ms postprocess per image at shape (1, 3, 384, 640)
+
+0: 384x640 2 persons, 1 cell phone, 4960.2ms
+Speed: 9.0ms preprocess, 4960.2ms inference, 23.0ms postprocess per image at shape (1, 3, 384, 640)
+
+0: 384x640 2 persons, 1 backpack, 1 cell phone, 3728.9ms
+Speed: 18.7ms preprocess, 3728.9ms inference, 7.0ms postprocess per image at shape (1, 3, 384, 640)
+
+0: 384x640 2 persons, 4045.8ms
+Speed: 12.5ms preprocess, 4045.8ms inference, 4.1ms postprocess per image at shape (1, 3, 384, 640)
+
+0: 384x640 2 persons, 5466.3ms
+Speed: 13.5ms preprocess, 5466.3ms inference, 8.0ms postprocess per image at shape (1, 3, 384, 640)
+
+0: 384x640 2 persons, 4594.4ms
+Speed: 8.3ms preprocess, 4594.4ms inference, 72.6ms postprocess per image at shape (1, 3, 384, 640)
+
+0: 384x640 2 persons, 6051.4ms
+Speed: 232.9ms preprocess, 6051.4ms inference, 166.1ms postprocess per image at shape (1, 3, 384, 640)
+
+0: 384x640 2 persons, 1 backpack, 5303.0ms
+Speed: 122.3ms preprocess, 5303.0ms inference, 6.2ms postprocess per image at shape (1, 3, 384, 640)
+
+0: 384x640 2 persons, 1 backpack, 5103.6ms
+Speed: 14.5ms preprocess, 5103.6ms inference, 9.3ms postprocess per image at shape (1, 3, 384, 640)
+
+0: 384x640 2 persons, 1 backpack, 1 cell phone, 4988.8ms
+Speed: 21.6ms preprocess, 4988.8ms inference, 6.4ms postprocess per image at shape (1, 3, 384, 640)
+
+0: 384x640 2 persons, 1 backpack, 1 handbag, 1 cell phone, 4940.7ms
+Speed: 16.0ms preprocess, 4940.7ms inference, 8.0ms postprocess per image at shape (1, 3, 384, 640)
+
+0: 384x640 2 persons, 1 backpack, 4008.5ms
+Speed: 7.1ms preprocess, 4008.5ms inference, 24.4ms postprocess per image at shape (1, 3, 384, 640)
+
+0: 384x640 2 persons, 1 backpack, 1 handbag, 1 cell phone, 4400.1ms
+Speed: 17.6ms preprocess, 4400.1ms inference, 5.7ms postprocess per image at shape (1, 3, 384, 640)
+
+0: 384x640 2 persons, 1 backpack, 1 handbag, 4677.0ms
+Speed: 9.7ms preprocess, 4677.0ms inference, 12.2ms postprocess per image at shape (1, 3, 384, 640)
+
+0: 384x640 2 persons, 1 backpack, 1 handbag, 4856.3ms
+Speed: 6.4ms preprocess, 4856.3ms inference, 9.1ms postprocess per image at shape (1, 3, 384, 640)
+
+0: 384x640 2 persons, 1 backpack, 3716.5ms
+Speed: 11.5ms preprocess, 3716.5ms inference, 20.0ms postprocess per image at shape (1, 3, 384, 640)
+
+0: 384x640 2 persons, 1 backpack, 4732.7ms
+Speed: 89.5ms preprocess, 4732.7ms inference, 14.5ms postprocess per image at shape (1, 3, 384, 640)
+
+0: 384x640 2 persons, 1 backpack, 1 handbag, 5195.7ms
+Speed: 10.5ms preprocess, 5195.7ms inference, 10.4ms postprocess per image at shape (1, 3, 384, 640)
+
+0: 384x640 2 persons, 1 backpack, 1 handbag, 3831.8ms
+Speed: 8.4ms preprocess, 3831.8ms inference, 7.1ms postprocess per image at shape (1, 3, 384, 640)
+
+0: 384x640 2 persons, 1 backpack, 1 handbag, 5028.3ms
+Speed: 11.1ms preprocess, 5028.3ms inference, 30.7ms postprocess per image at shape (1, 3, 384, 640)
+
+0: 384x640 2 persons, 1 backpack, 5444.7ms
+Speed: 21.9ms preprocess, 5444.7ms inference, 31.5ms postprocess per image at shape (1, 3, 384, 640)
+
+0: 384x640 2 persons, 1 backpack, 5358.5ms
+Speed: 33.8ms preprocess, 5358.5ms inference, 5.1ms postprocess per image at shape (1, 3, 384, 640)
+
+0: 384x640 2 persons, 1 backpack, 4406.0ms
+Speed: 9.6ms preprocess, 4406.0ms inference, 11.3ms postprocess per image at shape (1, 3, 384, 640)
+
+0: 384x640 2 persons, 1 backpack, 1 handbag, 2 cell phones, 4930.7ms
+Speed: 10.3ms preprocess, 4930.7ms inference, 33.1ms postprocess per image at shape (1, 3, 384, 640)
+
+0: 384x640 2 persons, 1 backpack, 1 handbag, 1 chair, 6161.4ms
+Speed: 44.2ms preprocess, 6161.4ms inference, 7.2ms postprocess per image at shape (1, 3, 384, 640)
+
+0: 384x640 2 persons, 1 backpack, 1 handbag, 1 chair, 7335.4ms
+Speed: 14.4ms preprocess, 7335.4ms inference, 14.9ms postprocess per image at shape (1, 3, 384, 640)
+
+0: 384x640 2 persons, 1 backpack, 1 chair, 5135.1ms
+Speed: 16.5ms preprocess, 5135.1ms inference, 12.6ms postprocess per image at shape (1, 3, 384, 640)
+
+0: 384x640 2 persons, 1 backpack, 1 handbag, 1 chair, 4322.6ms
+Speed: 16.8ms preprocess, 4322.6ms inference, 48.3ms postprocess per image at shape (1, 3, 384, 640)
+
+0: 384x640 2 persons, 1 backpack, 1 handbag, 1 chair, 7697.1ms
+Speed: 24.3ms preprocess, 7697.1ms inference, 98.6ms postprocess per image at shape (1, 3, 384, 640)
+
+0: 384x640 2 persons, 1 backpack, 1 handbag, 1 chair, 1 cell phone, 7012.7ms
+Speed: 28.5ms preprocess, 7012.7ms inference, 5.2ms postprocess per image at shape (1, 3, 384, 640)
+
+0: 384x640 2 persons, 2 backpacks, 1 handbag, 5941.0ms
+Speed: 12.7ms preprocess, 5941.0ms inference, 14.1ms postprocess per image at shape (1, 3, 384, 640)
+
+0: 384x640 2 persons, 1 backpack, 5920.0ms
+Speed: 17.4ms preprocess, 5920.0ms inference, 8.8ms postprocess per image at shape (1, 3, 384, 640)
+
+0: 384x640 2 persons, 1 backpack, 2805.4ms
+Speed: 12.8ms preprocess, 2805.4ms inference, 2.9ms postprocess per image at shape (1, 3, 384, 640)
+
+0: 384x640 2 persons, 3410.0ms
+Speed: 6.5ms preprocess, 3410.0ms inference, 4.2ms postprocess per image at shape (1, 3, 384, 640)
+INFO:     127.0.0.1:50473 - "POST /predict_video HTTP/1.1" 200 OK
+Task exception was never retrieved
+future: <Task finished name='Task-86' coro=<IocpProactor.accept.<locals>.accept_coro() done, defined at C:\Users\Stef\AppData\Local\Python\pythoncore-3.14-64\Lib\asyncio\windows_events.py:564> exception=OSError(22, 'El nombre de red especificado ya no est· disponible', None, 64, None)>
+Traceback (most recent call last):
+  File "C:\Users\Stef\AppData\Local\Python\pythoncore-3.14-64\Lib\asyncio\windows_events.py", line 567, in accept_coro
+    await future
+  File "C:\Users\Stef\AppData\Local\Python\pythoncore-3.14-64\Lib\asyncio\windows_events.py", line 804, in _poll
+    value = callback(transferred, key, ov)
+  File "C:\Users\Stef\AppData\Local\Python\pythoncore-3.14-64\Lib\asyncio\windows_events.py", line 556, in finish_accept
+    ov.getresult()
+    ~~~~~~~~~~~~^^
+OSError: [WinError 64] El nombre de red especificado ya no est· disponible
+Accept failed on a socket
+socket: <asyncio.TransportSocket fd=1452, family=2, type=1, proto=6, laddr=('0.0.0.0', 8000)>
+Traceback (most recent call last):
+  File "C:\Users\Stef\AppData\Local\Python\pythoncore-3.14-64\Lib\asyncio\proactor_events.py", line 845, in loop
+    conn, addr = f.result()
+                 ~~~~~~~~^^
+OSError: [WinError 64] El nombre de red especificado ya no est· disponible
+
+0: 384x640 1 person, 1 remote, 5770.5ms
+Speed: 6.9ms preprocess, 5770.5ms inference, 6.2ms postprocess per image at shape (1, 3, 384, 640)
+INFO:     127.0.0.1:50479 - "POST /predict HTTP/1.1" 200 OK

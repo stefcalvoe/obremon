@@ -1,0 +1,1404 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Aforador AMSA v16.15</title>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;600;700;800&family=Barlow:wght@400;500;600&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
+<style>
+:root {
+  --bg:#0d1117; --panel:#161b22; --border:#30363d; --text:#e6edf3; --muted:#7d8590;
+  --blue:#1a73e8; --bldim:rgba(26,115,232,0.15);
+  --green:#2ea043; --grdim:rgba(46,160,67,0.15);
+  --amber:#d29922; --amdim:rgba(210,153,34,0.15);
+  --red:#da3633;
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+html,body{height:100%;overflow:hidden;}
+body{font-family:"Barlow",sans-serif;background:var(--bg);color:var(--text);display:flex;flex-direction:column;}
+
+/* HEADER */
+.hdr{flex-shrink:0;height:52px;background:var(--panel);border-bottom:1px solid var(--border);display:flex;align-items:center;padding:0 16px;gap:12px;}
+.hdr img{height:36px;}
+.hdr-div{width:1px;height:26px;background:var(--border);}
+.hdr-title{font-family:"Barlow Condensed",sans-serif;font-size:17px;font-weight:700;}
+.hdr-sub{font-size:11px;color:var(--muted);}
+.hdr-sp{flex:1;}
+.hdr-badge{background:var(--grdim);border:1px solid var(--green);border-radius:20px;padding:3px 10px;font-size:10px;color:var(--green);font-weight:700;}
+.hdr-clock{font-family:"Barlow Condensed",sans-serif;font-size:14px;color:var(--muted);}
+
+/* LAYOUT */
+.body{flex:1;display:grid;grid-template-columns:1fr 390px;overflow:hidden;}
+
+/* VIDEO PANEL */
+.vpanel{display:flex;flex-direction:column;padding:12px;gap:8px;overflow:hidden;}
+.vwrap{flex:1;background:#000;border-radius:8px;border:1px solid var(--border);overflow:hidden;position:relative;min-height:0;}
+#vp{width:100%;height:100%;object-fit:contain;display:block;}
+.vbadge{position:absolute;top:8px;left:8px;background:rgba(0,0,0,0.75);border-radius:4px;padding:3px 8px;font-size:11px;color:var(--muted);max-width:65%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+.vctrl{flex-shrink:0;display:flex;gap:6px;flex-wrap:wrap;align-items:center;}
+.btn-load{padding:7px 14px;background:var(--panel);border:1px solid var(--border);border-radius:6px;color:var(--text);font-size:12px;cursor:pointer;font-family:"Barlow",sans-serif;}
+.btn-load:hover{background:var(--border);}
+.spd-grp{display:flex;background:var(--panel);border:1px solid var(--border);border-radius:6px;overflow:hidden;}
+.spd-lbl{padding:7px 8px;font-size:10px;color:var(--muted);border-right:1px solid var(--border);}
+.spd{padding:7px 10px;font-size:11px;font-weight:600;background:transparent;border:none;color:var(--muted);cursor:pointer;border-right:1px solid var(--border);font-family:"Barlow",sans-serif;}
+.spd:last-child{border-right:none;}
+.spd.on{color:var(--blue);background:var(--bldim);}
+
+/* RIGHT PANEL */
+.rpanel{border-left:1px solid var(--border);display:flex;flex-direction:column;overflow:hidden;}
+
+/* CORTES */
+.csec{padding:10px 14px;border-bottom:1px solid var(--border);background:linear-gradient(135deg,var(--grdim),rgba(46,160,67,0.05));border-left:3px solid var(--green);}
+.clbl{font-size:9px;text-transform:uppercase;letter-spacing:1.5px;color:var(--green);font-weight:700;margin-bottom:6px;}
+.ctbl{width:100%;border-collapse:collapse;font-size:10px;font-family:"Barlow Condensed",sans-serif;margin-bottom:7px;}
+.ctbl thead{background:rgba(46,160,67,0.15);}
+.ctbl th{padding:3px 4px;text-align:right;color:var(--green);font-weight:700;}
+.ctbl td{padding:3px 4px;text-align:right;border-bottom:1px solid rgba(46,160,67,0.15);cursor:pointer;}
+.ctbl tbody tr:hover td{background:rgba(46,160,67,0.2);}
+.btn-corte{width:100%;padding:9px;background:var(--green);color:#fff;border:none;border-radius:6px;font-size:13px;font-weight:700;cursor:pointer;font-family:"Barlow",sans-serif;letter-spacing:.5px;}
+.btn-corte:hover{background:#27903b;}
+
+/* TOTAL */
+.tsec{padding:12px 18px 8px;border-bottom:1px solid var(--border);text-align:center;}
+.tlbl{font-size:9px;text-transform:uppercase;letter-spacing:2px;color:var(--muted);font-weight:700;}
+.tnum{font-family:"Barlow Condensed",sans-serif;font-size:68px;font-weight:800;color:var(--blue);line-height:1.05;}
+
+/* COUNTERS */
+.counters{padding:8px 14px;border-bottom:1px solid var(--border);}
+.cgrid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:5px;}
+.card{border-radius:6px;padding:9px 7px;text-align:center;border:1px solid transparent;}
+.card.e{background:var(--amdim);border-color:rgba(210,153,34,0.3);}
+.card.t{background:var(--bldim);border-color:rgba(26,115,232,0.3);}
+.card.c{background:var(--grdim);border-color:rgba(46,160,67,0.3);}
+.ckey{display:inline-block;font-size:7px;font-weight:700;border-radius:3px;padding:1px 4px;margin-bottom:3px;}
+.card.e .ckey{background:var(--amber);color:#000;}
+.card.t .ckey{background:var(--blue);color:#fff;}
+.card.c .ckey{background:var(--green);color:#fff;}
+.cico{font-size:12px;margin-bottom:2px;}
+.ctype{font-size:8px;text-transform:uppercase;color:var(--muted);margin-bottom:3px;font-weight:600;}
+.cnum{font-family:"Barlow Condensed",sans-serif;font-size:30px;font-weight:800;line-height:1;margin-bottom:5px;}
+.card.e .cnum{color:var(--amber);}
+.card.t .cnum{color:#58a6ff;}
+.card.c .cnum{color:#3fb950;}
+.cbtn{width:100%;padding:5px 3px;border:none;border-radius:4px;font-size:9px;font-weight:700;cursor:pointer;font-family:"Barlow",sans-serif;margin-bottom:2px;}
+.cbtn:hover{opacity:.8;}
+.card.e .cbtn{background:var(--amber);color:#000;}
+.card.t .cbtn{background:var(--blue);color:#fff;}
+.card.c .cbtn{background:var(--green);color:#fff;}
+.cundo{width:100%;padding:2px;border:1px solid var(--border);border-radius:3px;background:transparent;font-size:8px;color:var(--muted);cursor:pointer;font-family:"Barlow",sans-serif;}
+.cundo:hover{background:rgba(255,255,255,.05);color:var(--text);}
+
+/* CONDUCTOR */
+.condsec{padding:7px 14px;border-bottom:1px solid var(--border);}
+.flbl{font-size:9px;text-transform:uppercase;letter-spacing:1px;color:var(--muted);font-weight:700;margin-bottom:4px;}
+.finput{width:100%;padding:7px;background:var(--bg);border:1px solid var(--border);border-radius:5px;color:var(--text);font-family:"Barlow",sans-serif;font-size:12px;}
+.finput:focus{border-color:var(--blue);outline:none;background:var(--panel);}
+
+/* ACCIONES */
+.actsec{padding:7px 14px;border-bottom:1px solid var(--border);display:grid;grid-template-columns:1fr 1fr;gap:5px;}
+.abtn{padding:9px;border:none;border-radius:6px;font-size:11px;font-weight:700;cursor:pointer;font-family:"Barlow",sans-serif;display:flex;align-items:center;justify-content:center;gap:4px;}
+.abtn.next{background:rgba(46,160,67,.2);color:#3fb950;border:1px solid rgba(46,160,67,.4);}
+.abtn.next:hover{background:rgba(46,160,67,.35);}
+.abtn.rst{background:rgba(218,54,51,.2);color:#ff7b72;border:1px solid rgba(218,54,51,.4);}
+.abtn.rst:hover{background:rgba(218,54,51,.35);}
+
+/* VIDEO LIST */
+.vlistsec{flex:1;padding:7px 14px;overflow:hidden;display:flex;flex-direction:column;}
+.shdr{font-size:9px;text-transform:uppercase;letter-spacing:1.5px;color:var(--muted);font-weight:700;margin-bottom:5px;}
+.vlist{flex:1;overflow-y:auto;display:flex;flex-direction:column;gap:2px;}
+.vi{padding:5px 8px;border-radius:4px;background:var(--bg);border:1px solid var(--border);cursor:pointer;display:flex;align-items:center;gap:5px;font-size:10px;transition:all .15s;position:relative;}
+.vi:hover{border-color:var(--blue);background:rgba(26,115,232,.1);}
+.vi.cur{background:var(--bldim);border-color:var(--blue);}
+.vi.done{opacity:.55;}
+.vi-name{flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;color:var(--muted);}
+.vi.cur .vi-name{color:#58a6ff;}
+.vi-num{font-family:"Barlow Condensed",sans-serif;font-weight:700;font-size:12px;color:var(--text);}
+.vi-mark{color:#3fb950;font-size:10px;font-weight:700;}
+.vi-tip{position:absolute;right:38px;top:50%;transform:translateY(-50%);font-size:8px;color:var(--muted);background:rgba(0,0,0,.5);padding:2px 5px;border-radius:3px;white-space:nowrap;opacity:0;pointer-events:none;transition:opacity .15s;}
+.vi:hover .vi-tip{opacity:1;}
+
+/* EXCEL */
+.exsec{padding:7px 14px;border-top:1px solid var(--border);}
+.exbtn{width:100%;padding:8px;border:none;border-radius:4px;font-size:11px;font-weight:700;cursor:pointer;font-family:"Barlow",sans-serif;background:#0d7700;color:#fff;}
+.exbtn:hover{background:#0a6000;}
+
+/* SHORTCUTS */
+.scuts{padding:5px 14px;border-top:1px solid var(--border);font-size:8px;color:var(--muted);display:flex;flex-wrap:wrap;gap:7px;align-items:center;}
+.kk{background:rgba(255,255,255,.08);border:1px solid var(--border);border-radius:3px;padding:1px 4px;font-family:"Barlow Condensed",sans-serif;font-size:9px;color:var(--text);}
+
+/* TOAST */
+.toast{position:fixed;bottom:18px;right:18px;background:rgba(22,27,34,.96);border:1px solid var(--border);color:var(--text);padding:10px 18px;border-radius:8px;font-size:13px;font-weight:600;display:none;z-index:9999;}
+.toast.on{display:block;animation:fup .2s ease;}
+@keyframes fup{from{transform:translateY(8px);opacity:0}to{transform:translateY(0);opacity:1}}
+input[type=file],canvas{display:none;}
+
+/* PANEL DE CORTES */
+.cortes-panel{border-top:2px solid var(--green);padding:12px;background:linear-gradient(135deg,var(--grdim),rgba(46,160,67,0.05));}
+.cortes-title{font-size:13px;font-weight:700;color:var(--green);text-transform:uppercase;margin-bottom:12px;letter-spacing:1px;}
+.cortes-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:10px;margin-bottom:12px;}
+.corte-card{border:1px solid rgba(46,160,67,0.3);border-radius:8px;padding:12px;background:rgba(46,160,67,0.08);}
+.corte-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;}
+.corte-num{font-size:12px;font-weight:700;color:var(--green);}
+.corte-btns{display:flex;gap:4px;}
+.btn-xs{padding:3px 6px;font-size:9px;border:none;border-radius:3px;cursor:pointer;font-family:"Barlow",sans-serif;}
+.btn-edit-corte{background:var(--blue);color:#fff;}
+.btn-del-corte{background:var(--red);color:#fff;}
+.corte-videos{font-size:10px;color:var(--muted);margin:6px 0;max-height:60px;overflow-y:auto;}
+.corte-video-tag{display:inline-block;background:rgba(46,160,67,0.2);color:var(--green);padding:2px 6px;border-radius:3px;margin:2px 2px 2px 0;font-size:9px;}
+.corte-selector{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:10px;}
+.video-checklist{max-height:150px;overflow-y:auto;border:1px solid var(--border);border-radius:5px;padding:8px;}
+.video-check-item{display:flex;align-items:center;padding:4px;font-size:11px;}
+.video-check-item input{margin-right:6px;}
+.corte-conductor{font-size:10px;color:var(--muted);margin-top:6px;}
+.corte-input{width:100%;padding:6px;background:var(--bg);border:1px solid var(--border);border-radius:4px;color:var(--text);font-size:11px;font-family:"Barlow",sans-serif;margin-top:4px;}
+.btn-crear-corte{width:100%;padding:10px;background:var(--green);color:#fff;border:none;border-radius:6px;font-size:12px;font-weight:700;cursor:pointer;font-family:"Barlow",sans-serif;}
+.btn-crear-corte:hover{background:#27903b;}
+.btn-confirmar-cortes{width:100%;padding:12px;background:var(--green);color:#fff;border:none;border-radius:6px;font-size:13px;font-weight:700;cursor:pointer;font-family:"Barlow",sans-serif;margin-top:10px;}
+.btn-confirmar-cortes:hover{background:#27903b;}
+
+/* MODAL EDITAR VIDEO */
+.modal-overlay{position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,0.7);display:none;align-items:center;justify-content:center;z-index:1000;}
+.modal-overlay.show{display:flex;}
+.modal-box{background:var(--panel);border:1px solid var(--border);border-radius:12px;padding:24px;min-width:380px;box-shadow:0 20px 60px rgba(0,0,0,0.5);}
+.modal-title{font-size:18px;font-weight:700;color:var(--text);margin-bottom:16px;}
+.modal-field{margin-bottom:16px;}
+.modal-label{font-size:11px;text-transform:uppercase;color:var(--muted);font-weight:700;margin-bottom:6px;display:block;}
+.modal-input{width:100%;padding:10px;background:var(--bg);border:1px solid var(--border);border-radius:6px;color:var(--text);font-size:13px;font-family:"Barlow",sans-serif;}
+.modal-input:focus{border-color:var(--blue);outline:none;}
+.modal-input-group{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;}
+.modal-input-group .modal-input{margin-top:6px;}
+.modal-buttons{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:20px;}
+.btn-cancel{padding:11px;background:var(--border);color:var(--text);border:none;border-radius:6px;cursor:pointer;font-weight:700;}
+.btn-save{padding:11px;background:var(--green);color:#fff;border:none;border-radius:6px;cursor:pointer;font-weight:700;}
+.btn-save:hover{background:#27903b;}
+
+/* COLLAPSE/EXPAND */
+.section-header{display:flex;align-items:center;justify-content:space-between;padding:10px;background:rgba(46,160,67,0.15);border:1px solid rgba(46,160,67,0.3);border-radius:6px;cursor:pointer;user-select:none;margin-bottom:10px;}
+.section-header:hover{background:rgba(46,160,67,0.25);}
+.section-title{font-weight:700;color:var(--green);font-size:12px;}
+.section-toggle{display:inline-flex;align-items:center;justify-content:center;width:20px;height:20px;background:var(--green);color:#fff;border-radius:3px;font-size:12px;font-weight:700;}
+.section-content{max-height:1000px;overflow:hidden;transition:max-height 0.3s ease;margin-bottom:10px;}
+.section-content.collapsed{max-height:0;transition:max-height 0.3s ease;}
+
+/* BOTÓN CARGAR VIDEOS */
+.cargar-videos-btn{width:100%;padding:12px;background:linear-gradient(135deg, #1a73e8 0%, #0055cc 100%);color:#fff;border:none;border-radius:6px;font-weight:700;font-size:13px;cursor:pointer;margin-bottom:12px;transition:all 0.2s;box-shadow:0 4px 8px rgba(26,115,232,0.3);}
+.cargar-videos-btn:hover{transform:translateY(-1px);box-shadow:0 6px 12px rgba(26,115,232,0.4);}
+
+/* ATAJOS FIJOS AL PIE */
+.keyboard-shortcuts{position:fixed;bottom:0;left:0;right:0;background:rgba(13,17,23,0.98);border-top:2px solid #2ea043;padding:10px 15px;font-size:11px;color:#8b949e;display:flex;gap:18px;flex-wrap:wrap;z-index:100;backdrop-filter:blur(8px);}
+.shortcut-item{display:flex;gap:5px;align-items:center;padding:5px 10px;background:rgba(46,160,67,0.12);border-radius:3px;}
+.shortcut-key{background:#2ea043;color:#fff;padding:3px 6px;border-radius:2px;font-weight:700;font-size:9px;min-width:22px;text-align:center;}
+.shortcut-desc{color:#8b949e;font-size:10px;}
+
+/* AJUSTE PANEL */
+#rpanel{margin-bottom:65px;}
+
+/* COLLAPSE/EXPAND */
+.section-header{display:flex;align-items:center;justify-content:space-between;padding:10px;background:rgba(46,160,67,0.15);border:1px solid rgba(46,160,67,0.3);border-radius:6px;cursor:pointer;user-select:none;margin-bottom:10px;}
+.section-header:hover{background:rgba(46,160,67,0.25);}
+.section-title{font-weight:700;color:#2ea043;font-size:12px;}
+.section-toggle{display:inline-flex;align-items:center;justify-content:center;width:20px;height:20px;background:#2ea043;color:#fff;border-radius:3px;font-size:12px;font-weight:700;}
+.section-content{max-height:1000px;overflow:hidden;transition:max-height 0.3s ease;}
+.section-content.collapsed{max-height:0;}
+
+/* VIDEO SELECT */
+.video-list-item{padding:8px;border-bottom:1px solid #30363d;cursor:pointer;transition:all 0.2s;}
+.video-list-item:hover{background:rgba(46,160,67,0.1);}
+.video-list-item input{margin-right:8px;cursor:pointer;}
+.video-list-item.selected{background:rgba(26,115,232,0.15);border-left:3px solid #1a73e8;}
+
+/* SECCIONES COLAPSABLES */
+.sec-hdr{display:flex;align-items:center;justify-content:space-between;padding:8px 14px;background:rgba(46,160,67,0.15);border-bottom:1px solid rgba(46,160,67,0.3);cursor:pointer;user-select:none;flex-shrink:0;}
+.sec-hdr:hover{background:rgba(46,160,67,0.25);}
+.sec-hdr-title{font-weight:700;color:#2ea043;font-size:11px;}
+.sec-hdr-btn{width:18px;height:18px;background:#2ea043;color:#fff;border-radius:3px;font-size:12px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+.sec-body{overflow:hidden;transition:max-height 0.3s ease;max-height:600px;}
+.sec-body.closed{max-height:0!important;}
+/* RPANEL SCROLLABLE */
+.rpanel{border-left:1px solid var(--border);display:flex;flex-direction:column;overflow-y:auto!important;overflow-x:hidden;}
+.vlist{max-height:200px;overflow-y:auto;display:flex;flex-direction:column;gap:2px;}
+/* SELECCIÓN EXCEL */
+.vi.sel{background:rgba(26,115,232,0.3)!important;border-left:3px solid #1a73e8!important;}
+/* MODO EDICIÓN */
+.vi.en-corte{background:rgba(255,193,7,0.25)!important;border-left:3px solid #ffc107!important;}
+.ctbody tr.fila-edit{background:rgba(255,193,7,0.2)!important;}
+.ctbody tr{cursor:pointer;}
+.ctbody tr:hover{background:rgba(46,160,67,0.15)!important;}
+#btnModoEdicion{width:100%;padding:10px;background:#ffc107;color:#000;border:none;border-radius:4px;font-weight:700;cursor:pointer;margin-bottom:6px;font-size:12px;}
+#btnModoEdicion.activo{background:#ff6f00;color:#fff;}
+/* ATAJOS FIJOS */
+.kbar{position:fixed!important;bottom:0!important;left:0!important;right:0!important;background:rgba(13,17,23,0.97);border-top:2px solid #2ea043;padding:6px 14px;display:flex;gap:10px;flex-wrap:wrap;z-index:9999;}
+.ki{display:flex;gap:4px;align-items:center;padding:3px 6px;background:rgba(46,160,67,0.12);border-radius:3px;}
+.kk2{background:#2ea043;color:#fff;padding:2px 5px;border-radius:2px;font-weight:700;font-size:9px;}
+.kd{color:#8b949e;font-size:9px;}
+body{padding-bottom:44px;}
+</style>
+</head>
+<body>
+
+<div class="hdr">
+  <img src="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQEAYABgAAD/2wBDAAMCAgMCAgMDAwMEAwMEBQgFBQQEBQoHBwYIDAoMDAsKCwsNDhIQDQ4RDgsLEBYQERMUFRUVDA8XGBYUGBIUFRT/2wBDAQMEBAUEBQkFBQkUDQsNFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBT/wAARCAB5AScDASIAAhEBAxEB/8QAHwAAAQUBAQEBAQEAAAAAAAAAAAECAwQFBgcICQoL/8QAtRAAAgEDAwIEAwUFBAQAAAF9AQIDAAQRBRIhMUEGE1FhByJxFDKBkaEII0KxwRVS0fAkM2JyggkKFhcYGRolJicoKSo0NTY3ODk6Q0RFRkdISUpTVFVWV1hZWmNkZWZnaGlqc3R1dnd4eXqDhIWGh4iJipKTlJWWl5iZmqKjpKWmp6ipqrKztLW2t7i5usLDxMXGx8jJytLT1NXW19jZ2uHi4+Tl5ufo6erx8vP09fb3+Pn6/8QAHwEAAwEBAQEBAQEBAQAAAAAAAAECAwQFBgcICQoL/8QAtREAAgECBAQDBAcFBAQAAQJ3AAECAxEEBSExBhJBUQdhcRMiMoEIFEKRobHBCSMzUvAVYnLRChYkNOEl8RcYGRomJygpKjU2Nzg5OkNERUZHSElKU1RVVldYWVpjZGVmZ2hpanN0dXZ3eHl6goOEhYaHiImKkpOUlZaXmJmaoqOkpaanqKmqsrO0tba3uLm6wsPExcbHyMnK0tPU1dbX2Nna4uPk5ebn6Onq8vP09fb3+Pn6/9oADAMBAAIRAxEAPwD9U6KSloAKKSloAKKKSgBaKSloAKKSloAKKKKACiiigAooooAKKKKACiiigAooooAKRqWkagBKOtRXVxFaW7yzSLFEgyzsQABXiXjH4wap4pv5PD/gKA3dxkpcanjEcI7kMePxrrw2FqYqVoaJbt7I87GY+jgo3qat7Jbs9L8XfEXw94JhL6rqMUL4yIVO6Q/RRXmlx+1Jps0n/Er0DUdRh/56In9K47SLPwH4W162i8Tag3irxFcShZGHzwwsT6/WmfFnx1qOi/Ei38M6ffQeGtKVVPnxxDABGckAV9Nh8sw/tFScHJ2bu7pNLsrNs+NxWcYp03WjNQSaVlaTV+7bSR6Db/tOaEqqdQ0vUtOJ6+ZATj8q6HTfj34I1RU261HAzcBbgFD+tcLo/gbWfFdoJdL+IsGp4GSGt1b9M5qtq3wb8aBclNB1f182DYx/SspYXLW+Vy5X6v8AWJ0U8bm6ippc0fRfpI9z0/xNpWrKrWWo2t0D08uZT/WtJZAT2/OvkvUvhxrukyB7nwTLGV63Gk3WCPoKgsfGmseGX2wa5rOk7DgQatbmSP8A76Has3k0KivQq3/ryv8AkbR4gqUnbE0bff8AqkfXuetH8VfPmhftC6vZ/wDISsrPWLcfen02YB/qUbFep+D/AIqeHfGuEsL5Uu/4rWf5JFP0PX8K8nEZbicMrzjp3R7uFzfCYt8sJWfZnZUmKRTTq809gRqKGooAY2TVO51izs76CznuI4rmfPlxM3L49KuMeK+UfiZ40h1Tx/quux6o1vL4dmiitbUJkTYOX5r0cDg3jJuO1vz6Hj5lmCy+nGVrtv8ADr9x9XAdMUd+a4q6+J1jb33haBYXm/t4DypEPC/Lnmsv4ifEw6PdaroNlp1zd6kmntdK0JxgHjP4VlDB1pzULb/52N6mPoU6cql9v8ro9KyOOaK8J+Hvxgn0v4Y6ZJf6feXOsXDmG0t2bdJdnJ+Yew/pXUab8U9W03WrPT/Fegto5vjttbiN98bP1CE9ia2qZfXg5K21+q1t2OelmuGqRjK+9ujsr7X7Hp3HSj3r540b4valoXjrxnd6jpGoNp9uEJQuCsI7HHvXeN8arOPwfDrj6XdQvdyeTZWLjEtwx7gelVVy3EUmla97firk0M3wtZNt2tfe/R2PSsdfSlU7q8kuPjFrfhk2x8TeGJbGG8kEcEsEgZQSeA/oajuvjteyXmpNpnhm5vtN0yTZe3W4KUwOdo78VP8AZ2IeyVvVfncv+1cKt5O/azv+R6/1yaO3vXlviT4422mLoo0nTJtYk1KH7SiRnaRGOv1b2p+ufGKeDXLfQ9K0G6v9XuLdJ0jY7VQMAcP6Y71CwGIdny6O/bpuX/aeFTa5rtWWz67Hp/6Ue5rzrw78VnbVLrSfE2nHQtSghNwAW3RSxjqVbvisn/hcGv6lbTaxpPhSW88Oxk/6Q0m2WRR1ZV9OtCwNdtqy+9W17MJZlhopPmfpZ303uj1vPSk/ix1NeY3vx20uObRo7KxutSbU498Qtxlgc4II9QRXLaH8SNTHxo1pL7Tb2101LNWcSvlIAOTIR79PxrSGW4iSlJq1lcxqZvhoyjGLvdpeSPdz1ApfSvGH+PV5dxTapp2jw3GgxOR5j3KrNIoOCypmr+u/He0gj0ZtE06XWW1GL7QFjbBVB976sPSpeXYm6XLv5r8So5vg3f39vJ/h3PWh0oFVNNu/t9jBciN4hKgcRyDDLkdD71aXOa85pp2Z68ZKSTWw6kalprZxxxQUIa5/xh420jwTpjXuq3Kwqv3Ixy7n0A7muD+LH7Qej/D63ktbORNS1jBAhjbKxn1Yj+VeCfD34yWWs+OJtS8bwNeTyEC0nk5jtT2ITpivosFktevTeInF8q6Ld+nkfI5hxBh8NVWFpTXO929o+v8AXqem+KtW1f4gW/2/xHdSeFvCRbMNjGf9KvB2AA55q9pHgbXvF2lrp+l2v/CFeFe6r/x93I9WPYGqPwh8Vafr3xM1O08QXUGr6wDu0+6DBohH/djXoDjmvolcZwBgYrbG4mpgZKjGCVrNdlft3fm/uOXL8HSzJOvObe6fd+vZeSPnv4ofAnQfCvw8m1DSoJDqmnsLn7S7ks+CC2aqrbaf4l+NmgyahbRXdtqejq+2Vcg/JXuXjqwGpeDdatcbvNtZAB/wE184+BL5pvF/wzupD862klsx9xwB+ldOCxFXE0JzqSbklJX66q/6HLmWFoYPFU6dOCUZcra6aOw/4xfD29+C99b+LPCFzNa2XmbZrcHKoev4qea91+EfxBh+JHhC21VVCXH+rnjH8Mg6/gev418/fHX9oj7ZDr/hGXSo8CQwrIWOeCOa6D9iu4aTQdcQk7ftCsF/4CK3xmFq1MrVfFL95Fqz6tPuY5fjKNLOXh8HL93NO8eia7H0sRnqM1TvtMs76MrcWsM6njDxg/zq7SGviFJx1TP0aUYy0krnBax8E/B+sMzPpSW0zf8ALS2JjP6V5l4t/ZZZJjqXhnWri31CIZjSc5zjnG4civommnjpXpUMzxeHfuzduz1R4+IyfBYpe/Ts+60f4HzD4R/aH8UeG7yfRvEmiSXzacdlzcQ53oBxk9jX0J4R8YaZ420mLUdKuBPbvwezKe4I7GvNvF/hmXQ/jBpWrwWjXOmazC1jfIiblU44ZvrXn3w1vJvhf8eNT8MIzDS7yUqkZbjkZQgfiR+Fe3Xw2Gx9J1aEeWajzabPurdz5vDYvGZZWjQxMuam5cuu67O/Y+pSOKKSivkeVPVn3bXYxfGl/eab4X1Cewt3ur0RERRR9SxGBXLfDv4cW2l/D2HT9VtIpb+8jeW7aRAW8x8kgn2z+legyMscZZ2VEUZLMcYHrXmvij9oLwn4ameD7Q99MpwRbjgH610wrzhT9nDve/psctTCwq1faz10aS9dzgLXwn4m0XTtElGmTXsnhXUXEcIwDc27ZAKe4BroNL03WvGXifX/ABVNpNxpds2ltY2tvcYEsrHkkjtVjSf2oPDGoXSxTxXForHAdgGA+uK1/En7QnhHw+qbLptQdhnFuMgfUmu95jOSvyK/6Xuzyo5RCH/Lx27ab2svuOOtPBHiLS/C/gzXLTTzPqmibxNpzn5pI2Y52++K0tWu9Z+MmpaPZR6FeaJpNldJdXN1fKEYlDkKg+vermjftO+F9TukgmiuLLcceY4DAflXrFje2+pWsdzaypNBKNySRnIYVH1+V+ZwXNrZ66XNFlMYrkjN8rtdaa2PDPFnhDXLyT4jCGxkcX0cC22P+WmDzit/xp4J1W68P+ENX0y3E+qaCscn2FjjzBtAYfXivSde8Rab4ZsWu9Tuo7WAd3PJ9gK8yuv2nfCVtd+Uq3UiA4MqoAPypfX6nuvlWn46WH/ZVKKknJ+8remtzF8deJPEXxK0mzsdP8J31nDDdRSXUl4oVhtIOEHcZ71q+BvCurWPh3x5Dc2UkMt5NIbZT1cFCARXovhDxvpPjSw+1aZceYucGNvlYfUVp6xq9roWnTX15J5VtCMu2M4qnmDVNUYU0knfr3uKOVL2rrVajlJq3TtY+fL/AMP+IIfBei6VP4XlvCtsRa3NqwW4tLjccEnsvQ06z1jX/CfxWWaXTn1u7h0eJdSW3/1gOOq56nNeq6X8ZvCWr3Jgg1MKwUsfNXYBj61T8NeJvA+v+MrnUtOvI21iRPIZnyu8DsM8GuqGZJqUalNap/icc8mcZxnSqO6a7aJHJ3nh/VvjPrpv7vTJ9C0e2tJIbf7SNs0sjjGSOwFO0fxl4m8H+Hl8LzeEr271WBDBbzwAG3mHZy3YV7ZIwiUsSFUDnPQVia5440Hw4kR1DU7e28z7m5skj2rkeP5oqnKC5VstdDsWV8snUjVak73emtzyjwL8N9W8K+NPDbXNv5yLbTS3M6j5I5HJO0fnWvqPgjUdf+IPjBJoZINO1HSVto7rPG8+n0rpdU+M/hDR3jSTVkkMi7x5I3gfWt7wv4w0vxhYvd6ZMZoUbazMu3BpSzCrKftGtbW/G44ZRRhTVK+l7/oeBab4dg8O2EOh33w2m1LW4B5UVzFzbzjPDs2eK2vG/h3V7XS7PS4fCCGE24eym0tgHsbr3P8AdzXrWqfELw7o8yxXWq26Ss20Rq2Tk10CsskauhBRhuB9RWrzOfMpuPnu/wDMw/sWHI4c77LRafhqZXhK31G18NabDq0om1FIVE0i9C2Oa4z4wePNT8ONpuk6Ntj1HUG2iZ+iDOPzrqLX4geHru+ls01a3FxE2xo3bac1znxo8O6JrHh+C81S/OmyQP8AuLuMbjk9Bj0ryZSc5OTVrnvwgoQUVrYzfDPiLxR4P8S2ei+KJ475dRfEEqNllPcn2r1O9tUvrV4HLBJBg7Tg4NeJ/CXSNE1XxQt9N4jk1/VbdMwq6kBB3OSea9xdxGpZiFC9SelTr0LsmrM5O0+FPhOzzs0K0Yk5LSIGJPqSe9M1j4ReEdatzDcaHabcYykYUj6EVp65430Lw7HG+o6nb24k+5ubJNYmp/GjwjpPlebqyS+au9fJG7j3rojia6d1N/ecjweGknGVNa+SPFfHf7N974H1OLxR4NnkkazcSta5y6gHnHqMdq+hPAfiaPxh4ZsdTQYaWMCRe6uOCPzp3hfxfpnjSzkutLmaWFG2NuXGDWjpml2ukrKlpCkCSOZGWMYBY9TiuvE4+eMpRhX1lHZ9beZw4PK6eAryqYbSEt49L90P1RfM026Q/wAUbD9DXyD4JuTa6t4ML8/Z9YlhGfQsa+wrgb4nXsRivjllOmLa3CjCW3iUj/dBY5r2MjtKFWL/AK0Z4PEnuzoy7f8AAPLvjhGzfE/X8KSPtTfd6dq9+/Yndl03XIm4O9Xx9RXtF18JvCOuTNfXWiwTT3ADvI3ViRWx4X8D6J4Pab+yLGOz83G/Z3xXTjc8o4nA/VIwaemvocuX8O4jC5h9dlNOLbdvU6Ciiivij9DCkalpDQB5d+0Xrt94b+G9zeadcPa3SzIBJGcHBr5S+DviLUPFHxh0i91K5kurhrhB5kjZOBX138cvBt/478Bz6Xpio900isA7YGBXhPwr/Zu8VeD/ABxpup3kcItoZhI5EmeOe1fdZTiMLRy6qqkkpu/rsfmmeYXGV81pSpRbgrem59b9qKavTjpRXwMua+h+leqPPvj5fz6d8NNQkt5GiclVJXg4J5r478D+G28beLrPTZbgxi4m2GTrgZr69/aI/wCSY33++n86+YPgMu74maXx/wAvH+NbrYRu/G/4JwfDW3sruyvGngmJUhgFYEDOawfg38O4viZ4kNldXbQQxxmRiACTj2r279rj/kXdK/66t/KuC/ZN/wCR4m4/5d3/AJin0A434yfDNPhn4i+y292ZoZIxIh6EDpg17t+ynr9xqHhm/s7ht8Vs6tH7A9RXBftcf8jda/8AXsn8zXVfsjrv0nWV/vbRS6D6nl/x28dX3jLxtPaRSuLSBzDDGDxgHGfxrqvDv7Kd9rHhuO+udQS3vJo/MSBge44ya818f2s3hf4iXomQq0NwxG4dRnIr6s8I/HTwpqfhu2ubnU4rOeONVlgfOQQMcetD8hI8Y0+11H4Z+BzdM7W+oWWrrEDnAYDr9RxXtnjrXI/E3wWvNTiGFubRZNvocjNeAfHT4s23xB1S30zR1K2EL537cGVj1Y17RfaVNov7PD2twNsy2YLKeoyc0MbPlfwT4VvPGniyDTbV2VppNpbPAHcn8K+uvDv7P3hfQ7WANHPc3UZDG4MpB3D0xXgH7MvPxPjz/dc/pX2b+tKQI8k8feJpNS8W2vhW2naKzt4jc3rK2HkVVyEz6HFeW6V8Hdc+L0l1rk94tlZO7Jbq2TwOBj2qf4napcfD343f2tdRtJYXIAfj78ZXaw/DNe0+AfEHhzTfC8cdprdtLZKWePzHCtGrc7SPbJp9Bnxh478Ian4H8QTaZqB/exHhlPDKehFfUX7La+Z4FvA3O64wc/SvEP2ivGmm+L/GrPpzCaGFBF5q/wAZHU17h+yv/wAiLdf9fH/stD2JPEPj54Um8E+O3eFnWzmPnRfQnkfgf519A+FfibC3wT/tyR83FpbGFhnneBhf6VR/ac8IDXfBa6jHHumsWy2ByUPWvla18aalY+F7nQEk/wBCllEjr3LDgU/iKOs+FPh65+IfxIijkkc2/mGSdv8AZBy3+H419AftLwrb/DmBEG1Y7hVA9AFIFZH7Kvg/+zfD15rEyYkuG8qM4/hHJP51tftPf8k9T/r5X+RqW9RdDyT9k0lvGkhOTiCTHPtXsfxE8VS6l4ws/CttK0NqI2ub5ozhmVFLbPYHFeOfsl/8jnJ/1wetb4rapcfD/wCNMetXCNLYz7d3HDIQVcfkar7QuhW0z4R658Yp7vWpbxbHT/MaO3ViTkDjC+gryTx/4M1PwLrk2m6gfnj+6ynhlPQivsj4d694b03wyqWOtWr2O9pYxJIFaNWOSpB9Dmvmz9o7xtpvi7xh/wAS2QTQ28aw+av8ZB5xSW4Hs/7KfPgm9PU+ev8A6DXtmK8S/ZT/AORJvP8Aruv/AKDXttTLcYjCvkLxtCLHw74olI4tfEO/8ya+vc8/jXzh4q8EXviLR/iNp1lGZrz+0Y7uKMclu+B+FfQZPVjSqNydlp+Z8pxBRlWpR5Fdq/5Hvnhy6F9oOnzjkSQI36VpK1fLfgz9orV/Aeh2+leJPD9w72q+UswRkJUdOCMcV2dh+1t4RnC/aILy1Y/3kz/Kpr5NjFNuEOaPdWZphc+wMqcFUqcsrap6WfzPcuaSvLrL9pTwHegf8TYRHuJEIrZtfjZ4Ju8FPENoM/3mxXnSwOKh8VKX3M9WGZ4Kp8NaP3o7ilrlU+KXhOQZXX7H/v8AClb4oeE0XLeILED/AK7Csvqtf+R/czf67hulRfejqRSda4DUvjv4I01SX123kI/hjyxpngH42aB8RNcudN0vzTJCm8PIMBx6itXgcSoOo6bUV5GKzLByqKkqqcnsrnoZ6UUGiuE9K1zzT9oj/kl9/wD76fzr5n/Z9Tf8TNM/67/419M/tD/8kwvv99P5181/s8oW+JVkF+9vbB9Dg81cSWfRXx++Heo+PvDtummr5k9u5byicFsjHFcT+z38J/EXgnxVLd6pZ/Z7fyWTczAkk9OlTX1l4xbULgp8SNMgXzGwhcZHPSovsfjLv8T9LX/gVeqsDTtriI/j/keC8yr82mGnb5f5l/8AaI+EOteN9SttR0mMXOIhE0WQCuCTn9a1v2dfh/rPgXT9RTVrb7M0pUKCwJ4rnFsfF3f4o6X+Ypfsfizv8U9M/nS+p0tvbx/H/Ir+0a//AECy/D/M7L4w/A+0+JEf2u2ZbbVUXG4j5ZPTPofevn64/Zx8bWt2YI7IvFn/AFiSDH4GvUBY+Kz/AM1T0yl/s7xZ/wBFU039KPqdL/n/AB/H/If9oV/+gaX4f5ifCr9mf+w7+LUvELRySId62yndk9txr134kaPc634J1Swso/Mnlj2onTPNeSjS/FzdPilpn6U5dG8Zt0+KGmH8qX1Ol/z/AI/j/kH9oV/+gaX4f5mT8DvhD4k8H+OotQ1CxMNrtYF2YHr2r6Wx6V4B/YfjZv8AmpumH8RR/wAI748b7nxI01v+BCn9SpP/AJfx/H/IX9o11/zCz/D/ADPUfiN8N9O+IukfZbxfLnQfuZwOVP8AhXzrqH7MPi2zunis5Yp7fPyuJccfQ13P/CM/EPt8Q9OP/AhTW8K/EvqnjvTn/wCBirWBpf8AQRD8f8iHmdf/AKBZ/h/meZ61+zH4usZohBCl2HXLGFxwfSvf/gF4P1TwZ4VubPVLc28zTblUkHjHtXDN4V+Lf/LLxfp7/wDbUVWfwr8aSfk8RWTj/ZkFX/Z1OX/MTD73/kZvNq0d8LP8P8z6B1/Sk1vRbywlXclxEyEfUcfrXx5cfs5eL/7WZUsGe3WQgSbxgjPWu+bwz8b1zjWIX/3ZBVObRvjtHnbeGT/dZa0jlUXtiIfeYvO5rfC1PuPobwf4fTwx4b0/TY1C/Z4lVsdz3rlfjj4P1Dxl4NFlpsYluFmWTaTjIANeI3Ufx3teguJP93aazJta+OVv96G+B6cRg1tHJHL4a8PvMJcRqO+Gn9x6B+z78I/EHgXxJLd6pa+RAImXLMCSSO1etfET4d6b8RNHNnfLslXPkzqPmQ18o3fxA+MlmT5v29cf9O5rKn+MnxVtziSe7T/egI/pXRHhyvPVVY/ec0uLKEPioTXyO21H9mDxZZXMkdlNDcW2cKwlxx9DWVrX7MXi2xaLyYY7zcuW8pxwfT61x837QHxHgzv1GZT7pUH/AA0d8QF/5isv/fIrdcL4t/DOP3mD4ywa3pyR9Z/s/wDg7VPBXhm6tNVtzbytKGVSQeMV6jk18JeEf2qPF+k63BPqV0dQtM4kgkAAYd8Hsa+yPAfj7SPiBo0eo6VcLIhA3x5+aNvQivEzDKMRl9pTV4vqj3srz3CZo3ClpJdH18zpm6V5l428QxfCie919rKW+j1CVEaGH7wwOT/OvTK5b4geDT4y0+CJZvJlt5DKvGQTgjB/OvPwsoRqpVfhe56mOhVlRcqHxrY43TPjx8PfF0apeyJbM/Gy/gwD+Jq/N8OPht4t/eRWemzMw+9bOFP6Vx0Ok6Ppumw6X4y8Evvhyov7eMSI4yfmyORSQ/CX4c61J5uj6tdaVM3QR3DJtP0Ne+44em70Zzgu/wAS/A+ZUsTVVq9OnUfn7r/E1r79lPwVdsWgW4t8/wByTIrFuv2O/D83+p1a8h/BTXlnxU1Lxv8ABfX0trDxDfXmnTL5sEsjbtw7g/Suds/2pPHlqoD6gJCOzwgmvdpYPN6tNVcPieaLPnK2PyWlUlSxOE5ZLc9rH7GukjH/ABP7wj/cWtO0/ZE8NwY87ULyfH0FeGN+1p45ddouIR7i3Gf51lah+0h4+1TKDU5Iw3H7pQla/Uc8lo66X9ehg8y4dpq8MO3/AF6n05/wpX4a+BoftOpCEBRktdTdfw71yPwjvtB1f486vc+G41j01LXaNqFBkAA4FJ8H/CNnqnhOHxT4jtrvX9WnmK28MzM4GCMfL09eat/BzTprX47eLftEUMEnlK3kwfdj3dB+VeTK8YYmFSrKclG3lutke1CMZVcLOlSjCMpXst9urPoiil7UV8Wfo9zzz48WFzqnw9ubS0ge4nlkRVSMZbr6V578E/gFqfhnVI9Z1WUWzAEi3HLnIxye30r6G7UtSI8Yuv2ZNEu7qWaTUrsl3LYGBjJz6VBF+zf4Ta4Nt/atxJcLy0QkXcPwxXtkn3G5xx1rx+w0eHwH4ijuddtmuEmume312OQnG7oko9B2pgOX9mXwwowZ7s/8CH+FTJ+zT4UXqbpvq4/wqHUPjlJ9su5NPtI5rG0lMRDZ8yfB5KYrePxD1LxBei28M6cly0USy3Ml0+wRlhnZ/vU9QMxf2b/CQ6pcn/gY/wAKd/wzh4R7x3B/7af/AFq0PDnxUfWtSs7C40ySzupp3t5EZgdjKCSfpUV58W3i1MafbaTLdXTXxs1UNjOACW/WlqBVH7OfhFf+WVyf+2v/ANamt+z54NjkVGWcO3RTPy30pyfEObSbvXQxlv7v7atpa2ZIA8xh0B9BWXretavb+PfDU/iO0isIrWOaczW8m6Nht+6R6inqBrr+zz4R/wCeNx/39NO/4Z78JL0iuR/22NNm+JXiC20k6+2ho2hM3ybZP32wnAcj0q6/jzV9c1Ce38O6bHdxWkatczTybVLFc7E96WoFGP4B+EJQTH9pcZwStwTg9xxTz+z74V7fbfwuGpfglcTTeFdSuHiaO4a9mJgdvutn7uatWfxYivxYW0Fi7arcXTWslnu+aEL1ZvagCkf2ffDGCfM1BR14umFQWvwf8JzTtBa6xeNMOqR35J/nWt8Tr65mv9A0GK5ezt9UuPLnnQ4baOdoPqelaSfDHw9am2e3s/sstswdJYWIbI9T3pAYv/Cj9MGPL1fV4/pdNSL8F44mzF4m1uM9sXJNPk+IGuas19d6DpEd3pVg7RvJM+15iv3tn0qC6+Kt7qc1nH4d0xb/AMy1+1yGaTbtUdV+vBpgSr8K7y1k3J4y1hM8BXlBGfyq6vgPXYl+TxffZ/2lU/0ri9a8SXPjDxLpN1FBMNMGmy3QVZdpikUfex3we1b2j+PtSvNN0fTtIh/tXV7iA3EstydqRx7iAW9zSA2IvCfiqFSP+EoE/p5tsppf+Ee8TggSXmm3S9/MtRk1jTfFy/sob+2utGKavazx24hWQbHZ8YIPpzWppPjzVryLVLK40lI9d08K8lusw8tkP8QanzNbEuMZbojm8I6hc7hd6JoV0P8AriFJrIvvhPol8D9r8FWRJ6tbybavWvxbkuPDn9onSnS5uLk2llalx+/cZ5B/u8datWPjjW7HxLp+i67pUUE18C0Vxbybk46r9a6I4ivD4ZtfM5Z4PD1Pjpp/JHBal+zT4M1BW/4lGoaazf8APJ9wFUND+AeqeAb8X/g3xK0Emcva3yELIP7rV9ErmhlBwMV3RzfGRjyOfNHs9UebLI8BKftI0+WXdaNGH4Z1bUb21CavZfY75Bhwjbkb3U+lbhG7FMaJWGMYHtXNeNIfE62cc3hma2NxGfmt7ofLIPQHsa85JVallaN/uPVlJ0KV3eVvvOodQ64YBh6EZqhcaBptw26Swt3b18sZrxy8+LXxG0Fyuo+CTMF/jtiXB/EVSH7TeqxMVuPBeoIfZa9WOVYuSvTs15SX+Z4ss6wXNapdNd4v/I9g8ReBdC8WWcdrqmnQ3cMX+rVx936GuHvf2YvAV8246Y8XtHKRXOR/tPXL/wDMnakfov8A9ap4/wBo7VLk4i8D6sfqhrop4TNKGkJNf9vL/M5KuNybEvmqRUn/AIX/AJGnH+yr4CjkBNjM467WlOK6DS/gT4J0dlaDQoHZejSAtXJf8Lu8YXQxa+AL7PYycCmt8RPiteMPs/gqKBfWSSrlTzKek61vWSMoVcopu9Kg36QZ7Pa2dtp9ukNvDHBBGPlRFChR9K8O+DrHUPjd47voyJLfKxrIvIOPeoNU0r4yeMYfss8tro1rLw/kyAEA+/WvTvhZ8N7T4baG1nC/2i6mbzbm4I5dj/SsHGng8PUUqqlOellr6ts6YzqZhiqThScIU9btWv2SR2bUUrUV4B9UFLSUtAEV1At1byQvnbIpU7Tg4IxXn0fwxv5fI0+91prvQLebzktmT942Ois3cCvQLy5SztZZ5OEjUs30FcjdeLNSjsBfSaeo06f5UdH/AHig9GIoAy/+Fa6lp1xcwaNq0VjpVxL5piaAPJET1CNWX4s0TxN4Y8Uf2l4ag82C7gWK5xjLyAYDEdjXbaRqEth4OW62PdyxoxCjq3JxWfcePpVFrbxW6fbpIvNkDEmNB6ZHemBzPhv4VavDodreXOpfZ/Esd092Jiu5Ru42EfStnSvha1jqGl38uoGe9t7l7u5kK8TO3GB6AYrSs/HxvDIE0y4zDH5k+7jaM9vX1qXU/GEEc0Xls62yhZJZlGRyMhfrRqBl3nwrjvG1aX7c8Vzd3a3ltMq828i9PrUS/DfU9Y1yz1HxBq634t0eL7PFFsRlYYz9a2v7c1eaylu5LJbezeMvHIjZkUdiRUaeKL+5jeews1ubO3UGWWRtrOe+2kBzt58LdauNHk0NfEWzRVbMKGLMgGc7Ce4rRk+HupaXqEtxoGrLp4uo1S5ikj3BmAA3rzweK6W88Sw2+hx6lGjSibAij7ljxiua1bxHqOj6tZXGq2vkRLGxUQNkOxHCketAGv4B8HN4H0aWye9e/kkmed5mXBJJyaxfBfhh7jxtr3iW7sRZtK4gtlPVlXq/tmtfQfGFxqWqR2dzaGPzkMkciKdq4/hbPeq8muXFhr+pW0CNdXU7osELN8qgDkn2oA2PFXhW08V6cttcFopI3EkFxHw8TjkMKwLfw14kS4tl1LxOhs4Xz+6i2PMPRjmtzRddury/urC+tPs91bqHLI2UcH+7Wdo+lxeKPtV9qTNM/mtEkIYhYgDjt3oAy5/h5qtnLfQaFrYsNKv3MksDR7mjJ4bYe2av6R8N4ND1SOe1uGS3jsfsYiIycnq2fWrst5PpdwukaPCLm4jTzHNw5wi9hnrzVK78eXCRssOnebcQAm5jZsbMdhQBU0n4Xf2asA+3l/LsprQ/L/f/AIqhh+F91pNvpU+kakLTVrGE27TNHuSaPJOCK6DRfFj39+ljc2jQXRBYhTkBcZFVpfGlzPNMtjp/mpbgtMXbHAOOKAMBPhDdTXFzc32sG5u7i5iuZH2YGUPQe1aeu/D241K78QXFrqZtJtVhSEttz5ajrirkfiqW4kMVgpu7qd90UcvyrGuBnJ/OqFp4h1G21y/gms/+JhIUjhg35jbjJb2FAEK/DW8vPDkOmX+pIJbJlfT7i3j2tCyjqR3zT7LwBrFx4o0vWtZ1tbuaxVlWCKLYhz3+taX/AAmF7aXUlhd6ft1H5fK2N8kpPcfSk0y91KXxmINQgEBW2yPKfMb8/wA6AOvFFC9KWgBKNo9KWigBNoIwRkVG1rC3WJD9VFS0U7tbCcU90QizgXpDGP8AgIpwt416RqPwqSijmYuWPYQKB0GKMClopFCbR1xRS0UAI1FDUUAFLSUtAEdxClxC8ci70cFWU9wa5ebwGtyiW8uoXJsYn3R24PC+xPcV1dNPb6f1oAzhoUcekfYIZpIV/hkU/MtZSeB47WJDaXclvd8h7jAJkz6iumk+6ad6UAZVjoENnM8zyyXEskQhdpDncKp23gnTrOw+xqHMHnGdtxzknsfat+Tt9RQP4fxoA5638ItFG0D6jcSWW0qkBPCg9s96JfByAslteTW1vIoWWFOj47+2a6BvvfgaUdX+tAGfd6DaXWkrp23y4FACbTgoR0I96yG8DR3Vws2o3s97IiGOPccBfQgevvXU0nagDJ0fRZtNmZ5tQluxt2qrjAA9fc1BqHhOC8uJrlJpILt2DpMh5Qj+lba9vwp3cUAY2i+G10q+ub2S6mu7u4ADvIeMDoAO1R3nhktdyXNheSWEkvMqx8qx9cetb3+NH8RoA56Xwn/qZLe/ngvEXY1xnJkX3pI/BVlHG43yNJJGUkkJ5fPUn3roX+61HpQBz9z4PgkmNxBcS2t1wFmQ5IGMY/KprHwpaWCSrGZD5sflyEtyfU/U1sj734/0p1AHON4Mt44EFtPJbXEZyk6nkcAY+lRJ4FiXzp2vbh9QkcSfai3KkdgPT2rqB1NFAHLr4HiaWe5uL2ee9lAxOTjyyOm0dqtaT4WFjqjajcXk13dsgjLOcKAPQVvLR/FQAClpP4qWgAooooAKKKKACiiigAooooAKKKKAEPNFLRQB/9k=" alt="AMSA">
+  <div class="hdr-div"></div>
+  <div><div class="hdr-title">AFORADOR DE PASAJEROS</div><div class="hdr-sub">v16 — Autotransportes Moravia</div></div>
+  <div class="hdr-sp"></div>
+  <div class="hdr-badge">✂️ CORTES CONSOLIDADOS</div>
+  <div class="hdr-clock" id="clock">--:--:--</div>
+</div>
+
+<div class="body">
+  <!-- VIDEO -->
+  <div class="vpanel">
+    <div class="vwrap">
+      <video id="vp" controls></video>
+      <div class="vbadge" id="vbadge">Sin video</div>
+    </div>
+    <div class="vctrl">
+      <input type="file" id="fileInput" accept="video/*" multiple>
+      <button class="btn-load" onclick="document.getElementById('fileInput').click()">📁 Cargar videos</button>
+      <div class="spd-grp">
+        <span class="spd-lbl">Vel</span>
+        <button class="spd on" data-s="1"   onclick="setSpd(1)">1×</button>
+        <button class="spd"    data-s="1.5" onclick="setSpd(1.5)">1.5×</button>
+        <button class="spd"    data-s="2"   onclick="setSpd(2)">2×</button>
+        <button class="spd"    data-s="3"   onclick="setSpd(3)">3×</button>
+        <button class="spd"    data-s="4"   onclick="setSpd(4)">4×</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- CONTROLES -->
+  <div class="rpanel">
+
+    <!-- CORTES REALIZADOS -->
+    <div class="sec-hdr" onclick="toggleSec('cortes')">
+      <span class="sec-hdr-title">✂️ CORTES REALIZADOS</span>
+      <span class="sec-hdr-btn" id="sec-btn-cortes">−</span>
+    </div>
+    <div class="sec-body" id="sec-cortes">
+      <div class="csec">
+        <div class="clbl">📊 Cortes realizados</div>
+        <table class="ctbl">
+          <thead><tr><th>Inicio</th><th>Final</th><th>Vids</th><th>Total</th></tr></thead>
+          <tbody id="ctbody"></tbody>
+        </table>
+        <button class="btn-corte" style="background:#1a73e8;" onclick="actualizarCortesRealizados()">🔄 ACTUALIZAR CORTES</button>
+      </div>
+    </div>
+
+    <!-- TOTAL PERSONAS -->
+    <div class="sec-hdr" onclick="toggleSec('total')">
+      <span class="sec-hdr-title">👥 TOTAL PERSONAS</span>
+      <span class="sec-hdr-btn" id="sec-btn-total">−</span>
+    </div>
+    <div class="sec-body" id="sec-total">
+      <div class="tsec">
+        <div class="tlbl">Total Personas</div>
+        <div class="tnum" id="tnum">0</div>
+      </div>
+    </div>
+
+    <!-- CONTADORES -->
+    <div class="sec-hdr" onclick="toggleSec('contadores')">
+      <span class="sec-hdr-title">💰 CONTADORES</span>
+      <span class="sec-hdr-btn" id="sec-btn-contadores">−</span>
+    </div>
+    <div class="sec-body" id="sec-contadores">
+      <div class="counters">
+        <div class="cgrid">
+          <div class="card e"><span class="ckey">1</span><div class="cico">💵</div><div class="ctype">Efectivo</div><div class="cnum" id="cn_e">0</div><button class="cbtn" onclick="add('e')">+ Efectivo</button><button class="cundo" onclick="undo('e')">↶ Deshacer</button></div>
+          <div class="card t"><span class="ckey">2</span><div class="cico">💳</div><div class="ctype">Electrónico</div><div class="cnum" id="cn_t">0</div><button class="cbtn" onclick="add('t')">+ Electrónico</button><button class="cundo" onclick="undo('t')">↶ Deshacer</button></div>
+          <div class="card c"><span class="ckey">3</span><div class="cico">🪪</div><div class="ctype">Cédula</div><div class="cnum" id="cn_c">0</div><button class="cbtn" onclick="add('c')">+ Cédula</button><button class="cundo" onclick="undo('c')">↶ Deshacer</button></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- CONDUCTOR -->
+    <div class="sec-hdr" onclick="toggleSec('conductor')">
+      <span class="sec-hdr-title">👤 CONDUCTOR</span>
+      <span class="sec-hdr-btn" id="sec-btn-conductor">−</span>
+    </div>
+    <div class="sec-body" id="sec-conductor">
+      <div class="condsec">
+        <input class="finput" id="conductor" type="text" placeholder="Nombre del conductor">
+      </div>
+    </div>
+
+    <!-- OBSERVACIONES -->
+    <div class="sec-hdr" onclick="toggleSec('obs')">
+      <span class="sec-hdr-title">📝 OBSERVACIONES</span>
+      <span class="sec-hdr-btn" id="sec-btn-obs">−</span>
+    </div>
+    <div class="sec-body" id="sec-obs">
+      <div class="condsec">
+        <textarea class="finput" id="obs" style="height:52px;resize:vertical;" placeholder="Notas..."></textarea>
+      </div>
+    </div>
+
+    <!-- SIGUIENTE / LIMPIAR -->
+    <div class="actsec">
+      <button class="abtn next" onclick="nextVid()">▶️ SIGUIENTE</button>
+      <button class="abtn rst"  onclick="limpiar()">🗑️ LIMPIAR</button>
+    </div>
+
+    <!-- CARGAR VIDEOS -->
+    <div style="padding:8px 14px 4px;">
+      <button class="cargar-videos-btn" onclick="document.getElementById('fileInput').click()">📂 CARGAR VIDEOS</button>
+    </div>
+
+    <!-- VIDEOS CARGADOS -->
+    <div class="sec-hdr" onclick="toggleSec('videos')">
+      <span class="sec-hdr-title">🎬 VIDEOS CARGADOS (<span id="vcnt">0</span>)</span>
+      <span class="sec-hdr-btn" id="sec-btn-videos">−</span>
+    </div>
+    <div class="sec-body" id="sec-videos">
+      <div style="padding:4px 14px 8px;">
+        <div class="vlist" id="vlist"></div>
+      </div>
+    </div>
+
+    <!-- MODO EDICIÓN + EXPORTAR + CAPTURA -->
+    <div class="exsec">
+      <button id="btnModoEdicion" onclick="toggleModoEdicion()">✏️ MODO EDICIÓN</button>
+      <div style="display:flex;gap:6px;">
+        <button class="exbtn" onclick="exportXL()" style="flex:1;">📊 EXPORTAR EXCEL</button>
+        <button onclick="tomarCaptura()" title="Captura de pantalla" style="padding:8px 12px;background:#555;color:#fff;border:none;border-radius:4px;cursor:pointer;font-size:13px;flex-shrink:0;">📸</button>
+      </div>
+    </div>
+
+  </div>
+
+</div>
+
+<div class="toast" id="toast"></div>
+<canvas id="snap"></canvas>
+
+<script>
+// ═══════════════════════════════════════════════════════════
+// ESTADO PRINCIPAL
+// ═══════════════════════════════════════════════════════════
+const state = {
+  vids:    {},       // { nombre: { file, e, t, c, obs } }
+  queue:   [],       // array ordenado de nombres
+  cur:     null,     // nombre del video actual
+  curIdx:  -1,       // índice en queue
+  cortes:  [],       // cortes realizados
+  corteStart: 0,     // índice de inicio del corte actual
+  e: 0, t: 0, c: 0  // contadores actuales
+};
+
+// ═══════════════════════════════════════════════════════════
+// FUNCIONES PRINCIPALES
+// ═══════════════════════════════════════════════════════════
+
+function total() { return state.e + state.t + state.c; }
+
+// Guardar conteo actual en state.vids
+function guardar() {
+  if (!state.cur) return;
+  const obs = document.getElementById('obs').value;
+  const cond = document.getElementById('conductor').value;
+  const v = state.vids[state.cur];
+  if (v) {
+    v.e = state.e;
+    v.t = state.t;
+    v.c = state.c;
+    v.obs = obs;
+    v.conductor = cond;
+  }
+}
+
+// Cargar video por índice
+// skipSave=true cuando los datos YA fueron guardados antes (ej. desde hacerCorte)
+function cargarIdx(idx, skipSave = false) {
+  if (idx < 0 || idx >= state.queue.length) return;
+  if (!skipSave) guardar();
+  state.curIdx = idx;
+  state.cur = state.queue[idx];
+  const v = state.vids[state.cur];
+  state.e = v.e || 0;
+  state.t = v.t || 0;
+  state.c = v.c || 0;
+  document.getElementById('obs').value = v.obs || '';
+  if (v.file) {
+    document.getElementById('vp').src = URL.createObjectURL(v.file);
+  }
+  document.getElementById('vbadge').textContent = state.cur;
+  // Reset speed
+  document.getElementById('vp').playbackRate = 1;
+  document.querySelectorAll('.spd').forEach(b => {
+    b.classList.toggle('on', b.dataset.s === '1');
+  });
+  render();
+}
+
+// Siguiente video
+function nextVid() {
+  guardar();
+  // Buscar siguiente desde curIdx+1 en adelante
+  let next = -1;
+  for (let i = state.curIdx + 1; i < state.queue.length; i++) {
+    next = i;
+    break;
+  }
+  if (next === -1) {
+    toast('⚠️ Ya estás en el último video');
+    return;
+  }
+  cargarIdx(next);
+  setTimeout(() => {
+    const vp = document.getElementById('vp');
+    if (vp.src) vp.play().catch(() => {});
+  }, 200);
+}
+
+// Hacer CORTE
+function hacerCorte() {
+  guardar();
+
+  // Videos desde corteStart hasta curIdx (INCLUSIVE)
+  const desde = state.corteStart;
+  const hasta = state.curIdx; // INCLUSIVE el video actual
+
+  if (hasta < desde) {
+    toast('⚠️ No hay videos para consolidar');
+    return;
+  }
+
+  const nombres = state.queue.slice(desde, hasta + 1);
+  const vidsCorte = nombres.map(n => state.vids[n]);
+
+  const totalCorte = vidsCorte.reduce((s, v) => s + (v.e||0) + (v.t||0) + (v.c||0), 0);
+
+  const corte = {
+    num:      state.cortes.length + 1,
+    conductor: document.getElementById('conductor').value.trim() || 'N/A',
+    fecha:    new Date().toLocaleDateString('es-CR'),
+    inicio:   nombres[0],
+    fin:      nombres[nombres.length - 1],
+    count:    nombres.length,
+    e:        vidsCorte.reduce((s, v) => s + (v.e||0), 0),
+    t:        vidsCorte.reduce((s, v) => s + (v.t||0), 0),
+    c:        vidsCorte.reduce((s, v) => s + (v.c||0), 0),
+    total:    totalCorte,
+    nombres:  [...nombres]
+  };
+
+  state.cortes.push(corte);
+  // El SIGUIENTE corte empieza DESPUÉS del actual
+  state.corteStart = hasta + 1;
+
+  // Resetear contadores
+  state.e = 0; state.t = 0; state.c = 0;
+  document.getElementById('obs').value = '';
+
+  toast(`✂️ Corte ${corte.num} — ${corte.total} personas`);
+
+  // Avanzar al siguiente video si existe
+  // skipSave=true porque YA guardamos arriba antes de resetear contadores
+  if (state.corteStart < state.queue.length) {
+    cargarIdx(state.corteStart, true);
+    setTimeout(() => {
+      const vp = document.getElementById('vp');
+      if (vp.src) vp.play().catch(() => {});
+    }, 200);
+  } else {
+    render();
+    toast('✅ Todos los videos procesados');
+  }
+}
+
+// Limpiar todo
+function limpiar() {
+  if (!confirm('⚠️ ¿Borrar TODO?')) return;
+  Object.assign(state, {
+    vids: {}, queue: [], cur: null, curIdx: -1,
+    cortes: [], corteStart: 0, e: 0, t: 0, c: 0
+  });
+  document.getElementById('vp').src = '';
+  document.getElementById('vbadge').textContent = 'Sin video';
+  document.getElementById('obs').value = '';
+  document.getElementById('fileInput').value = '';
+  toast('🗑️ Limpiado');
+  render();
+}
+
+// Añadir pago
+function add(tipo) {
+  state[tipo]++;
+  guardar();
+  render();
+}
+
+// Deshacer
+function undo(tipo) {
+  if (state[tipo] > 0) {
+    state[tipo]--;
+    guardar();
+    render();
+  }
+}
+
+// Cambiar velocidad
+function setSpd(s) {
+  const vp = document.getElementById('vp');
+  if (vp) vp.playbackRate = s;
+  document.querySelectorAll('.spd').forEach(b => {
+    b.classList.toggle('on', parseFloat(b.dataset.s) === s);
+  });
+}
+
+// Captura
+function capturar() {
+  const vp = document.getElementById('vp');
+  if (!vp.src || vp.src === window.location.href) { toast('⚠️ Carga un video'); return; }
+  try {
+    const c = document.getElementById('snap');
+    c.width = vp.videoWidth; c.height = vp.videoHeight;
+    const ctx = c.getContext('2d');
+    ctx.drawImage(vp, 0, 0);
+    ctx.fillStyle = 'rgba(13,17,23,.85)';
+    ctx.fillRect(0, c.height - 55, c.width, 55);
+    ctx.fillStyle = '#fff';
+    ctx.font = 'bold 13px Barlow';
+    ctx.fillText(`Total:${total()} 💵${state.e} 💳${state.t} 🪪${state.c}`, 10, c.height - 36);
+    const a = document.createElement('a');
+    a.download = 'captura_' + (state.cur||'video').replace(/[^a-z0-9]/gi,'_') + '.png';
+    a.href = c.toDataURL();
+    a.click();
+    toast('📸 Captura guardada');
+  } catch(e) { toast('❌ Error captura'); }
+}
+
+// ═══════════════════════════════════════════════════════════
+// CARGAR ARCHIVOS
+// ═══════════════════════════════════════════════════════════
+document.getElementById('fileInput').addEventListener('change', e => {
+  const files = Array.from(e.target.files);
+  if (!files.length) return;
+  files.forEach(f => {
+    if (!state.vids[f.name]) {
+      state.vids[f.name] = { file: f, e: 0, t: 0, c: 0, obs: '', conductor: '' };
+    } else {
+      state.vids[f.name].file = f;
+    }
+  });
+  // Ordenar alfabéticamente
+  state.queue = Object.keys(state.vids).sort();
+  // Cargar el primero solo si no hay video actual
+  if (state.curIdx === -1) {
+    cargarIdx(0);
+  }
+  toast(`📁 ${files.length} video(s) cargado(s)`);
+  render();
+});
+
+// ═══════════════════════════════════════════════════════════
+// RENDER
+// ═══════════════════════════════════════════════════════════
+function render() {
+  // Contadores
+  document.getElementById('tnum').textContent = total();
+  document.getElementById('cn_e').textContent = state.e;
+  document.getElementById('cn_t').textContent = state.t;
+  document.getElementById('cn_c').textContent = state.c;
+  document.getElementById('vcnt').textContent = state.queue.length;
+
+  // Tabla de cortes
+  const tb = document.getElementById('ctbody');
+  tb.innerHTML = state.cortes.length
+    ? state.cortes.map((c, i) => `
+      <tr onclick="manejarClickCorte(${i})">
+        <td>${c.nombres[0].substring(0,8)}…</td>
+        <td>${c.nombres[c.nombres.length-1].substring(0,8)}…</td>
+        <td>${c.count}</td>
+        <td><b>${c.total}</b></td>
+      </tr>`).join('')
+    : '<tr><td colspan="4" style="text-align:center;color:var(--muted);font-size:9px;">Sin cortes</td></tr>';
+
+  // Lista de videos
+  const vl = document.getElementById('vlist');
+  if (!state.queue.length) {
+    vl.innerHTML = '<div style="color:var(--muted);font-size:10px;padding:8px;text-align:center;">Sin videos cargados</div>';
+    return;
+  }
+
+  // Determinar qué videos están en cortes
+  const enCorte = new Set();
+  state.cortes.forEach(c => c.nombres.forEach(n => enCorte.add(n)));
+
+  vl.innerHTML = state.queue.map((n, i) => {
+    const v = state.vids[n];
+    const isCur = n === state.cur;
+    const isDone = enCorte.has(n);
+    const tot = (v.e||0) + (v.t||0) + (v.c||0);
+    const tip = `💵${v.e||0} 💳${v.t||0} 🪪${v.c||0}`;
+    return `<div class="vi${isCur?' cur':''}${isDone?' done':''}"
+      onclick="manejarClickVideo(${i},event)" data-n="${n}" title="${tip}">
+      <span class="vi-name">${n.substring(0,25)}</span>
+      <span class="vi-num">${tot}</span>
+      ${isDone ? '<span class="vi-mark">✓</span>' : ''}
+      <span class="vi-tip">${tip}</span>
+    </div>`;
+  }).join('');
+}
+
+// Resaltar videos de un corte Y mostrar sus totales
+function resaltarCorte(idx) {
+  const c = state.cortes[idx];
+  const names = new Set(c.nombres);
+
+  // Resaltar videos del corte
+  document.querySelectorAll('.vi').forEach(el => {
+    const n = el.dataset.n;
+    if (names.has(n)) {
+      el.style.background = 'rgba(46,160,67,.4)';
+      el.style.borderColor = '#3fb950';
+    } else {
+      el.style.background = '';
+      el.style.borderColor = '';
+    }
+  });
+
+  // Actualizar TOTAL PERSONAS y CONTADORES con datos del corte
+  document.getElementById('tnum').textContent = c.total;
+  document.getElementById('cn_e').textContent = c.e || 0;
+  document.getElementById('cn_t').textContent = c.t || 0;
+  document.getElementById('cn_c').textContent = c.c || 0;
+
+  // Resaltar fila activa
+  document.querySelectorAll('.ctbody tr').forEach((tr, i) => {
+    tr.style.background = i === idx ? 'rgba(46,160,67,0.25)' : '';
+  });
+
+  toast(`✂️ Corte ${c.num}: ${c.count} videos — ${c.total} personas (💵${c.e||0} 💳${c.t||0} 🪪${c.c||0})`);
+}
+
+// Export Excel
+function exportXL() {
+  try {
+    guardar();
+    if (!state.cortes.length && !state.queue.length) { toast('⚠️ Sin datos'); return; }
+
+    // Función para extraer datos del nombre del video
+    function parsearNombreVideo(nombre) {
+      // Formato: Bus106_2026-04-15_05-02-41_20.mov
+      const regex = /([A-Za-z0-9]+)_(\d{4})-(\d{2})-(\d{2})_(\d{2})-(\d{2})-(\d{2})_(\d+)/;
+      const match = nombre.match(regex);
+      if (!match) return { bus: '', fecha: '', hora: '', duracion: 0 };
+      
+      const [, bus, año, mes, dia, h, m, s, dur] = match;
+      return {
+        bus: bus,
+        fecha: dia + '/' + mes + '/' + año,  // dd/mm/yyyy
+        hora: h + ':' + m + ':' + s,         // HH:MM:SS
+        duracion: parseInt(dur)
+      };
+    }
+
+    // Headers
+    const rows = [
+      ['AFORADOR DE PASAJEROS — AUTOTRANSPORTES MORAVIA'],
+      ['Exportado:', new Date().toLocaleString('es-CR')],
+      [],
+      ['BUS', 'CONDUCTOR', 'FECHA', 'INICIO', 'FINAL', 'TOTAL', 'EFECTIVO', 'ELECTRÓNICO', 'CÉDULA', 'OBSERVACIONES']
+    ];
+
+    // Procesar cortes
+    state.cortes.forEach(c => {
+      const videos = c.nombres || [];
+      const primerVideo = videos.length > 0 ? parsearNombreVideo(videos[0]) : {};
+      let ultimoVideo = primerVideo;
+      if (videos.length > 1) {
+        ultimoVideo = parsearNombreVideo(videos[videos.length - 1]);
+      }
+
+      // Calcular hora final
+      let horaFinal = ultimoVideo.hora;
+      if (ultimoVideo.duracion && ultimoVideo.hora) {
+        const [h, m, s] = ultimoVideo.hora.split(':').map(Number);
+        let totalSegs = h * 3600 + m * 60 + s + ultimoVideo.duracion;
+        const hf = Math.floor(totalSegs / 3600) % 24;
+        const mf = Math.floor((totalSegs % 3600) / 60);
+        const sf = totalSegs % 60;
+        horaFinal = String(hf).padStart(2,'0') + ':' + String(mf).padStart(2,'0') + ':' + String(sf).padStart(2,'0');
+      }
+
+      const bus = primerVideo.bus || 'N/A';
+      const fecha = primerVideo.fecha || c.fecha || new Date().toLocaleDateString('es-CR');
+      const inicio = primerVideo.hora || c.inicio || 'N/A';
+      const final = horaFinal || c.fin || 'N/A';
+      const obs = (c.obs || '').trim() || '';
+
+      rows.push([bus, c.conductor, fecha, inicio, final, c.total, c.e, c.t, c.c, obs]);
+    });
+
+    // Videos pendientes
+    const enCorte = new Set(state.cortes.flatMap(c => c.nombres));
+    const pendientes = state.queue.filter(n => !enCorte.has(n));
+    if (pendientes.length) {
+      const ve = pendientes.reduce((s,n)=>s+(state.vids[n].e||0),0);
+      const vt = pendientes.reduce((s,n)=>s+(state.vids[n].t||0),0);
+      const vc = pendientes.reduce((s,n)=>s+(state.vids[n].c||0),0);
+      const cond = document.getElementById('conductor').value.trim() || 'N/A';
+      const primerP = parsearNombreVideo(pendientes[0]);
+      const ultimoP = parsearNombreVideo(pendientes[pendientes.length-1]);
+      rows.push([primerP.bus || 'N/A', cond, primerP.fecha || new Date().toLocaleDateString('es-CR'), primerP.hora || 'N/A', ultimoP.hora || 'N/A', ve+vt+vc, ve, vt, vc, '']);
+    }
+
+    // TOTALES
+    const colasCol = [];
+    for (let i = 5; i < 10; i++) {
+      let suma = 0;
+      for (let j = 4; j < rows.length; j++) {
+        const val = rows[j][i];
+        if (typeof val === 'number') suma += val;
+      }
+      colasCol.push(suma);
+    }
+    rows.push(['', '', '', '', 'TOTAL', colasCol[0], colasCol[1], colasCol[2], colasCol[3], '']);
+
+    // Crear Excel
+    const ws = XLSX.utils.aoa_to_sheet(rows);
+    ws['!cols'] = [{wch:12},{wch:22},{wch:12},{wch:12},{wch:12},{wch:10},{wch:12},{wch:14},{wch:10},{wch:28}];
+    const wb = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(wb, ws, 'Aforo');
+    const nombreArchivo = 'aforo_' + new Date().toISOString().slice(0,10) + '.xlsx';
+    XLSX.writeFile(wb, nombreArchivo);
+    toast('✅ Excel descargado: ' + nombreArchivo);
+  } catch(err) { 
+    console.error(err);
+    toast('❌ Error Excel: ' + err.message); 
+  }
+}
+
+// Toast
+function toast(msg) {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('on');
+  setTimeout(() => t.classList.remove('on'), 2500);
+}
+
+// Reloj
+setInterval(() => {
+  document.getElementById('clock').textContent = new Date().toLocaleTimeString('es-CR');
+}, 1000);
+
+// Teclado
+document.addEventListener('keydown', ev => {
+  if (['INPUT','TEXTAREA'].includes(document.activeElement.tagName)) return;
+  switch(ev.key) {
+    case '1': ev.preventDefault(); add('e'); break;
+    case '2': ev.preventDefault(); add('t'); break;
+    case '3': ev.preventDefault(); add('c'); break;
+    case '+':
+    case '=': ev.preventDefault(); hacerCorte(); break;
+    case 'Enter': ev.preventDefault(); nextVid(); break;
+    case 'ArrowRight': ev.preventDefault();
+      const sRight = parseFloat(document.querySelector('.spd.on')?.dataset.s||1);
+      const spds = [1,1.5,2,3,4];
+      const nR = spds.indexOf(sRight);
+      if (nR < spds.length-1) setSpd(spds[nR+1]);
+      break;
+    case 'ArrowLeft': ev.preventDefault();
+      const sLeft = parseFloat(document.querySelector('.spd.on')?.dataset.s||1);
+      const sArr = [1,1.5,2,3,4];
+      const nL = sArr.indexOf(sLeft);
+      if (nL > 0) setSpd(sArr[nL-1]);
+      break;
+    case 'p':
+      if (ev.ctrlKey) { ev.preventDefault(); capturar(); }
+      break;
+  }
+});
+
+render();
+</script>
+
+<script>
+// TOGGLE COLLAPSE/EXPAND
+function toggleSection(event, sectionId) {
+  if (event) event.stopPropagation();
+  const content = document.getElementById(sectionId);
+  const toggle = document.getElementById('toggle-' + sectionId);
+  
+  if (content && toggle) {
+    if (content.classList.contains('collapsed')) {
+      content.classList.remove('collapsed');
+      toggle.textContent = '−';
+    } else {
+      content.classList.add('collapsed');
+      toggle.textContent = '+';
+    }
+  }
+}
+
+
+let editVideoNombre = null;
+let nuevosCortes = [];
+let videosSeleccionados = [];
+
+// TOGGLE COLLAPSE/EXPAND
+function toggleSection(event, sectionId) {
+  event.stopPropagation();
+  const content = document.getElementById(sectionId);
+  const toggle = document.getElementById('toggle-' + sectionId);
+  
+  if (content.classList.contains('collapsed')) {
+    content.classList.remove('collapsed');
+    toggle.textContent = '−';
+  } else {
+    content.classList.add('collapsed');
+    toggle.textContent = '+';
+  }
+}
+
+// EDITAR VIDEO
+function abrirEditarVideo(nombre) {
+  editVideoNombre = nombre;
+  const vid = state.vids[nombre];
+  document.getElementById('editNombre').value = nombre;
+  document.getElementById('editEfectivo').value = vid.e || 0;
+  document.getElementById('editElectronico').value = vid.t || 0;
+  document.getElementById('editCedula').value = vid.c || 0;
+  document.getElementById('modalOverlay').classList.add('show');
+  setTimeout(() => document.getElementById('editEfectivo').focus(), 100);
+}
+
+function cerrarModal() {
+  document.getElementById('modalOverlay').classList.remove('show');
+  editVideoNombre = null;
+}
+
+function guardarEdicion() {
+  const e = parseInt(document.getElementById('editEfectivo').value) || 0;
+  const t = parseInt(document.getElementById('editElectronico').value) || 0;
+  const c = parseInt(document.getElementById('editCedula').value) || 0;
+  
+  if (editVideoNombre && state.vids[editVideoNombre]) {
+    state.vids[editVideoNombre].e = e;
+    state.vids[editVideoNombre].t = t;
+    state.vids[editVideoNombre].c = c;
+    guardar();
+    render();
+    cerrarModal();
+    toast('✅ Video actualizado');
+  }
+}
+
+document.addEventListener('click', (ev) => {
+  const modal = document.getElementById('modalOverlay');
+  if (modal && ev.target === modal) cerrarModal();
+});
+
+document.addEventListener('keydown', (ev) => {
+  if (ev.key === 'Enter' && editVideoNombre && document.getElementById('modalOverlay').classList.contains('show')) {
+    ev.preventDefault();
+    guardarEdicion();
+  }
+  
+  if (ev.key.toLowerCase() === 'a' && document.getElementById('cortes-panel-sec').style.display === 'block') {
+    ev.preventDefault();
+    anclarVideosSeleccionados();
+  }
+});
+
+// PANEL DE CORTES
+function mostrarPanelCortes() {
+  nuevosCortes = [];
+  videosSeleccionados = [];
+  
+  const checklist = state.queue.map((n, idx) => {
+    const v = state.vids[n];
+    const tot = (v.e||0) + (v.t||0) + (v.c||0);
+    return `<label class="video-check-item">
+      <input type="checkbox" value="${n.replace(/"/g, '&quot;')}" data-idx="${idx}">
+      <span>${n.substring(0,30)} (${tot})</span>
+    </label>`;
+  }).join('');
+  
+  document.getElementById('video-check-list').innerHTML = checklist;
+  
+  document.querySelectorAll('#video-check-list input[type="checkbox"]').forEach(cb => {
+    cb.addEventListener('change', () => actualizarVideosSeleccionados());
+  });
+  
+  renderizarCortesPanel();
+  document.getElementById('cortes-panel-sec').style.display = 'block';
+  document.getElementById('rpanel').scrollTop = document.getElementById('rpanel').scrollHeight;
+  toast('📋 Selecciona videos y presiona A para anclar');
+}
+
+function actualizarVideosSeleccionados() {
+  const checkboxes = document.querySelectorAll('#video-check-list input[type="checkbox"]:checked');
+  videosSeleccionados = Array.from(checkboxes).map(cb => cb.value);
+}
+
+function anclarVideosSeleccionados() {
+  if (!videosSeleccionados.length) { 
+    toast('⚠️ Selecciona videos (checkboxes)');
+    return;
+  }
+  
+  const conductor = document.getElementById('new-corte-conductor').value.trim() || 'N/A';
+  const obs = document.getElementById('new-corte-obs').value.trim() || '';
+  
+  let e = 0, t = 0, c = 0;
+  videosSeleccionados.forEach(n => {
+    const v = state.vids[n];
+    if (v) { e += v.e||0; t += v.t||0; c += v.c||0; }
+  });
+  
+  const corte = {
+    num: nuevosCortes.length + 1,
+    nombres: [...videosSeleccionados],
+    conductor,
+    obs,
+    e, t, c,
+    total: e + t + c,
+    count: videosSeleccionados.length,
+    fecha: new Date().toLocaleDateString('es-CR'),
+    inicio: videosSeleccionados[0] || '',
+    fin: videosSeleccionados[videosSeleccionados.length - 1] || ''
+  };
+  
+  nuevosCortes.push(corte);
+  document.getElementById('new-corte-conductor').value = '';
+  document.getElementById('new-corte-obs').value = '';
+  document.querySelectorAll('#video-check-list input[type="checkbox"]').forEach(cb => cb.checked = false);
+  videosSeleccionados = [];
+  renderizarCortesPanel();
+  toast('✅ Corte ' + corte.num + ' anclado');
+}
+
+function renderizarCortesPanel() {
+  const html = nuevosCortes.map((c, idx) => `
+    <div class="corte-card">
+      <div class="corte-header">
+        <div class="corte-num">Corte ${c.num}</div>
+        <div class="corte-btns">
+          <button class="btn-xs btn-edit-corte" onclick="editarCortePanel(${idx})">✏️</button>
+          <button class="btn-xs btn-del-corte" onclick="eliminarCortePanel(${idx})">🗑️</button>
+        </div>
+      </div>
+      <div class="corte-videos">
+        ${c.nombres.map(n => `<span class="corte-video-tag">${n.substring(0,20)}</span>`).join('')}
+      </div>
+      <div class="corte-conductor">👤 ${c.conductor}</div>
+    </div>
+  `).join('');
+  
+  document.getElementById('cortes-list').innerHTML = html || '<div style="color:var(--muted);font-size:11px;">No hay cortes</div>';
+}
+
+function editarCortePanel(idx) {
+  const corte = nuevosCortes[idx];
+  const newCond = prompt('Conductor:', corte.conductor);
+  if (newCond !== null) {
+    corte.conductor = newCond.trim() || 'N/A';
+    renderizarCortesPanel();
+    toast('✅ Corte actualizado');
+  }
+}
+
+function eliminarCortePanel(idx) {
+  if (!confirm('¿Eliminar corte ' + (idx + 1) + '?')) return;
+  nuevosCortes.splice(idx, 1);
+  nuevosCortes.forEach((c, i) => c.num = i + 1);
+  renderizarCortesPanel();
+  toast('🗑️ Corte eliminado');
+}
+
+function actualizarCortesRealizados() {
+  if (!nuevosCortes.length) { 
+    toast('⚠️ Crea cortes primero');
+    return;
+  }
+  
+  // Sincronizar: copiar cada corte con todos sus datos
+  state.cortes = nuevosCortes.map(c => ({
+    num: c.num,
+    nombres: c.nombres,
+    conductor: c.conductor,
+    obs: c.obs,
+    e: c.e,
+    t: c.t,
+    c: c.c,
+    total: c.total,
+    count: c.count,
+    fecha: c.fecha,
+    inicio: c.inicio,
+    fin: c.fin
+  }));
+  
+  guardar();
+  render();
+  toast('✅ CORTES REALIZADOS actualizados - ' + state.cortes.length + ' cortes');
+}
+
+function confirmarCortes() {
+  if (!nuevosCortes.length) { toast('⚠️ Sin cortes'); return; }
+  
+  state.cortes = JSON.parse(JSON.stringify(nuevosCortes));
+  guardar();
+  document.getElementById('cortes-panel-sec').style.display = 'none';
+  toast('✅ Exportando...');
+  setTimeout(() => exportXL(), 300);
+}
+</script>
+
+<!-- MODAL EDITAR VIDEO -->
+<div id="modalOverlay" class="modal-overlay">
+  <div class="modal-box">
+    <div class="modal-title">Editar Video</div>
+    <div class="modal-field">
+      <label class="modal-label">Nombre</label>
+      <input type="text" id="editNombre" class="modal-input" readonly>
+    </div>
+    <div class="modal-field">
+      <label class="modal-label">Conteos</label>
+      <div class="modal-input-group">
+        <div>
+          <label class="modal-label" style="margin-bottom:3px;">Efectivo</label>
+          <input type="number" id="editEfectivo" class="modal-input" min="0" value="0">
+        </div>
+        <div>
+          <label class="modal-label" style="margin-bottom:3px;">Electrónico</label>
+          <input type="number" id="editElectronico" class="modal-input" min="0" value="0">
+        </div>
+        <div>
+          <label class="modal-label" style="margin-bottom:3px;">Cédula</label>
+          <input type="number" id="editCedula" class="modal-input" min="0" value="0">
+        </div>
+      </div>
+    </div>
+    <div class="modal-buttons">
+      <button class="btn-cancel" onclick="cerrarModal()">Cancelar</button>
+      <button class="btn-save" onclick="guardarEdicion()">Guardar</button>
+    </div>
+  </div>
+</div>
+
+<!-- BARRA DE ATAJOS FIJA AL PIE -->
+<div class="keyboard-shortcuts">
+  <div class="shortcut-item"><span class="shortcut-key">[1]</span><span class="shortcut-desc">Efectivo</span></div>
+  <div class="shortcut-item"><span class="shortcut-key">[2]</span><span class="shortcut-desc">Electrónico</span></div>
+  <div class="shortcut-item"><span class="shortcut-key">[3]</span><span class="shortcut-desc">Cédula</span></div>
+  <div class="shortcut-item"><span class="shortcut-key">A</span><span class="shortcut-desc">Anclar</span></div>
+  <div class="shortcut-item"><span class="shortcut-key">Enter</span><span class="shortcut-desc">Siguiente</span></div>
+  <div class="shortcut-item"><span class="shortcut-key">←→</span><span class="shortcut-desc">Velocidad</span></div>
+  <div class="shortcut-item"><span class="shortcut-key">Esc</span><span class="shortcut-desc">Cerrar</span></div>
+</div>
+
+<div class="kbar">
+  <div class="ki"><span class="kk2">[1]</span><span class="kd">Efectivo</span></div>
+  <div class="ki"><span class="kk2">[2]</span><span class="kd">Electrónico</span></div>
+  <div class="ki"><span class="kk2">[3]</span><span class="kd">Cédula</span></div>
+  <div class="ki"><span class="kk2">SHIFT+Click</span><span class="kd">Rango</span></div>
+  <div class="ki"><span class="kk2">A</span><span class="kd">Crear corte</span></div>
+  <div class="ki"><span class="kk2">CTRL+Click</span><span class="kd">Editar</span></div>
+  <div class="ki"><span class="kk2">Esc</span><span class="kd">Cancelar</span></div>
+  <div class="ki"><span class="kk2">CTRL+Enter</span><span class="kd">Captura</span></div>
+</div>
+
+<script>
+// ══════════════════════════════════════════════════
+// v16.15 — COLLAPSE + EXCEL + MODO EDICIÓN
+// ══════════════════════════════════════════════════
+
+function toggleSec(id) {
+  var body = document.getElementById('sec-' + id);
+  var btn  = document.getElementById('sec-btn-' + id);
+  if (!body) return;
+  var closed = body.classList.toggle('closed');
+  if (btn) btn.textContent = closed ? '+' : '−';
+}
+
+var seleccion    = [];
+var ultimoIdx    = -1;
+var modoEdicion  = false;
+var corteEditing = null;
+
+function manejarClickVideo(idx, event) {
+  if (modoEdicion) {
+    if (event && (event.ctrlKey || event.metaKey)) {
+      modificarVideoEnCorte(idx);
+    }
+    return;
+  }
+  if (event && event.shiftKey && ultimoIdx !== -1) {
+    var mn = Math.min(ultimoIdx, idx);
+    var mx = Math.max(ultimoIdx, idx);
+    seleccion = [];
+    for (var i = mn; i <= mx; i++) seleccion.push(i);
+  } else {
+    seleccion = [idx];
+    cargarIdx(idx);
+  }
+  ultimoIdx = idx;
+  pintarSeleccion();
+}
+
+function manejarClickCorte(idx) {
+  if (modoEdicion) {
+    activarEdicionCorte(idx);
+  } else {
+    resaltarCorte(idx);
+  }
+}
+
+function pintarSeleccion() {
+  document.querySelectorAll('.vi').forEach(function(el, i) {
+    el.classList.toggle('sel', seleccion.indexOf(i) !== -1);
+    if (modoEdicion && corteEditing !== null) {
+      var nombre = el.dataset.n;
+      var c = state.cortes[corteEditing];
+      var enCorte = c && c.nombres.indexOf(nombre) !== -1;
+      el.classList.toggle('en-corte', !!enCorte);
+    } else {
+      el.classList.remove('en-corte');
+    }
+  });
+}
+
+function crearCorte() {
+  if (!seleccion.length) {
+    toast('⚠️ Selecciona videos primero (SHIFT+Click)');
+    return;
+  }
+  var conductor = (document.getElementById('conductor').value || '').trim() || 'N/A';
+  var obs       = (document.getElementById('obs').value || '').trim();
+  var nombres   = seleccion.map(function(i) { return state.queue[i]; });
+  var e=0, t=0, c=0;
+  nombres.forEach(function(n) {
+    var v = state.vids[n];
+    if (v) { e += v.e||0; t += v.t||0; c += v.c||0; }
+  });
+  state.cortes.push({
+    num: state.cortes.length + 1,
+    nombres: nombres, conductor: conductor, obs: obs,
+    e: e, t: t, c: c, total: e+t+c,
+    count: nombres.length,
+    fecha: new Date().toLocaleDateString('es-CR')
+  });
+  guardar(); render();
+  seleccion = []; ultimoIdx = -1;
+  toast('✅ Corte ' + state.cortes.length + ' creado');
+}
+
+function toggleModoEdicion() {
+  modoEdicion = !modoEdicion;
+  var btn = document.getElementById('btnModoEdicion');
+  if (modoEdicion) {
+    btn.textContent = '✅ MODO EDICIÓN ACTIVO';
+    btn.classList.add('activo');
+    corteEditing = null;
+    toast('✏️ Modo edición ON — Click en un corte');
+  } else {
+    btn.textContent = '✏️ MODO EDICIÓN';
+    btn.classList.remove('activo');
+    corteEditing = null;
+    document.querySelectorAll('.ctbody tr').forEach(function(tr) { tr.classList.remove('fila-edit'); });
+    pintarSeleccion();
+    toast('Modo edición desactivado');
+  }
+}
+
+function activarEdicionCorte(idx) {
+  corteEditing = idx;
+  document.querySelectorAll('.ctbody tr').forEach(function(tr, i) {
+    tr.classList.toggle('fila-edit', i === idx);
+  });
+  pintarSeleccion();
+  var c = state.cortes[idx];
+  if (c) toast('✏️ Editando Corte ' + c.num + ' — CTRL+Click en videos');
+}
+
+function modificarVideoEnCorte(videoIdx) {
+  if (corteEditing === null) {
+    toast('⚠️ Click en un corte de la tabla primero');
+    return;
+  }
+  var corte  = state.cortes[corteEditing];
+  var nombre = state.queue[videoIdx];
+  var pos    = corte.nombres.indexOf(nombre);
+  if (pos > -1) {
+    corte.nombres.splice(pos, 1);
+    toast('➖ Video removido');
+  } else {
+    corte.nombres.push(nombre);
+    toast('➕ Video agregado');
+  }
+  var e=0, t=0, c=0;
+  corte.nombres.forEach(function(n) {
+    var v = state.vids[n]; if (v) { e+=v.e||0; t+=v.t||0; c+=v.c||0; }
+  });
+  corte.e=e; corte.t=t; corte.c=c;
+  corte.total=e+t+c; corte.count=corte.nombres.length;
+  guardar(); render();
+  var idx = corteEditing;
+  setTimeout(function() { activarEdicionCorte(idx); }, 60);
+}
+
+function tomarCaptura() {
+  var vp = document.getElementById('vp');
+  if (!vp || !vp.src || vp.readyState === 0) {
+    toast('⚠️ No hay video cargado');
+    return;
+  }
+  var canvas = document.createElement('canvas');
+  canvas.width  = vp.videoWidth  || 640;
+  canvas.height = vp.videoHeight || 360;
+  canvas.getContext('2d').drawImage(vp, 0, 0);
+  canvas.toBlob(function(blob) {
+    var url = URL.createObjectURL(blob);
+    var a = document.createElement('a');
+    a.href = url;
+    a.download = 'captura_' + Date.now() + '.png';
+    a.click();
+    URL.revokeObjectURL(url);
+    toast('📸 Captura guardada');
+  });
+}
+
+document.addEventListener('keydown', function(e) {
+  if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') return;
+  if (e.key.toLowerCase() === 'a') { e.preventDefault(); crearCorte(); }
+  if (e.key === 'Escape' && modoEdicion) { toggleModoEdicion(); }
+  if ((e.ctrlKey || e.metaKey) && e.key === 'Enter') { e.preventDefault(); tomarCaptura(); }
+});
+</script>
+<script>
+// ═══════════════════════════════════════════════════════════════
+// INTEGRACIÓN IA - AFORADOR AMSA
+// ═══════════════════════════════════════════════════════════════
+
+const IA_API_URL = "http://localhost:8000";
+
+async function predecirConIA() {
+    const vp = document.getElementById('vp');
+    if (!vp || !vp.src) {
+        toast('❌ No hay video cargado');
+        return;
+    }
+    
+    const btnIA = document.getElementById('btn-predecir-ia');
+    btnIA.disabled = true;
+    btnIA.textContent = '⏳ Procesando IA...';
+    
+    try {
+        const canvas = document.createElement('canvas');
+        canvas.width = vp.videoWidth || 640;
+        canvas.height = vp.videoHeight || 360;
+        const ctx = canvas.getContext('2d');
+        ctx.drawImage(vp, 0, 0);
+        
+        canvas.toBlob(async (blob) => {
+            const formData = new FormData();
+            formData.append("file", blob, "frame.jpg");
+            
+            const response = await fetch(`${IA_API_URL}/predict`, {
+                method: "POST",
+                body: formData
+            });
+            
+            if (!response.ok) throw new Error(`Error: ${response.status}`);
+            
+            const result = await response.json();
+            const count = result.total_personas;
+            
+            // Auto-llenar contadores
+            document.getElementById('contador-e').value = Math.ceil(count * 0.5);
+            document.getElementById('contador-t').value = Math.ceil(count * 0.35);
+            document.getElementById('contador-c').value = Math.ceil(count * 0.15);
+            
+            toast(`✅ IA contó: ${count} personas`);
+            guardar();
+            render();
+            
+            btnIA.disabled = false;
+            btnIA.textContent = '🤖 Predecir IA';
+        });
+        
+    } catch (error) {
+        console.error('Error IA:', error);
+        toast('❌ Error en predicción IA');
+        btnIA.disabled = false;
+        btnIA.textContent = '🤖 Predecir IA';
+    }
+}
+
+async function verificarIA() {
+    try {
+        const response = await fetch(`${IA_API_URL}/health`);
+        const data = await response.json();
+        
+        const estado = document.getElementById('estado-ia');
+        if (data.model_loaded) {
+            estado.textContent = '🟢 IA CONECTADA';
+            estado.style.color = '#3fb950';
+            document.getElementById('btn-predecir-ia').disabled = false;
+        } else {
+            estado.textContent = '🔴 Modelo no cargado';
+            estado.style.color = '#da3633';
+        }
+    } catch (error) {
+        const estado = document.getElementById('estado-ia');
+        estado.textContent = '⚫ IA DESCONECTADA';
+        estado.style.color = '#da3633';
+        document.getElementById('btn-predecir-ia').disabled = true;
+    }
+}
+
+function agregarBotonesIA() {
+    const actsec = document.querySelector('.actsec');
+    if (!actsec) return;
+    
+    // Sección IA
+    const iasec = document.createElement('div');
+    iasec.style.cssText = `
+        padding: 12px 14px;
+        border-bottom: 1px solid var(--border);
+        background: linear-gradient(135deg, rgba(0, 217, 255, 0.08), rgba(0, 217, 255, 0.02));
+        border-left: 3px solid #00d9ff;
+    `;
+    
+    iasec.innerHTML = `
+        <div style="font-size: 9px; text-transform: uppercase; letter-spacing: 1.5px; color: #00d9ff; font-weight: 700; margin-bottom: 8px;">⚡ INTELIGENCIA ARTIFICIAL</div>
+        
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 5px; margin-bottom: 8px;">
+            <button id="btn-predecir-ia" style="padding: 9px; background: #00d9ff; color: #0a1117; border: none; border-radius: 6px; font-size: 11px; font-weight: 700; cursor: pointer; font-family: 'Barlow', sans-serif;">
+                🤖 IA Predict
+            </button>
+            <button id="btn-verificar-ia" style="padding: 9px; background: #3fb950; color: #fff; border: none; border-radius: 6px; font-size: 11px; font-weight: 700; cursor: pointer; font-family: 'Barlow', sans-serif;">
+                ✓ Verificar
+            </button>
+        </div>
+        
+        <div id="estado-ia" style="padding: 6px 8px; background: rgba(0, 0, 0, 0.3); border-radius: 4px; font-size: 10px; text-align: center; color: #da3633; font-weight: 600;">
+            ⏳ Verificando...
+        </div>
+    `;
+    
+    actsec.parentNode.insertBefore(iasec, actsec.nextSibling);
+    
+    document.getElementById('btn-predecir-ia').addEventListener('click', predecirConIA);
+    document.getElementById('btn-verificar-ia').addEventListener('click', verificarIA);
+    
+    // Verificar automáticamente
+    setTimeout(verificarIA, 500);
+}
+
+// Ejecutar cuando el DOM esté listo
+if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', agregarBotonesIA);
+} else {
+    agregarBotonesIA();
+}
+
+console.log('✅ Integración IA cargada');
+
+</script>
+</body>
+</html>

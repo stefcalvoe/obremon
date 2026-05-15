@@ -1,0 +1,574 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Aforador AMSA - Sistema con IA Aprendiz</title>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;600;700;800&family=Barlow:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg:#0d1117; --panel:#161b22; --border:#30363d; --text:#e6edf3; --muted:#7d8590;
+  --green:#2ea043; --grdim:rgba(46,160,67,0.15);
+  --blue:#1a73e8; --bldim:rgba(26,115,232,0.15);
+  --amber:#d29922; --amdim:rgba(210,153,34,0.15);
+  --red:#da3633; --rddim:rgba(218,54,51,0.15);
+}
+
+* { margin:0; padding:0; box-sizing:border-box; }
+html, body { height:100%; background:var(--bg); color:var(--text); font-family:"Barlow",sans-serif; }
+body { padding:20px; }
+
+.container {
+  max-width:1200px;
+  margin:0 auto;
+  display:grid;
+  grid-template-columns:2fr 1fr;
+  gap:20px;
+  height:100vh;
+  padding-top:10px;
+}
+
+.video-section {
+  display:flex;
+  flex-direction:column;
+  gap:15px;
+}
+
+.video-player {
+  background:var(--panel);
+  border:1px solid var(--border);
+  border-radius:8px;
+  padding:20px;
+  flex:1;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  min-height:400px;
+}
+
+.video-info {
+  color:var(--muted);
+  font-size:13px;
+  margin-bottom:20px;
+  text-align:center;
+}
+
+.video-placeholder {
+  width:100%;
+  height:100%;
+  background:rgba(26,115,232,0.1);
+  border:2px dashed var(--blue);
+  border-radius:6px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  color:var(--muted);
+  font-size:14px;
+}
+
+.controls-section {
+  background:var(--panel);
+  border:1px solid var(--border);
+  border-radius:8px;
+  padding:20px;
+  display:flex;
+  gap:15px;
+}
+
+.btn-sube {
+  flex:1;
+  padding:40px 20px;
+  background:var(--green);
+  border:none;
+  border-radius:8px;
+  color:#fff;
+  font-size:24px;
+  font-weight:bold;
+  cursor:pointer;
+  transition:opacity 0.2s;
+  font-family:"Barlow",sans-serif;
+}
+
+.btn-sube:hover { opacity:0.9; }
+.btn-sube:active { opacity:0.8; }
+
+.contador-display {
+  font-size:64px;
+  font-weight:bold;
+  text-align:center;
+  color:var(--green);
+  font-family:"Barlow Condensed",sans-serif;
+  background:var(--grdim);
+  padding:20px;
+  border-radius:8px;
+  min-width:150px;
+}
+
+.sidebar {
+  display:flex;
+  flex-direction:column;
+  gap:15px;
+}
+
+.panel {
+  background:var(--panel);
+  border:1px solid var(--border);
+  border-radius:8px;
+  padding:15px;
+}
+
+.panel h3 {
+  color:var(--text);
+  font-size:13px;
+  text-transform:uppercase;
+  margin-bottom:12px;
+  color:var(--muted);
+}
+
+.stat-item {
+  display:flex;
+  justify-content:space-between;
+  padding:8px 0;
+  border-bottom:1px solid rgba(48,54,61,0.5);
+  font-size:13px;
+}
+
+.stat-item:last-child { border-bottom:none; }
+
+.stat-label { color:var(--muted); }
+.stat-value { color:var(--text); font-weight:bold; }
+
+.btn-guardar {
+  width:100%;
+  padding:15px;
+  background:var(--blue);
+  border:none;
+  border-radius:6px;
+  color:#fff;
+  font-weight:bold;
+  cursor:pointer;
+  transition:opacity 0.2s;
+  font-family:"Barlow",sans-serif;
+  font-size:13px;
+}
+
+.btn-guardar:hover { opacity:0.9; }
+.btn-guardar:disabled { opacity:0.5; cursor:not-allowed; }
+
+.ia-status {
+  background:var(--bldim);
+  border-left:3px solid var(--blue);
+  padding:10px;
+  border-radius:4px;
+  font-size:12px;
+}
+
+.ia-status-label { color:var(--muted); font-size:11px; margin-bottom:5px; }
+.ia-status-value { color:var(--blue); font-weight:bold; }
+
+.modal {
+  display:none;
+  position:fixed;
+  top:0;
+  left:0;
+  width:100%;
+  height:100%;
+  background:rgba(0,0,0,0.8);
+  z-index:1000;
+  align-items:center;
+  justify-content:center;
+}
+
+.modal.show { display:flex; }
+
+.modal-content {
+  background:var(--panel);
+  border:1px solid var(--border);
+  border-radius:8px;
+  padding:30px;
+  max-width:400px;
+  text-align:center;
+}
+
+.modal-content h2 {
+  margin-bottom:20px;
+  color:var(--text);
+}
+
+.modal-comparison {
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:15px;
+  margin:20px 0;
+  background:rgba(48,54,61,0.3);
+  padding:15px;
+  border-radius:6px;
+}
+
+.comparison-item {
+  text-align:center;
+}
+
+.comparison-label {
+  font-size:11px;
+  color:var(--muted);
+  margin-bottom:8px;
+  text-transform:uppercase;
+}
+
+.comparison-number {
+  font-size:48px;
+  font-weight:bold;
+  font-family:"Barlow Condensed",sans-serif;
+}
+
+.comparison-item.humano .comparison-number { color:var(--green); }
+.comparison-item.ia .comparison-number { color:var(--blue); }
+
+.discrepancia {
+  background:var(--amdim);
+  border-left:3px solid var(--amber);
+  padding:12px;
+  border-radius:4px;
+  margin:15px 0;
+  font-size:12px;
+  color:var(--text);
+}
+
+.modal-buttons {
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:10px;
+  margin-top:20px;
+}
+
+.btn-confirm, .btn-cancel {
+  padding:12px;
+  border:none;
+  border-radius:6px;
+  font-weight:bold;
+  cursor:pointer;
+  font-family:"Barlow",sans-serif;
+  font-size:12px;
+}
+
+.btn-confirm {
+  background:var(--green);
+  color:#fff;
+}
+
+.btn-cancel {
+  background:var(--red);
+  color:#fff;
+}
+
+.btn-confirm:hover { opacity:0.9; }
+.btn-cancel:hover { opacity:0.9; }
+
+.success-message {
+  background:var(--grdim);
+  border-left:3px solid var(--green);
+  padding:12px;
+  border-radius:4px;
+  margin-bottom:15px;
+  font-size:12px;
+  color:var(--green);
+  display:none;
+}
+
+.success-message.show { display:block; }
+
+.header {
+  grid-column:1/-1;
+  margin-bottom:10px;
+}
+
+.header h1 {
+  color:var(--green);
+  font-size:24px;
+  margin-bottom:5px;
+}
+
+.header p {
+  color:var(--muted);
+  font-size:13px;
+}
+
+@media (max-width:900px) {
+  .container { grid-template-columns:1fr; }
+}
+</style>
+</head>
+<body>
+
+<div class="container">
+  <div class="header">
+    <h1>🚌 Aforador AMSA - Sistema Inteligente</h1>
+    <p>Aforador manual con IA que aprende en tiempo real</p>
+  </div>
+
+  <div class="video-section">
+    <div class="video-player">
+      <div class="video-info" id="videoInfo">
+        Cargando video...
+      </div>
+      <div class="video-placeholder">
+        📹 Video del Bus<br>
+        <span style="font-size:11px; margin-top:10px;">Bus080_2026-04-16_05-57-00_20.mov</span>
+      </div>
+    </div>
+
+    <div class="controls-section">
+      <button class="btn-sube" onclick="suebePersona()">
+        ➕<br>SUBE
+      </button>
+      <div class="contador-display" id="contador">0</div>
+    </div>
+  </div>
+
+  <div class="sidebar">
+    <div class="success-message" id="successMsg">
+      ✅ Guardado exitosamente y enviado a IA para aprender
+    </div>
+
+    <div class="panel">
+      <h3>📊 Contador Manual</h3>
+      <div class="stat-item">
+        <span class="stat-label">Personas Subidas</span>
+        <span class="stat-value" id="totalSubidas">0</span>
+      </div>
+      <div class="stat-item">
+        <span class="stat-label">Video Actual</span>
+        <span class="stat-value" id="videoActual">-</span>
+      </div>
+    </div>
+
+    <div class="panel ia-status">
+      <div class="ia-status-label">🤖 IA Analizando en Background</div>
+      <div class="ia-status-value" id="iaStatus">Cargando análisis...</div>
+      <div style="font-size:11px; color:var(--muted); margin-top:8px;">
+        Se comparará al guardar
+      </div>
+    </div>
+
+    <div class="panel">
+      <h3>⚙️ Acciones</h3>
+      <button class="btn-guardar" onclick="guardarYValidar()" id="btnGuardar">
+        ✅ GUARDAR Y VALIDAR
+      </button>
+      <button class="btn-guardar" style="background:var(--red); margin-top:10px;" onclick="resetearConteo()">
+        🔄 REINICIAR
+      </button>
+    </div>
+
+    <div class="panel" style="font-size:11px; color:var(--muted);">
+      <h3>ℹ️ Cómo funciona</h3>
+      <p style="line-height:1.6;">
+        1. Cuenta personas que SUBEN<br>
+        2. IA analiza automáticamente<br>
+        3. Presiona GUARDAR<br>
+        4. Sistema valida y aprende
+      </p>
+    </div>
+  </div>
+</div>
+
+<!-- MODAL VALIDACIÓN -->
+<div class="modal" id="modalValidacion">
+  <div class="modal-content">
+    <h2>Validación de Conteo</h2>
+
+    <div class="modal-comparison">
+      <div class="comparison-item humano">
+        <div class="comparison-label">Tu Conteo</div>
+        <div class="comparison-number" id="modalHumano">0</div>
+      </div>
+      <div class="comparison-item ia">
+        <div class="comparison-label">IA Detectó</div>
+        <div class="comparison-number" id="modalIA">0</div>
+      </div>
+    </div>
+
+    <div id="discrepanciaDiv" class="discrepancia" style="display:none;">
+      ⚠️ Hay discrepancia. ¿Cuál es el conteo correcto?
+    </div>
+
+    <div id="coincidenciaDiv" style="background:var(--grdim); padding:12px; border-radius:4px; color:var(--green); display:none;">
+      ✅ Los conteos coinciden. Se guardará automáticamente.
+    </div>
+
+    <div class="modal-buttons" id="botonesValidacion">
+      <button class="btn-confirm" onclick="confirmarHumano()">
+        ✓ Humano Correcto
+      </button>
+      <button class="btn-cancel" onclick="confirmarIA()">
+        ✓ IA Correcta
+      </button>
+    </div>
+
+    <button class="btn-cancel" style="width:100%; margin-top:10px;" onclick="cerrarModal()">
+      Cancelar
+    </button>
+  </div>
+</div>
+
+<script>
+// Variables globales
+let conteoManual = 0;
+let conteoIA = 0;
+let videoActual = "Bus080_2026-04-16_05-57-00_20.mov";
+let historialAforados = [];
+
+// Simulación: generar conteo IA
+function generarConteoIA(conteoHumano) {
+  // Para esta demo, IA simula análisis
+  // En producción, llamará al modelo real
+  const variacion = Math.floor(Math.random() * 6) - 2; // -2 a +3
+  return Math.max(0, conteoHumano + variacion);
+}
+
+function suebePersona() {
+  conteoManual++;
+  actualizarDisplay();
+
+  // Actualizar estado IA en tiempo real
+  conteoIA = generarConteoIA(conteoManual);
+  document.getElementById('iaStatus').textContent = `Detecta: ${conteoIA} personas`;
+}
+
+function actualizarDisplay() {
+  document.getElementById('contador').textContent = conteoManual;
+  document.getElementById('totalSubidas').textContent = conteoManual;
+}
+
+function resetearConteo() {
+  conteoManual = 0;
+  conteoIA = 0;
+  actualizarDisplay();
+  document.getElementById('iaStatus').textContent = 'Cargando análisis...';
+}
+
+function guardarYValidar() {
+  if (conteoManual === 0) {
+    alert('Debes contar al menos una persona');
+    return;
+  }
+
+  // Generar conteo IA final
+  conteoIA = generarConteoIA(conteoManual);
+
+  // Mostrar modal de validación
+  document.getElementById('modalHumano').textContent = conteoManual;
+  document.getElementById('modalIA').textContent = conteoIA;
+
+  const diferencia = Math.abs(conteoManual - conteoIA);
+  const hayDiscrepancia = diferencia > 0;
+
+  document.getElementById('discrepanciaDiv').style.display = hayDiscrepancia ? 'block' : 'none';
+  document.getElementById('coincidenciaDiv').style.display = hayDiscrepancia ? 'none' : 'block';
+  document.getElementById('botonesValidacion').style.display = hayDiscrepancia ? 'grid' : 'none';
+
+  document.getElementById('modalValidacion').classList.add('show');
+}
+
+function confirmarHumano() {
+  guardarEnregistro(conteoManual, conteoIA, 'HUMANO');
+}
+
+function confirmarIA() {
+  guardarEnregistro(conteoIA, conteoManual, 'IA');
+}
+
+function guardarEnregistro(conteoFinal, conteoOtro, validadoPor) {
+  const registro = {
+    timestamp: new Date().toISOString(),
+    video: videoActual,
+    conteoHumano: conteoManual,
+    conteoIA: conteoIA,
+    conteoValidado: conteoFinal,
+    validadoPor: validadoPor,
+    diferencia: Math.abs(conteoManual - conteoIA)
+  };
+
+  historialAforados.push(registro);
+
+  // Generar archivo JSON para entrenamiento
+  generarArchivoEntrenamiento(registro);
+
+  // Mostrar confirmación
+  cerrarModal();
+  document.getElementById('successMsg').classList.add('show');
+  setTimeout(() => {
+    document.getElementById('successMsg').classList.remove('show');
+  }, 4000);
+
+  // Reset
+  setTimeout(() => {
+    resetearConteo();
+  }, 2000);
+
+  console.log('Registro guardado:', registro);
+}
+
+function generarArchivoEntrenamiento(registro) {
+  // Crear JSON para IA
+  const dataIA = {
+    tipo: 'TRAINING_DATA',
+    video: registro.video,
+    conteoManual: registro.conteoHumano,
+    conteoIA: registro.conteoIA,
+    conteoValidado: registro.conteoValidado,
+    validadoPor: registro.validadoPor,
+    diferencia: registro.diferencia,
+    timestamp: registro.timestamp,
+    retroalimentacion: {
+      correcto: registro.validadoPor === 'HUMANO' ? registro.conteoHumano : registro.conteoIA,
+      incorrecto: registro.validadoPor === 'HUMANO' ? registro.conteoIA : registro.conteoHumano,
+      casos_especiales: []
+    }
+  };
+
+  // En producción: enviar a servidor
+  console.log('Datos para IA:', dataIA);
+
+  // Descargar JSON localmente
+  descargarJSON(dataIA, `training_${Date.now()}.json`);
+}
+
+function descargarJSON(data, filename) {
+  const json = JSON.stringify(data, null, 2);
+  const blob = new Blob([json], { type: 'application/json' });
+  const url = URL.createObjectURL(blob);
+  const link = document.createElement('a');
+  link.href = url;
+  link.download = filename;
+  link.click();
+  URL.revokeObjectURL(url);
+}
+
+function cerrarModal() {
+  document.getElementById('modalValidacion').classList.remove('show');
+}
+
+// Inicializar
+window.addEventListener('load', () => {
+  document.getElementById('videoActual').textContent = videoActual.substring(0, 20) + '...';
+  document.getElementById('iaStatus').textContent = 'Esperando conteo...';
+});
+
+// Shortcuts de teclado
+document.addEventListener('keydown', (e) => {
+  if (e.key === ' ') {
+    e.preventDefault();
+    suebePersona();
+  }
+  if (e.key === 'Enter') {
+    e.preventDefault();
+    guardarYValidar();
+  }
+});
+</script>
+
+</body>
+</html>

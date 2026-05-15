@@ -1,0 +1,538 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aforador Real vs IA - Validacion de Precision</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: Arial, sans-serif;
+            background: #f5f5f5;
+            padding: 20px;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 8px;
+            padding: 30px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #333;
+            margin-bottom: 10px;
+            text-align: center;
+        }
+        .subtitle {
+            text-align: center;
+            color: #666;
+            margin-bottom: 30px;
+            font-size: 14px;
+        }
+        .grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            margin-bottom: 30px;
+        }
+        .panel {
+            border: 2px solid #ddd;
+            border-radius: 6px;
+            padding: 20px;
+        }
+        .panel.real {
+            border-color: #2ea043;
+            background: #f0f9f5;
+        }
+        .panel.ia {
+            border-color: #1a73e8;
+            background: #f0f5ff;
+        }
+        .panel h2 {
+            margin-bottom: 20px;
+            font-size: 18px;
+        }
+        .panel.real h2 { color: #2ea043; }
+        .panel.ia h2 { color: #1a73e8; }
+
+        .counter {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+        .counter button {
+            flex: 1;
+            padding: 12px;
+            font-size: 16px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+        .btn-up {
+            background: #2ea043;
+            color: white;
+        }
+        .btn-down {
+            background: #da3633;
+            color: white;
+        }
+        .btn-up:hover { background: #1f7a2d; }
+        .btn-down:hover { background: #b71c1c; }
+
+        .display {
+            font-size: 48px;
+            font-weight: bold;
+            text-align: center;
+            padding: 20px;
+            border-radius: 4px;
+            margin-bottom: 20px;
+        }
+        .display.real {
+            background: #2ea043;
+            color: white;
+        }
+        .display.ia {
+            background: #1a73e8;
+            color: white;
+        }
+
+        .video-section {
+            margin: 30px 0;
+            padding: 20px;
+            background: #f9f9f9;
+            border-radius: 6px;
+        }
+        .video-select {
+            margin-bottom: 15px;
+        }
+        .video-select label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+            color: #333;
+        }
+        .video-select select {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 14px;
+        }
+
+        .stats {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            margin-top: 20px;
+        }
+        .stat-box {
+            background: white;
+            padding: 15px;
+            border-radius: 4px;
+            border-left: 4px solid #ddd;
+        }
+        .stat-label {
+            color: #666;
+            font-size: 12px;
+            text-transform: uppercase;
+            margin-bottom: 5px;
+        }
+        .stat-value {
+            font-size: 24px;
+            font-weight: bold;
+            color: #333;
+        }
+
+        .comparison {
+            margin: 30px 0;
+            padding: 20px;
+            background: #fff3cd;
+            border-left: 4px solid #ffc107;
+            border-radius: 4px;
+        }
+        .comparison h3 {
+            margin-bottom: 10px;
+            color: #333;
+        }
+        .comparison .values {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 15px;
+            margin-top: 10px;
+        }
+        .value-item {
+            text-align: center;
+        }
+        .value-label {
+            font-size: 12px;
+            color: #666;
+            text-transform: uppercase;
+        }
+        .value-num {
+            font-size: 28px;
+            font-weight: bold;
+            color: #333;
+        }
+
+        .reset-btn {
+            width: 100%;
+            padding: 10px;
+            background: #ccc;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: bold;
+            margin-top: 15px;
+        }
+        .reset-btn:hover { background: #999; }
+
+        .tabla-videos {
+            margin-top: 30px;
+            overflow-x: auto;
+        }
+        .tabla-videos table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 13px;
+        }
+        .tabla-videos th {
+            background: #333;
+            color: white;
+            padding: 10px;
+            text-align: left;
+        }
+        .tabla-videos td {
+            padding: 10px;
+            border-bottom: 1px solid #ddd;
+        }
+        .tabla-videos tr {
+            cursor: pointer;
+        }
+        .tabla-videos tr.expandible:hover {
+            background: #f5f5f5;
+        }
+        .tabla-videos tr.detalles {
+            display: none;
+        }
+        .tabla-videos tr.detalles.show {
+            display: table-row;
+        }
+        .tabla-videos tr.detalles td {
+            background: #f9f9f9;
+            padding: 15px;
+            border-left: 4px solid #1a73e8;
+        }
+        .toggle-icon {
+            cursor: pointer;
+            font-weight: bold;
+            color: #1a73e8;
+        }
+        .precision {
+            text-align: center;
+            font-weight: bold;
+        }
+        .precision.good { color: #2ea043; }
+        .precision.medium { color: #ffc107; }
+        .precision.bad { color: #da3633; }
+        .detalle-ia {
+            background: white;
+            padding: 10px;
+            border-radius: 4px;
+            border-left: 4px solid #1a73e8;
+            margin: 10px 0;
+        }
+        .detalle-ia strong {
+            color: #1a73e8;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🚌 Aforador Real vs IA</h1>
+        <p class="subtitle">Valida la precision del conteo automatico comparandolo con aforo manual</p>
+
+        <div class="video-section">
+            <div class="video-select">
+                <label>Selecciona un video para analizar:</label>
+                <select id="videoSelect" onchange="cambiarVideo()">
+                    <option value="">-- Cargando videos --</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="grid">
+            <!-- Panel Aforo Real (Manual) -->
+            <div class="panel real">
+                <h2>📊 Aforo Real (Manual)</h2>
+                <p style="color: #666; font-size: 13px; margin-bottom: 15px;">
+                    Cuenta manualmente las personas que suben al bus
+                </p>
+
+                <div class="display real" id="conteoReal">0</div>
+
+                <div class="counter">
+                    <button class="btn-up" onclick="incrementarReal()">➕ SUBE</button>
+                    <button class="btn-down" onclick="decrementarReal()">➖ BAJA</button>
+                </div>
+
+                <div class="stats">
+                    <div class="stat-box">
+                        <div class="stat-label">Total Subidas</div>
+                        <div class="stat-value" id="totalSubidas">0</div>
+                    </div>
+                    <div class="stat-box">
+                        <div class="stat-label">Total Bajadas</div>
+                        <div class="stat-value" id="totalBajadas">0</div>
+                    </div>
+                </div>
+
+                <button class="reset-btn" onclick="resetearReal()">REINICIAR CONTADOR</button>
+            </div>
+
+            <!-- Panel IA (Automatico) -->
+            <div class="panel ia">
+                <h2>🤖 Conteo IA (Automatico)</h2>
+                <p style="color: #666; font-size: 13px; margin-bottom: 15px;">
+                    Resultado del modelo YOLOv8
+                </p>
+
+                <div class="display ia" id="conteoIA">Cargando...</div>
+
+                <div class="stats">
+                    <div class="stat-box">
+                        <div class="stat-label">Frames Analizados</div>
+                        <div class="stat-value" id="totalFrames">0</div>
+                    </div>
+                    <div class="stat-box">
+                        <div class="stat-label">Personas Promedio</div>
+                        <div class="stat-value" id="promedio">0</div>
+                    </div>
+                </div>
+
+                <div style="margin-top: 15px; padding: 10px; background: white; border-radius: 4px; font-size: 12px; color: #666;">
+                    <strong>Nota:</strong> Conteo de personas unicas detectadas (no suma de frames)
+                </div>
+            </div>
+        </div>
+
+        <!-- Comparacion -->
+        <div class="comparison">
+            <h3>📈 Comparacion de Precision</h3>
+            <div class="values">
+                <div class="value-item">
+                    <div class="value-label">Aforo Real</div>
+                    <div class="value-num" id="realValue">0</div>
+                </div>
+                <div class="value-item">
+                    <div class="value-label">Conteo IA</div>
+                    <div class="value-num" id="iaValue">0</div>
+                </div>
+                <div class="value-item">
+                    <div class="value-label">Diferencia / Precision</div>
+                    <div class="value-num precision" id="diferencia">-</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Tabla de Resultados -->
+        <div class="tabla-videos">
+            <h3 style="margin-bottom: 15px;">Resultados de todos los videos</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Video</th>
+                        <th>Duracion</th>
+                        <th>Aforo Real</th>
+                        <th>Conteo IA</th>
+                        <th>Diferencia</th>
+                        <th>Precision</th>
+                    </tr>
+                </thead>
+                <tbody id="tablaPruebas">
+                    <tr><td colspan="6" style="text-align: center; color: #999;">Cargando videos...</td></tr>
+                </tbody>
+                <tbody id="tablaDetalles"></tbody>
+            </table>
+        </div>
+    </div>
+
+    <script>
+        const VIDEOS = [
+            { name: "Bus080_2026-04-16_05-57-00_20.mov", duracion: "20s", personasIA: 1 },
+            { name: "Bus080_2026-04-16_05-57-21_20.mov", duracion: "20s", personasIA: 0 },
+            { name: "Bus080_2026-04-16_05-57-42_20.mov", duracion: "20s", personasIA: 0 },
+            { name: "Bus080_2026-04-16_05-58-03_20.mov", duracion: "20s", personasIA: 0 },
+            { name: "Bus080_2026-04-16_05-58-24_20.mov", duracion: "20s", personasIA: 0 },
+            { name: "Bus080_2026-04-16_05-58-45_20.mov", duracion: "20s", personasIA: 0 },
+            { name: "Bus080_2026-04-16_05-59-06_20.mov", duracion: "20s", personasIA: 0 },
+            { name: "Bus080_2026-04-16_05-59-27_20.mov", duracion: "20s", personasIA: 0 },
+            { name: "Bus080_2026-04-16_05-59-48_20.mov", duracion: "20s", personasIA: 0 },
+            { name: "Bus080_2026-04-16_06-00-09_20.mov", duracion: "20s", personasIA: 0 },
+            { name: "Bus080_2026-04-16_06-00-30_20.mov", duracion: "20s", personasIA: 0 },
+            { name: "Bus080_2026-04-16_06-00-51_20.mov", duracion: "20s", personasIA: 0 },
+            { name: "Bus080_2026-04-16_06-01-12_20.mov", duracion: "20s", personasIA: 0 },
+            { name: "Bus080_2026-04-16_06-01-33_20.mov", duracion: "20s", personasIA: 0 },
+            { name: "Bus080_2026-04-16_06-01-54_20.mov", duracion: "20s", personasIA: 0 },
+            { name: "Bus080_2026-04-16_06-02-15_20.mov", duracion: "20s", personasIA: 0 },
+            { name: "Bus080_2026-04-16_06-02-36_20.mov", duracion: "20s", personasIA: 0 },
+            { name: "Bus080_2026-04-16_06-02-57_20.mov", duracion: "20s", personasIA: 0 },
+            { name: "Bus080_2026-04-16_06-03-18_20.mov", duracion: "20s", personasIA: 0 },
+            { name: "Bus080_2026-04-16_06-03-39_20.mov", duracion: "20s", personasIA: 0 },
+            { name: "Bus080_2026-04-16_06-04-00_20.mov", duracion: "20s", personasIA: 0 },
+            { name: "Bus080_2026-04-16_06-04-21_20.mov", duracion: "20s", personasIA: 0 },
+            { name: "Bus080_2026-04-16_06-04-42_20.mov", duracion: "20s", personasIA: 0 },
+            { name: "Bus080_2026-04-16_06-05-03_20.mov", duracion: "20s", personasIA: 0 }
+        ];
+
+        let conteoReal = 0;
+        let totalSubidas = 0;
+        let totalBajadas = 0;
+        let videoActual = null;
+        let resultados = {};
+
+        function inicializar() {
+            const select = document.getElementById('videoSelect');
+            select.innerHTML = '<option value="">-- Selecciona un video --</option>';
+            VIDEOS.forEach((v, idx) => {
+                const opt = document.createElement('option');
+                opt.value = idx;
+                opt.text = v.name;
+                select.appendChild(opt);
+            });
+
+            cargarTabla();
+        }
+
+        function cambiarVideo() {
+            const idx = document.getElementById('videoSelect').value;
+            if (idx === '') return;
+
+            videoActual = VIDEOS[idx];
+            resetearReal();
+
+            document.getElementById('conteoIA').textContent = videoActual.personasIA;
+            document.getElementById('totalFrames').textContent = '159';
+            document.getElementById('promedio').textContent = (videoActual.personasIA / 159).toFixed(2);
+
+            document.getElementById('iaValue').textContent = videoActual.personasIA;
+            actualizarComparacion();
+        }
+
+        function incrementarReal() {
+            conteoReal++;
+            totalSubidas++;
+            actualizar();
+        }
+
+        function decrementarReal() {
+            if (conteoReal > 0) {
+                conteoReal--;
+                totalBajadas++;
+                actualizar();
+            }
+        }
+
+        function actualizar() {
+            document.getElementById('conteoReal').textContent = conteoReal;
+            document.getElementById('totalSubidas').textContent = totalSubidas;
+            document.getElementById('totalBajadas').textContent = totalBajadas;
+            document.getElementById('realValue').textContent = conteoReal;
+            actualizarComparacion();
+        }
+
+        function actualizarComparacion() {
+            if (!videoActual) return;
+
+            const real = conteoReal;
+            const ia = videoActual.personasIA;
+            const diff = Math.abs(real - ia);
+            const precision = real > 0 ? (100 - (diff / real) * 100) : 0;
+
+            let clase = 'bad';
+            if (precision >= 80) clase = 'good';
+            else if (precision >= 60) clase = 'medium';
+
+            document.getElementById('diferencia').innerHTML =
+                `<span class="precision ${clase}">${precision.toFixed(0)}%</span>`;
+
+            // Guardar resultado
+            if (videoActual && real > 0) {
+                resultados[videoActual.name] = { real, ia, diff, precision };
+                cargarTabla();
+            }
+        }
+
+        function resetearReal() {
+            conteoReal = 0;
+            totalSubidas = 0;
+            totalBajadas = 0;
+            actualizar();
+        }
+
+        function toggleDetalle(video) {
+            const detalleId = 'detalle_' + video;
+            const fila = document.getElementById(detalleId);
+            if (fila) {
+                fila.classList.toggle('show');
+            }
+        }
+
+        function cargarTabla() {
+            const tbody = document.getElementById('tablaPruebas');
+            const tbodyDet = document.getElementById('tablaDetalles');
+
+            if (Object.keys(resultados).length === 0) {
+                tbody.innerHTML = '<tr><td colspan="6" style="text-align: center; color: #999;">Completa aforos para ver resultados</td></tr>';
+                tbodyDet.innerHTML = '';
+                return;
+            }
+
+            let htmlPrincipal = '';
+            let htmlDetalles = '';
+
+            VIDEOS.forEach((v, idx) => {
+                const r = resultados[v.name];
+                const videoId = 'video_' + idx;
+                const detalleId = 'detalle_' + idx;
+
+                // Fila principal (clickeable)
+                let filaPrincipal = `
+                    <tr class="expandible" onclick="toggleDetalle(${idx})" style="cursor: pointer;">
+                        <td><span class="toggle-icon">▶</span> ${v.name.substring(0, 25)}...</td>
+                        <td>${v.duracion}</td>
+                        <td><strong>${r ? r.real : '-'}</strong></td>
+                        <td><strong>${r ? r.ia : '-'}</strong></td>
+                        <td>${r ? r.diff : '-'}</td>
+                        <td>${r ? `<span class="precision ${r.precision >= 80 ? 'good' : r.precision >= 60 ? 'medium' : 'bad'}">${r.precision.toFixed(0)}%</span>` : '-'}</td>
+                    </tr>
+                `;
+                htmlPrincipal += filaPrincipal;
+
+                // Fila de detalles (expandible)
+                let filaDetalle = `
+                    <tr class="detalles" id="${detalleId}">
+                        <td colspan="6">
+                            <div class="detalle-ia">
+                                <strong>Detalles IA:</strong><br>
+                                Personas detectadas: <strong>${r ? r.ia : '-'}</strong><br>
+                                Promedio por frame: <strong>${r && r.ia > 0 ? (r.ia / 159).toFixed(2) : '0.00'}</strong><br>
+                                <br>
+                                <strong>Comparacion:</strong><br>
+                                Aforo Manual: ${r ? r.real : '-'} | IA: ${r ? r.ia : '-'} | Diferencia: ${r ? Math.abs(r.real - r.ia) : '-'}
+                            </div>
+                        </td>
+                    </tr>
+                `;
+                htmlDetalles += filaDetalle;
+            });
+
+            tbody.innerHTML = htmlPrincipal;
+            tbodyDet.innerHTML = htmlDetalles;
+        }
+
+        inicializar();
+    </script>
+</body>
+</html>

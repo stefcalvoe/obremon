@@ -1,5 +1,5 @@
-import base64, uuid
-from datetime import datetime, date
+import uuid
+from datetime import datetime, date, timedelta
 from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.orm import Session
 from sqlalchemy import text
@@ -17,7 +17,7 @@ def check_in(
     db:   Session = Depends(get_db),
     user: dict    = Depends(verificar_token)
 ):
-    empleado_id = uuid.UUID(user["sub"])
+    empleado_id = user["sub"]
 
     # 1. Obtener turno activo del empleado para hoy
     hoy = date.today().strftime('%A').lower()
@@ -47,7 +47,6 @@ def check_in(
     estado = EstadoValidacion.valido
     if data.tipo == "entrada":
         ahora = datetime.now().time()
-        from datetime import timedelta
         limite = (
             datetime.combine(date.today(), turno.hora_entrada)
             + timedelta(minutes=turno.tolerancia_min)
@@ -67,7 +66,7 @@ def check_in(
         estado = EstadoValidacion.sin_foto
 
     # 5. Insertar registro
-    registro_id = uuid.uuid4()
+    registro_id = str(uuid.uuid4())
     db.execute(text("""
         INSERT INTO registros (
             id, empleado_id, turno_id, tipo, timestamp_registro,
@@ -79,9 +78,9 @@ def check_in(
             :foto, :facial, :estado
         )
     """), {
-        "id":     str(registro_id),
-        "emp":    str(empleado_id),
-        "turno":  str(turno.id),
+        "id":     registro_id,
+        "emp":    empleado_id,
+        "turno":  turno.id,
         "tipo":   data.tipo,
         "lat":    data.latitud,
         "lon":    data.longitud,
@@ -94,8 +93,8 @@ def check_in(
     db.commit()
 
     return RegistroOut(
-        id=str(registro_id),
-        empleado_id=str(empleado_id),
+        id=registro_id,
+        empleado_id=empleado_id,
         tipo=data.tipo,
         timestamp_registro=datetime.now(),
         gps_valido=gps_ok,

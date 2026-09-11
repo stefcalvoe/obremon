@@ -1,0 +1,722 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#14121a">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Perfumes">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='22' fill='%2314121a'/%3E%3Crect x='36' y='40' width='28' height='36' rx='6' fill='%23c9a86a'/%3E%3Crect x='44' y='24' width='12' height='16' rx='3' fill='%23c9a86a'/%3E%3Ccircle cx='50' cy='20' r='7' fill='%23c9a86a'/%3E%3C/svg%3E">
+<link rel="apple-touch-icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='22' fill='%2314121a'/%3E%3Crect x='36' y='40' width='28' height='36' rx='6' fill='%23c9a86a'/%3E%3Crect x='44' y='24' width='12' height='16' rx='3' fill='%23c9a86a'/%3E%3Ccircle cx='50' cy='20' r='7' fill='%23c9a86a'/%3E%3C/svg%3E">
+<title>Perfumes - Control de Negocio</title>
+<style>
+  :root {
+    --bg:#14121a; --card:#1f1c28; --accent:#c9a86a; --accent-soft:#3a3140;
+    --text:#f2eee6; --text-dim:#a89fb0; --danger:#d9685f; --success:#7ab88a;
+    --warn:#d9a95f; --border:#322c3d;
+  }
+  * { box-sizing:border-box; }
+  body { margin:0; font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;
+    background:var(--bg); color:var(--text); padding-bottom:60px; }
+  header { padding:18px 16px 10px; text-align:center; }
+  header h1 { margin:0; font-size:20px; letter-spacing:.5px; color:var(--accent); font-weight:600; }
+  header p { margin:4px 0 0; color:var(--text-dim); font-size:13px; }
+  nav { display:flex; gap:5px; padding:0 10px; margin-bottom:12px; }
+  nav button { flex:1; padding:10px 2px; background:var(--card); border:1px solid var(--border);
+    color:var(--text-dim); border-radius:10px; font-size:12px; font-weight:600; }
+  nav button.active { background:var(--accent); color:#1a1a1a; border-color:var(--accent); }
+  main { padding:0 12px; }
+  .view { display:none; } .view.active { display:block; }
+  .card { background:var(--card); border:1px solid var(--border); border-radius:14px; padding:14px; margin-bottom:12px; }
+  .card h3 { margin:0 0 4px; font-size:15px; }
+  .card .row { display:flex; justify-content:space-between; font-size:13px; color:var(--text-dim); margin-top:2px; }
+  .card .row b { color:var(--text); font-weight:600; }
+  .badge { display:inline-block; padding:2px 8px; border-radius:20px; font-size:11px; font-weight:600; }
+  .badge.contado,.badge.pagado { background:rgba(122,184,138,.15); color:var(--success); }
+  .badge.credito,.badge.vencido,.badge.agotado { background:rgba(217,104,95,.15); color:var(--danger); }
+  .badge.hoy { background:rgba(217,169,95,.18); color:var(--warn); }
+  .badge.prox { background:rgba(201,168,106,.15); color:var(--accent); }
+  form { background:var(--card); border:1px solid var(--border); border-radius:14px; padding:16px; margin-bottom:16px; }
+  form h3 { margin-top:0; font-size:15px; color:var(--accent); }
+  label { display:block; font-size:12px; color:var(--text-dim); margin:10px 0 4px; }
+  input, select { width:100%; padding:10px; background:var(--accent-soft); border:1px solid var(--border);
+    border-radius:8px; color:var(--text); font-size:14px; }
+  input:focus, select:focus { outline:1px solid var(--accent); }
+  button.primary { margin-top:14px; width:100%; padding:12px; background:var(--accent); color:#1a1a1a;
+    border:none; border-radius:10px; font-size:14px; font-weight:700; }
+  button.small { padding:7px 8px; font-size:12px; background:var(--accent-soft); color:var(--text);
+    border:1px solid var(--border); border-radius:8px; }
+  button.small.gold { background:rgba(201,168,106,.18); color:var(--accent); border-color:rgba(201,168,106,.35); }
+  .empty { text-align:center; color:var(--text-dim); padding:26px 10px; font-size:13px; }
+  .summary { display:flex; gap:8px; margin-bottom:14px; }
+  .summary .box { flex:1; background:var(--card); border:1px solid var(--border); border-radius:12px; padding:10px; text-align:center; }
+  .summary .box .num { font-size:16px; font-weight:700; color:var(--accent); }
+  .summary .box .num.pos { color:var(--success); } .summary .box .num.neg { color:var(--danger); }
+  .summary .box .lbl { font-size:10px; color:var(--text-dim); margin-top:2px; }
+  .actions { display:flex; gap:6px; margin-top:10px; flex-wrap:wrap; }
+  .actions button { flex:1; min-width:78px; }
+  .hist { margin-top:10px; border-top:1px solid var(--border); padding-top:8px; }
+  .hist .item { display:flex; justify-content:space-between; font-size:12px; color:var(--text-dim); padding:4px 0; }
+  .hist .item .g { color:var(--success); } .hist .item .r { color:var(--danger); }
+  .hist .item .del { background:transparent; border:none; color:var(--danger); font-size:13px;
+    padding:0 6px; margin-left:2px; line-height:1; }
+  .hist .saldo { text-align:right; font-size:11px; color:var(--text-dim); }
+  .bal-line { display:flex; justify-content:space-between; padding:10px 0; border-bottom:1px solid var(--border); font-size:14px; }
+  .bal-line:last-child { border-bottom:none; }
+  .bal-line .v { font-weight:700; } .bal-line .v.pos { color:var(--success); } .bal-line .v.neg { color:var(--danger); }
+  .bal-line small { display:block; color:var(--text-dim); font-size:11px; font-weight:400; }
+  .cobro { background:var(--card); border:1px solid var(--border); border-left:3px solid var(--accent);
+    border-radius:10px; padding:10px 12px; margin-bottom:8px; }
+  .cobro.venc { border-left-color:var(--danger); }
+  .cobro.hoy { border-left-color:var(--warn); }
+  .cobro .top { display:flex; justify-content:space-between; align-items:center; }
+  .cobro .nm { font-weight:600; font-size:14px; }
+  .cobro .sub { font-size:12px; color:var(--text-dim); margin-top:3px; }
+  .sec-title { font-size:13px; color:var(--accent); font-weight:700; margin:4px 0 8px; letter-spacing:.3px; }
+  .modal-bg { display:none; position:fixed; inset:0; background:rgba(0,0,0,.7); z-index:50;
+    align-items:center; justify-content:center; padding:20px; }
+  .modal-bg.open { display:flex; }
+  .modal { background:var(--card); border:1px solid var(--border); border-radius:16px; padding:18px; width:100%; max-width:380px; }
+  .modal h3 { margin:0 0 2px; font-size:16px; color:var(--accent); }
+  .modal .sub { font-size:12px; color:var(--text-dim); margin-bottom:6px; }
+  .chk { display:flex; align-items:center; gap:8px; margin-top:12px; font-size:13px; color:var(--text-dim); }
+  .chk input { width:auto; }
+</style>
+</head>
+<body>
+
+<header>
+  <h1>✦ Mis Perfumes</h1>
+  <p>Inventario · Clientes · Ventas · Balance</p>
+</header>
+
+<nav>
+  <button data-view="inventario" class="active">Inventario</button>
+  <button data-view="clientes">Clientes</button>
+  <button data-view="ventas">Ventas</button>
+  <button data-view="balance">Balance</button>
+</nav>
+
+<main>
+
+  <!-- INVENTARIO -->
+  <section id="inventario" class="view active">
+    <div class="summary">
+      <div class="box"><div class="num" id="invCount">0</div><div class="lbl">PERFUMES</div></div>
+      <div class="box"><div class="num" id="invStock">0</div><div class="lbl">UNIDADES</div></div>
+      <div class="box"><div class="num" id="invValor">₡0</div><div class="lbl">EN STOCK</div></div>
+    </div>
+    <form id="formInventario">
+      <h3 id="tituloForm">Registrar compra / perfume</h3>
+      <input type="hidden" id="pEditId">
+      <label>Nombre del perfume</label>
+      <input type="text" id="pNombre" required placeholder="Ej: One Million 100ml">
+      <label>Marca</label>
+      <input type="text" id="pMarca" placeholder="Ej: Paco Rabanne">
+      <label>Costo por unidad (₡)</label>
+      <input type="number" id="pCosto" required min="0" step="1">
+      <label>Precio de venta (₡)</label>
+      <input type="number" id="pPrecio" required min="0" step="1">
+      <label id="lblCant">Unidades compradas</label>
+      <input type="number" id="pCantidad" required min="1" step="1" value="1">
+      <button type="submit" class="primary" id="btnGuardarP">Guardar en inventario</button>
+      <button type="button" class="small" id="btnCancelarP" style="display:none;width:100%;margin-top:8px;">Cancelar edición</button>
+    </form>
+    <div id="listaInventario"></div>
+  </section>
+
+  <!-- CLIENTES -->
+  <section id="clientes" class="view">
+    <div class="summary">
+      <div class="box"><div class="num" id="cliCount">0</div><div class="lbl">CLIENTES</div></div>
+      <div class="box"><div class="num" id="cliDeuda">₡0</div><div class="lbl">POR COBRAR</div></div>
+      <div class="box"><div class="num neg" id="cliVencidos">0</div><div class="lbl">VENCIDOS</div></div>
+    </div>
+
+    <div id="agendaCobros"></div>
+
+    <form id="formCliente">
+      <h3 id="tituloFormC">Nuevo cliente</h3>
+      <input type="hidden" id="cEditId">
+      <label>Nombre</label>
+      <input type="text" id="cNombre" required placeholder="Ej: María Rodríguez">
+      <label>Teléfono</label>
+      <input type="text" id="cTelefono" placeholder="Ej: 8888-8888">
+      <label>Frecuencia de cobro</label>
+      <select id="cFrec">
+        <option value="">Sin plan de cobro</option>
+        <option value="7">Semanal</option>
+        <option value="15">Quincenal</option>
+      </select>
+      <label>Cuota sugerida (₡)</label>
+      <input type="number" id="cCuota" min="0" step="1" placeholder="Ej: 5000">
+      <label>Próxima fecha de cobro</label>
+      <input type="date" id="cProx">
+      <button type="submit" class="primary" id="btnGuardarC">Guardar cliente</button>
+      <button type="button" class="small" id="btnCancelarC" style="display:none;width:100%;margin-top:8px;">Cancelar edición</button>
+    </form>
+
+    <div id="listaClientes"></div>
+  </section>
+
+  <!-- VENTAS -->
+  <section id="ventas" class="view">
+    <form id="formVenta">
+      <h3>Registrar venta</h3>
+      <label>Perfume</label>
+      <select id="vPerfume" required></select>
+      <label>Cliente</label>
+      <select id="vCliente" required></select>
+      <label>Cantidad</label>
+      <input type="number" id="vCantidad" required min="1" step="1" value="1">
+      <label>Precio de venta total (₡) — vacío usa el precio de lista</label>
+      <input type="number" id="vPrecio" min="0" step="1" placeholder="Automático">
+      <label>Método de pago</label>
+      <select id="vMetodo" required>
+        <option value="contado">Contado</option>
+        <option value="credito">Crédito</option>
+      </select>
+      <button type="submit" class="primary">Registrar venta</button>
+    </form>
+    <div id="listaVentas"></div>
+  </section>
+
+  <!-- BALANCE -->
+  <section id="balance" class="view">
+    <div class="summary">
+      <div class="box"><div class="num" id="bVentas">₡0</div><div class="lbl">VENDIDO</div></div>
+      <div class="box"><div class="num pos" id="bGanancia">₡0</div><div class="lbl">GANANCIA</div></div>
+    </div>
+    <div class="card">
+      <h3 style="color:var(--accent)">Resumen general</h3>
+      <div class="bal-line"><span>Invertido en compras<small>Todo lo que has comprado</small></span><span class="v neg" id="bInvertido">₡0</span></div>
+      <div class="bal-line"><span>Valor del stock actual<small>Al costo, lo que aún no vendés</small></span><span class="v" id="bStock">₡0</span></div>
+      <div class="bal-line"><span>Costo de lo vendido</span><span class="v" id="bCostoVendido">₡0</span></div>
+      <div class="bal-line"><span>Total vendido</span><span class="v" id="bTotalVendido">₡0</span></div>
+      <div class="bal-line"><span>Ganancia bruta<small>Vendido menos su costo</small></span><span class="v pos" id="bGananciaBruta">₡0</span></div>
+    </div>
+    <div class="card">
+      <h3 style="color:var(--accent)">Cobros y flujo de dinero</h3>
+      <div class="bal-line"><span>Cobrado de contado</span><span class="v pos" id="bContado">₡0</span></div>
+      <div class="bal-line"><span>Abonos recibidos<small><span id="bNumAbonos">0</span> abonos registrados</small></span><span class="v pos" id="bAbonos">₡0</span></div>
+      <div class="bal-line"><span>Vendido a crédito</span><span class="v" id="bCredito">₡0</span></div>
+      <div class="bal-line"><span>Pendiente de cobro<small>Deuda viva de clientes</small></span><span class="v neg" id="bPendiente">₡0</span></div>
+      <div class="bal-line"><span>Vencido<small>Cobros con fecha pasada</small></span><span class="v neg" id="bVencido">₡0</span></div>
+      <div class="bal-line"><span>Efectivo recuperado<small>Contado + abonos</small></span><span class="v" id="bEfectivo">₡0</span></div>
+      <div class="bal-line"><span>Posición de caja<small>Recuperado menos invertido</small></span><span class="v" id="bCaja">₡0</span></div>
+    </div>
+    <div class="card">
+      <h3 style="color:var(--accent)">Ganancia por perfume</h3>
+      <div id="bPorPerfume"></div>
+    </div>
+
+    <div class="card">
+      <h3 style="color:var(--accent)">Respaldo de datos</h3>
+      <div class="row" style="margin-bottom:8px">Descargá un respaldo antes de cambiar de navegador, borrar caché o mover la app.</div>
+      <div class="actions">
+        <button class="small gold" onclick="exportarDatos()">Descargar respaldo</button>
+        <button class="small" onclick="document.getElementById('fileImport').click()">Restaurar respaldo</button>
+      </div>
+      <input type="file" id="fileImport" accept=".json,application/json" style="display:none">
+    </div>
+  </section>
+
+</main>
+
+<!-- MODAL ABONO -->
+<div class="modal-bg" id="modalAbono">
+  <div class="modal">
+    <h3 id="mTitulo">Registrar abono</h3>
+    <div class="sub" id="mSub"></div>
+    <input type="hidden" id="mClienteId">
+    <label>Monto del abono (₡)</label>
+    <input type="number" id="mMonto" min="1" step="1">
+    <label>Fecha del abono</label>
+    <input type="date" id="mFecha">
+    <div class="chk"><input type="checkbox" id="mAvanzar" checked><label for="mAvanzar" style="margin:0">Programar el siguiente cobro</label></div>
+    <button class="primary" id="mGuardar">Guardar abono</button>
+    <button class="small" id="mCerrar" style="width:100%;margin-top:8px;">Cancelar</button>
+  </div>
+</div>
+
+<script>
+/* ---------- almacenamiento ---------- */
+function load(k){ try { return JSON.parse(localStorage.getItem(k)) || []; } catch(e){ return []; } }
+function save(k,d){ localStorage.setItem(k, JSON.stringify(d)); }
+function uid(){ return Date.now().toString(36) + Math.random().toString(36).slice(2,6); }
+function crc(n){ return '₡' + Math.round(n).toLocaleString('es-CR'); }
+
+/* ---------- fechas (ISO yyyy-mm-dd, sin zona horaria) ---------- */
+function hoyISO(){
+  const d = new Date();
+  return d.getFullYear() + '-' + String(d.getMonth()+1).padStart(2,'0') + '-' + String(d.getDate()).padStart(2,'0');
+}
+function addDays(iso, n){
+  const [y,m,d] = iso.split('-').map(Number);
+  const dt = new Date(y, m-1, d);
+  dt.setDate(dt.getDate() + n);
+  return dt.getFullYear() + '-' + String(dt.getMonth()+1).padStart(2,'0') + '-' + String(dt.getDate()).padStart(2,'0');
+}
+function fmtFecha(iso){
+  if(!iso) return '';
+  if(!/^\d{4}-\d{2}-\d{2}$/.test(iso)) return iso; // fechas viejas en formato local
+  const [y,m,d] = iso.split('-');
+  return `${Number(d)}/${Number(m)}/${y}`;
+}
+function diasDesdeHoy(iso){
+  if(!iso) return null;
+  const [y,m,d] = iso.split('-').map(Number);
+  const a = new Date(y, m-1, d);
+  const h = new Date(); h.setHours(0,0,0,0);
+  return Math.round((a - h) / 86400000);
+}
+function estadoCobro(iso){
+  const dd = diasDesdeHoy(iso);
+  if(dd === null) return { clase:'', txt:'Sin fecha', badge:'prox' };
+  if(dd < 0)  return { clase:'venc', txt:`Vencido hace ${-dd} d`, badge:'vencido' };
+  if(dd === 0) return { clase:'hoy', txt:'Cobrar hoy', badge:'hoy' };
+  if(dd === 1) return { clase:'', txt:'Mañana', badge:'prox' };
+  return { clase:'', txt:`En ${dd} días`, badge:'prox' };
+}
+// avanza la fecha programada una vuelta; si sigue muy atrás, la trae hasta hoy o después
+function avanzarProx(prox, frec){
+  if(!frec) return '';
+  let p = prox || hoyISO();
+  p = addDays(p, frec);
+  let guard = 0;
+  while(diasDesdeHoy(p) < 0 && guard < 500){ p = addDays(p, frec); guard++; }
+  return p;
+}
+
+/* ---------- datos ---------- */
+let inventario = load('inventario');
+let clientes   = load('clientes');
+let ventas     = load('ventas');
+let abonos     = load('abonos');
+let compras    = load('compras');
+
+// migración: reconstruir compras iniciales si faltan
+if(!compras.length && inventario.length){
+  inventario.forEach(p => {
+    const vendidas = ventas.filter(v => v.perfumeId===p.id || v.perfumeNombre===p.nombre).reduce((a,v)=>a+v.cantidad,0);
+    compras.push({ id:uid(), fecha:'inicial', perfumeId:p.id, nombre:p.nombre, cantidad:p.stock+vendidas, costoUnit:p.costo });
+  });
+  save('compras', compras);
+}
+// migración: campos de plan de cobro
+let migCli = false;
+clientes.forEach(c => {
+  if(c.frec === undefined){ c.frec = ''; c.cuota = 0; c.prox = ''; migCli = true; }
+});
+if(migCli) save('clientes', clientes);
+
+/* ---------- navegación ---------- */
+document.querySelectorAll('nav button').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('nav button').forEach(b=>b.classList.remove('active'));
+    document.querySelectorAll('.view').forEach(v=>v.classList.remove('active'));
+    btn.classList.add('active');
+    document.getElementById(btn.dataset.view).classList.add('active');
+    renderAll(); window.scrollTo(0,0);
+  });
+});
+
+/* ---------- INVENTARIO ---------- */
+document.getElementById('formInventario').addEventListener('submit', e => {
+  e.preventDefault();
+  const editId = document.getElementById('pEditId').value;
+  const nombre = document.getElementById('pNombre').value.trim();
+  const marca  = document.getElementById('pMarca').value.trim();
+  const costo  = parseFloat(document.getElementById('pCosto').value);
+  const precio = parseFloat(document.getElementById('pPrecio').value);
+  const cant   = parseInt(document.getElementById('pCantidad').value);
+  if(editId){
+    const p = inventario.find(x=>x.id===editId);
+    p.nombre=nombre; p.marca=marca; p.costo=costo; p.precio=precio; p.stock=cant;
+    salirEdicionP();
+  } else {
+    const p = { id:uid(), nombre, marca, costo, precio, stock:cant };
+    inventario.push(p);
+    compras.push({ id:uid(), fecha:hoyISO(), perfumeId:p.id, nombre, cantidad:cant, costoUnit:costo });
+    save('compras', compras);
+  }
+  save('inventario', inventario);
+  e.target.reset(); document.getElementById('pCantidad').value = 1;
+  renderAll();
+});
+
+function renderInventario(){
+  const cont = document.getElementById('listaInventario');
+  document.getElementById('invCount').textContent = inventario.length;
+  document.getElementById('invStock').textContent = inventario.reduce((a,p)=>a+p.stock,0);
+  document.getElementById('invValor').textContent = crc(inventario.reduce((a,p)=>a+p.stock*p.costo,0));
+  if(!inventario.length){ cont.innerHTML='<div class="empty">Todavía no hay perfumes registrados</div>'; return; }
+  cont.innerHTML = inventario.slice().reverse().map(p=>`
+    <div class="card">
+      <h3>${p.nombre} ${p.stock===0?'<span class="badge agotado">Agotado</span>':''}</h3>
+      <div class="row"><span>${p.marca||'Sin marca'}</span><span>Stock: <b>${p.stock}</b></span></div>
+      <div class="row"><span>Costo: ${crc(p.costo)}</span><span>Venta: ${crc(p.precio)}</span></div>
+      <div class="row"><span>Ganancia por unidad</span><span style="color:var(--success)">${crc(p.precio-p.costo)}</span></div>
+      <div class="actions">
+        <button class="small gold" onclick="agregarStock('${p.id}')">+ Stock</button>
+        <button class="small" onclick="editarPerfume('${p.id}')">Editar</button>
+        <button class="small" onclick="eliminarPerfume('${p.id}')">Eliminar</button>
+      </div>
+    </div>`).join('');
+}
+function agregarStock(id){
+  const p = inventario.find(x=>x.id===id);
+  const cant = parseInt(prompt(`¿Cuántas unidades entraron de ${p.nombre}? (stock actual: ${p.stock})`));
+  if(isNaN(cant)||cant<=0) return;
+  const costo = parseFloat(prompt('Costo por unidad de esta compra (₡):', p.costo));
+  if(isNaN(costo)||costo<0) return;
+  p.stock += cant; p.costo = costo;
+  compras.push({ id:uid(), fecha:hoyISO(), perfumeId:p.id, nombre:p.nombre, cantidad:cant, costoUnit:costo });
+  save('inventario',inventario); save('compras',compras); renderAll();
+}
+function editarPerfume(id){
+  const p = inventario.find(x=>x.id===id);
+  document.getElementById('pEditId').value=p.id;
+  document.getElementById('pNombre').value=p.nombre;
+  document.getElementById('pMarca').value=p.marca||'';
+  document.getElementById('pCosto').value=p.costo;
+  document.getElementById('pPrecio').value=p.precio;
+  document.getElementById('pCantidad').value=p.stock;
+  document.getElementById('tituloForm').textContent='Editando: '+p.nombre;
+  document.getElementById('lblCant').textContent='Stock actual (corregir)';
+  document.getElementById('btnGuardarP').textContent='Guardar cambios';
+  document.getElementById('btnCancelarP').style.display='block';
+  window.scrollTo(0,0);
+}
+function salirEdicionP(){
+  document.getElementById('pEditId').value='';
+  document.getElementById('tituloForm').textContent='Registrar compra / perfume';
+  document.getElementById('lblCant').textContent='Unidades compradas';
+  document.getElementById('btnGuardarP').textContent='Guardar en inventario';
+  document.getElementById('btnCancelarP').style.display='none';
+}
+document.getElementById('btnCancelarP').addEventListener('click',()=>{
+  document.getElementById('formInventario').reset();
+  document.getElementById('pCantidad').value=1; salirEdicionP();
+});
+function eliminarPerfume(id){
+  if(!confirm('¿Eliminar este perfume? Las ventas ya registradas se mantienen.')) return;
+  inventario = inventario.filter(p=>p.id!==id);
+  save('inventario',inventario); renderAll();
+}
+
+/* ---------- CLIENTES ---------- */
+document.getElementById('formCliente').addEventListener('submit', e=>{
+  e.preventDefault();
+  const editId = document.getElementById('cEditId').value;
+  const nombre = document.getElementById('cNombre').value.trim();
+  const tel    = document.getElementById('cTelefono').value.trim();
+  const frec   = document.getElementById('cFrec').value ? parseInt(document.getElementById('cFrec').value) : '';
+  const cuota  = parseFloat(document.getElementById('cCuota').value) || 0;
+  const prox   = document.getElementById('cProx').value;
+  if(editId){
+    const c = clientes.find(x=>x.id===editId);
+    const viejo = c.nombre;
+    c.nombre=nombre; c.telefono=tel; c.frec=frec; c.cuota=cuota; c.prox=prox;
+    ventas.forEach(v=>{ if(v.clienteNombre===viejo) v.clienteNombre=nombre; });
+    save('ventas',ventas); salirEdicionC();
+  } else {
+    clientes.push({ id:uid(), nombre, telefono:tel, deuda:0, frec, cuota, prox });
+  }
+  save('clientes',clientes); e.target.reset(); renderAll();
+});
+
+function claveFecha(f){
+  if(!f) return '00000000';
+  if(/^\d{4}-\d{2}-\d{2}$/.test(f)) return f.replace(/-/g,'');
+  const p = String(f).split('/');
+  if(p.length===3) return p[2] + String(p[1]).padStart(2,'0') + String(p[0]).padStart(2,'0');
+  return '00000000';
+}
+
+function movimientosCliente(c){
+  const vs = ventas.filter(v=>v.clienteId===c.id || (!v.clienteId && v.clienteNombre===c.nombre));
+  const abs = abonos.filter(a=>a.clienteId===c.id);
+  return [
+    ...vs.map(v=>({ id:v.id, fecha:v.fecha, txt:`${v.perfumeNombre} ×${v.cantidad}${v.metodo==='contado'?' (contado)':''}`,
+                    monto:v.total, tipo: v.metodo==='credito'?'cargo':'contado' })),
+    ...abs.map(a=>({ id:a.id, fecha:a.fecha, txt:'Abono recibido', monto:a.monto, tipo:'abono' }))
+  ].sort((x,y)=> claveFecha(x.fecha).localeCompare(claveFecha(y.fecha)));
+}
+
+function renderClientes(){
+  const cont = document.getElementById('listaClientes');
+  const deudores = clientes.filter(c=>c.deuda>0);
+  document.getElementById('cliCount').textContent = clientes.length;
+  document.getElementById('cliDeuda').textContent = crc(clientes.reduce((a,c)=>a+c.deuda,0));
+  document.getElementById('cliVencidos').textContent = deudores.filter(c=>c.prox && diasDesdeHoy(c.prox)<0).length;
+
+  // agenda de cobros
+  const ag = document.getElementById('agendaCobros');
+  if(deudores.length){
+    const orden = deudores.slice().sort((a,b)=>{
+      if(!a.prox) return 1; if(!b.prox) return -1;
+      return a.prox.localeCompare(b.prox);
+    });
+    ag.innerHTML = '<div class="sec-title">AGENDA DE COBROS</div>' + orden.map(c=>{
+      const e = estadoCobro(c.prox);
+      const cuota = c.cuota ? Math.min(c.cuota, c.deuda) : c.deuda;
+      return `<div class="cobro ${e.clase}">
+        <div class="top"><span class="nm">${c.nombre}</span><span class="badge ${e.badge}">${e.txt}</span></div>
+        <div class="sub">Saldo ${crc(c.deuda)} · cuota ${crc(cuota)}${c.prox?' · '+fmtFecha(c.prox):''}${c.frec?(c.frec===7?' · semanal':' · quincenal'):' · sin plan'}</div>
+        <div class="actions"><button class="small gold" onclick="abrirAbono('${c.id}')">Registrar abono</button></div>
+      </div>`;
+    }).join('');
+  } else {
+    ag.innerHTML = '';
+  }
+
+  if(!clientes.length){ cont.innerHTML='<div class="empty">Todavía no hay clientes registrados</div>'; return; }
+
+  cont.innerHTML = '<div class="sec-title">TODOS LOS CLIENTES</div>' + clientes.slice().reverse().map(c=>{
+    const movs = movimientosCliente(c);
+    const comprado = movs.filter(m=>m.tipo!=='abono').reduce((a,m)=>a+m.monto,0);
+    const pagado = movs.filter(m=>m.tipo==='abono').reduce((a,m)=>a+m.monto,0);
+    const e = estadoCobro(c.prox);
+    return `
+    <div class="card">
+      <h3>${c.nombre}</h3>
+      <div class="row"><span>${c.telefono||'Sin teléfono'}</span>
+        <span class="badge ${c.deuda>0?'credito':'pagado'}">${c.deuda>0?'Debe '+crc(c.deuda):'Al día'}</span></div>
+      ${c.deuda>0?`<div class="row"><span>Plan</span><span>${c.frec?(c.frec===7?'Semanal':'Quincenal'):'Sin plan'}${c.cuota?' · '+crc(c.cuota):''}</span></div>
+      <div class="row"><span>Próximo cobro</span><span><b>${c.prox?fmtFecha(c.prox):'—'}</b> · ${e.txt}</span></div>`:''}
+      <div class="row"><span>Comprado / abonado</span><span>${crc(comprado)} / ${crc(pagado)}</span></div>
+      <div class="actions">
+        ${c.deuda>0?`<button class="small gold" onclick="abrirAbono('${c.id}')">Abono</button>`:''}
+        <button class="small" onclick="editarCliente('${c.id}')">Editar</button>
+        <button class="small" onclick="toggleHist('h_${c.id}')">Historial</button>
+        <button class="small" onclick="eliminarCliente('${c.id}')">Eliminar</button>
+      </div>
+      <div class="hist" id="h_${c.id}" style="display:none">
+        ${movs.length ? movs.map(m=>`
+          <div class="item"><span>${fmtFecha(m.fecha)} · ${m.txt}${m.tipo==='abono'?` <button class="del" onclick="eliminarAbono('${m.id}')" title="Borrar abono">✕</button>`:''}</span>
+          <span class="${m.tipo==='abono'?'g':(m.tipo==='cargo'?'r':'')}">${m.tipo==='abono'?'−':(m.tipo==='cargo'?'+':'')}${crc(m.monto)}</span></div>`).join('')
+          + `<div class="saldo">Saldo actual: <b style="color:${c.deuda>0?'var(--danger)':'var(--success)'}">${crc(c.deuda)}</b></div>`
+        : '<div class="item"><span>Sin movimientos</span></div>'}
+      </div>
+    </div>`;
+  }).join('');
+}
+
+function eliminarAbono(id){
+  const a = abonos.find(x=>x.id===id);
+  if(!a) return;
+  const c = clientes.find(x=>x.id===a.clienteId);
+  if(!confirm(`¿Borrar el abono de ${crc(a.monto)} del ${fmtFecha(a.fecha)}? El saldo vuelve a subir.`)) return;
+  c.deuda += a.monto;
+  abonos = abonos.filter(x=>x.id!==id);
+  if(c.frec){
+    if(!c.prox) c.prox = addDays(hoyISO(), c.frec);
+    else if(confirm('¿Retroceder también la fecha del próximo cobro un ciclo?')) c.prox = addDays(c.prox, -c.frec);
+  }
+  save('clientes',clientes); save('abonos',abonos); renderAll();
+}
+
+function toggleHist(id){
+  const el = document.getElementById(id);
+  el.style.display = el.style.display==='none' ? 'block' : 'none';
+}
+function editarCliente(id){
+  const c = clientes.find(x=>x.id===id);
+  document.getElementById('cEditId').value=c.id;
+  document.getElementById('cNombre').value=c.nombre;
+  document.getElementById('cTelefono').value=c.telefono||'';
+  document.getElementById('cFrec').value=c.frec||'';
+  document.getElementById('cCuota').value=c.cuota||'';
+  document.getElementById('cProx').value=c.prox||'';
+  document.getElementById('tituloFormC').textContent='Editando: '+c.nombre;
+  document.getElementById('btnGuardarC').textContent='Guardar cambios';
+  document.getElementById('btnCancelarC').style.display='block';
+  document.getElementById('formCliente').scrollIntoView({behavior:'smooth'});
+}
+function salirEdicionC(){
+  document.getElementById('cEditId').value='';
+  document.getElementById('tituloFormC').textContent='Nuevo cliente';
+  document.getElementById('btnGuardarC').textContent='Guardar cliente';
+  document.getElementById('btnCancelarC').style.display='none';
+}
+document.getElementById('btnCancelarC').addEventListener('click',()=>{
+  document.getElementById('formCliente').reset(); salirEdicionC();
+});
+function eliminarCliente(id){
+  if(!confirm('¿Eliminar este cliente?')) return;
+  clientes = clientes.filter(c=>c.id!==id);
+  save('clientes',clientes); renderAll();
+}
+
+/* ---------- ABONOS ---------- */
+function abrirAbono(id){
+  const c = clientes.find(x=>x.id===id);
+  document.getElementById('mClienteId').value = c.id;
+  document.getElementById('mTitulo').textContent = 'Abono de ' + c.nombre;
+  document.getElementById('mSub').textContent =
+    `Saldo actual ${crc(c.deuda)}${c.prox?' · programado para '+fmtFecha(c.prox):''}`;
+  const sugerido = c.cuota ? Math.min(c.cuota, c.deuda) : c.deuda;
+  document.getElementById('mMonto').value = Math.round(sugerido);
+  document.getElementById('mFecha').value = hoyISO();
+  document.getElementById('mAvanzar').checked = !!c.frec;
+  document.getElementById('modalAbono').classList.add('open');
+}
+document.getElementById('mCerrar').addEventListener('click',()=>{
+  document.getElementById('modalAbono').classList.remove('open');
+});
+document.getElementById('modalAbono').addEventListener('click', e=>{
+  if(e.target.id==='modalAbono') e.currentTarget.classList.remove('open');
+});
+document.getElementById('mGuardar').addEventListener('click',()=>{
+  const c = clientes.find(x=>x.id===document.getElementById('mClienteId').value);
+  const monto = parseFloat(document.getElementById('mMonto').value);
+  const fecha = document.getElementById('mFecha').value || hoyISO();
+  if(isNaN(monto) || monto<=0){ alert('Poné un monto válido.'); return; }
+  const aplicado = Math.min(monto, c.deuda);
+  c.deuda = Math.round((c.deuda - aplicado)*100)/100;
+  abonos.push({ id:uid(), fecha, clienteId:c.id, monto:aplicado });
+  if(c.deuda <= 0){ c.deuda = 0; c.prox = ''; }
+  else if(document.getElementById('mAvanzar').checked && c.frec){ c.prox = avanzarProx(c.prox, c.frec); }
+  save('clientes',clientes); save('abonos',abonos);
+  document.getElementById('modalAbono').classList.remove('open');
+  renderAll();
+});
+
+/* ---------- VENTAS ---------- */
+function poblarSelects(){
+  const selP = document.getElementById('vPerfume'), selC = document.getElementById('vCliente');
+  selP.innerHTML = inventario.filter(p=>p.stock>0)
+    .map(p=>`<option value="${p.id}">${p.nombre} — ${crc(p.precio)} (stock ${p.stock})</option>`).join('')
+    || '<option value="">Sin stock disponible</option>';
+  selC.innerHTML = clientes.map(c=>`<option value="${c.id}">${c.nombre}</option>`).join('')
+    || '<option value="">Registrá un cliente primero</option>';
+}
+document.getElementById('formVenta').addEventListener('submit', e=>{
+  e.preventDefault();
+  const pid=document.getElementById('vPerfume').value, cid=document.getElementById('vCliente').value;
+  const cant=parseInt(document.getElementById('vCantidad').value);
+  const metodo=document.getElementById('vMetodo').value;
+  const pm=document.getElementById('vPrecio').value;
+  if(!pid||!cid){ alert('Necesitás al menos un perfume en stock y un cliente registrado.'); return; }
+  const p=inventario.find(x=>x.id===pid), c=clientes.find(x=>x.id===cid);
+  if(cant>p.stock){ alert('No hay suficiente stock.'); return; }
+  const total = pm!=='' ? parseFloat(pm) : p.precio*cant;
+  p.stock -= cant;
+  if(metodo==='credito'){
+    c.deuda += total;
+    if(!c.prox && c.frec) c.prox = addDays(hoyISO(), c.frec);
+  }
+  ventas.push({ id:uid(), fecha:hoyISO(), perfumeId:p.id, perfumeNombre:p.nombre,
+    clienteId:c.id, clienteNombre:c.nombre, cantidad:cant, total, costoTotal:p.costo*cant, metodo });
+  save('inventario',inventario); save('clientes',clientes); save('ventas',ventas);
+  e.target.reset(); document.getElementById('vCantidad').value=1; renderAll();
+});
+function renderVentas(){
+  poblarSelects();
+  const cont=document.getElementById('listaVentas');
+  if(!ventas.length){ cont.innerHTML='<div class="empty">Todavía no hay ventas registradas</div>'; return; }
+  cont.innerHTML = ventas.slice().reverse().map(v=>`
+    <div class="card">
+      <h3>${v.perfumeNombre}</h3>
+      <div class="row"><span>${v.clienteNombre}</span><span>${fmtFecha(v.fecha)}</span></div>
+      <div class="row"><span>Cant: ${v.cantidad} · <b>${crc(v.total)}</b></span>
+        <span class="badge ${v.metodo}">${v.metodo==='contado'?'Contado':'Crédito'}</span></div>
+      <div class="row"><span>Ganancia</span><span style="color:var(--success)">${crc(v.total-(v.costoTotal||0))}</span></div>
+      <div class="actions"><button class="small" onclick="eliminarVenta('${v.id}')">Eliminar venta</button></div>
+    </div>`).join('');
+}
+function eliminarVenta(id){
+  if(!confirm('¿Eliminar esta venta? Se devuelve el stock y se ajusta la deuda.')) return;
+  const v=ventas.find(x=>x.id===id);
+  const p=inventario.find(x=>x.id===v.perfumeId); if(p) p.stock+=v.cantidad;
+  const c=clientes.find(x=>x.id===v.clienteId);
+  if(c && v.metodo==='credito'){ c.deuda=Math.max(0,c.deuda-v.total); if(c.deuda===0) c.prox=''; }
+  ventas=ventas.filter(x=>x.id!==id);
+  save('ventas',ventas); save('inventario',inventario); save('clientes',clientes); renderAll();
+}
+
+/* ---------- BALANCE ---------- */
+function renderBalance(){
+  const invertido = compras.reduce((a,c)=>a+c.cantidad*c.costoUnit,0);
+  const stockValor = inventario.reduce((a,p)=>a+p.stock*p.costo,0);
+  const totalVendido = ventas.reduce((a,v)=>a+v.total,0);
+  const costoVendido = ventas.reduce((a,v)=>a+(v.costoTotal||0),0);
+  const gananciaBruta = totalVendido - costoVendido;
+  const contado = ventas.filter(v=>v.metodo==='contado').reduce((a,v)=>a+v.total,0);
+  const aCredito = ventas.filter(v=>v.metodo==='credito').reduce((a,v)=>a+v.total,0);
+  const totalAbonos = abonos.reduce((a,x)=>a+x.monto,0);
+  const pendiente = clientes.reduce((a,c)=>a+c.deuda,0);
+  const vencido = clientes.filter(c=>c.deuda>0 && c.prox && diasDesdeHoy(c.prox)<0).reduce((a,c)=>a+c.deuda,0);
+  const efectivo = contado + totalAbonos;
+  const caja = efectivo - invertido;
+
+  document.getElementById('bVentas').textContent = crc(totalVendido);
+  const g=document.getElementById('bGanancia'); g.textContent=crc(gananciaBruta); g.className='num '+(gananciaBruta>=0?'pos':'neg');
+  document.getElementById('bInvertido').textContent = crc(invertido);
+  document.getElementById('bStock').textContent = crc(stockValor);
+  document.getElementById('bCostoVendido').textContent = crc(costoVendido);
+  document.getElementById('bTotalVendido').textContent = crc(totalVendido);
+  document.getElementById('bGananciaBruta').textContent = crc(gananciaBruta);
+  document.getElementById('bContado').textContent = crc(contado);
+  document.getElementById('bCredito').textContent = crc(aCredito);
+  document.getElementById('bAbonos').textContent = crc(totalAbonos);
+  document.getElementById('bNumAbonos').textContent = abonos.length;
+  document.getElementById('bPendiente').textContent = crc(pendiente);
+  document.getElementById('bVencido').textContent = crc(vencido);
+  document.getElementById('bEfectivo').textContent = crc(efectivo);
+  const cj=document.getElementById('bCaja'); cj.textContent=crc(caja); cj.className='v '+(caja>=0?'pos':'neg');
+
+  const porP={};
+  ventas.forEach(v=>{
+    if(!porP[v.perfumeNombre]) porP[v.perfumeNombre]={u:0,ven:0,gan:0};
+    porP[v.perfumeNombre].u+=v.cantidad; porP[v.perfumeNombre].ven+=v.total;
+    porP[v.perfumeNombre].gan+=v.total-(v.costoTotal||0);
+  });
+  const ks=Object.keys(porP);
+  document.getElementById('bPorPerfume').innerHTML = ks.length
+    ? ks.map(k=>`<div class="bal-line"><span>${k}<small>${porP[k].u} und · ${crc(porP[k].ven)}</small></span><span class="v pos">${crc(porP[k].gan)}</span></div>`).join('')
+    : '<div class="empty">Sin ventas todavía</div>';
+}
+
+/* ---------- RESPALDO ---------- */
+function exportarDatos(){
+  const data = { version:4, exportado:hoyISO(), inventario, clientes, ventas, abonos, compras };
+  const blob = new Blob([JSON.stringify(data,null,2)], {type:'application/json'});
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = 'perfumes-respaldo-' + hoyISO() + '.json';
+  document.body.appendChild(a); a.click(); document.body.removeChild(a);
+  setTimeout(()=>URL.revokeObjectURL(a.href), 2000);
+}
+
+document.getElementById('fileImport').addEventListener('change', e=>{
+  const f = e.target.files[0];
+  if(!f) return;
+  const r = new FileReader();
+  r.onload = ev => {
+    try {
+      const d = JSON.parse(ev.target.result);
+      if(!d.inventario && !d.clientes && !d.ventas) throw new Error('formato');
+      if(!confirm('Esto reemplaza todos los datos actuales por los del respaldo. ¿Continuar?')) return;
+      inventario = d.inventario || []; clientes = d.clientes || [];
+      ventas = d.ventas || []; abonos = d.abonos || []; compras = d.compras || [];
+      save('inventario',inventario); save('clientes',clientes);
+      save('ventas',ventas); save('abonos',abonos); save('compras',compras);
+      renderAll();
+      alert('Respaldo restaurado: ' + inventario.length + ' perfumes, ' + clientes.length + ' clientes, ' + ventas.length + ' ventas.');
+    } catch(err){
+      alert('El archivo no es un respaldo válido de la app.');
+    }
+  };
+  r.readAsText(f);
+  e.target.value = '';
+});
+
+function renderAll(){ renderInventario(); renderClientes(); renderVentas(); renderBalance(); }
+renderAll();
+</script>
+</body>
+</html>

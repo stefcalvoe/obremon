@@ -248,6 +248,548 @@ function save(k,d){ localStorage.setItem(k, JSON.stringify(d)); }
 function uid(){ return Date.now().toString(36) + Math.random().toString(36).slice(2,6); }
 function crc(n){ return '₡' + Math.round(n).toLocaleString('es-CR'); }
 
+/* ---------- semilla inicial (respaldo del 2026-09-11) ----------
+   Solo siembran la primera vez en un navegador vacío. Si ya hay datos
+   guardados, no se toca nada. La marca SEMILLA evita re-sembrar si el
+   usuario borra todo a propósito. */
+const SEMILLA = 'semilla_2026_09_11';
+const DATOS_INICIALES = {
+  "inventario": [
+    {
+      "id": "mtn5p2ppwwtr",
+      "nombre": "Mandaryn SKY",
+      "marca": "Odyssey",
+      "costo": 13000,
+      "precio": 30000,
+      "stock": 1
+    },
+    {
+      "id": "mtn5qd61pgwg",
+      "nombre": "9 pm",
+      "marca": "AFNAN",
+      "costo": 14500,
+      "precio": 30000,
+      "stock": 0
+    },
+    {
+      "id": "mtn5s5lb34i5",
+      "nombre": "Happy",
+      "marca": "Clinique",
+      "costo": 17000,
+      "precio": 35000,
+      "stock": 0
+    },
+    {
+      "id": "mtn5x85fgczc",
+      "nombre": "Náutica clásica",
+      "marca": "Nautica",
+      "costo": 6400,
+      "precio": 15000,
+      "stock": 0
+    },
+    {
+      "id": "mtn5xvg7ycmw",
+      "nombre": "Body",
+      "marca": "Victoria secret",
+      "costo": 5600,
+      "precio": 10000,
+      "stock": 0
+    },
+    {
+      "id": "mtngqmrep70e",
+      "nombre": "Bestia Negra",
+      "marca": "AFNAN",
+      "costo": 14500,
+      "precio": 30000,
+      "stock": 2
+    },
+    {
+      "id": "mtt6p05r4gsq",
+      "nombre": "Cloud",
+      "marca": "Adriana Grande",
+      "costo": 26000,
+      "precio": 37000,
+      "stock": 0
+    },
+    {
+      "id": "mtt71e7i2kzs",
+      "nombre": "Candee",
+      "marca": "Armaf",
+      "costo": 13000,
+      "precio": 25000,
+      "stock": 2
+    },
+    {
+      "id": "mtt728xstoao",
+      "nombre": "In motion",
+      "marca": "Boss",
+      "costo": 14500,
+      "precio": 30000,
+      "stock": 1
+    },
+    {
+      "id": "mtt73rmvfrer",
+      "nombre": "Blue Seduction",
+      "marca": "Antonio Banderas",
+      "costo": 12500,
+      "precio": 25000,
+      "stock": 0
+    },
+    {
+      "id": "mtt74fme5abu",
+      "nombre": "Dark Seduction",
+      "marca": "Antonio Banderas",
+      "costo": 13000,
+      "precio": 25000,
+      "stock": 1
+    },
+    {
+      "id": "mtt7637p0tjy",
+      "nombre": "Meow",
+      "marca": "Katy Perry",
+      "costo": 13000,
+      "precio": 20000,
+      "stock": 0
+    },
+    {
+      "id": "mtt78g5p323n",
+      "nombre": "Dunescape",
+      "marca": "Armaf",
+      "costo": 18500,
+      "precio": 38000,
+      "stock": 1
+    }
+  ],
+  "clientes": [
+    {
+      "id": "mtn5umblt8vs",
+      "nombre": "Kendall",
+      "telefono": "62553815",
+      "deuda": 0,
+      "frec": "",
+      "cuota": 0,
+      "prox": ""
+    },
+    {
+      "id": "mtn6mcjeqljj",
+      "nombre": "Larry",
+      "telefono": "63056256",
+      "deuda": 8000,
+      "frec": 7,
+      "cuota": 0,
+      "prox": "2026-09-11"
+    },
+    {
+      "id": "mtn6ork9xmjr",
+      "nombre": "Jonathan",
+      "telefono": "89135216",
+      "deuda": 10000,
+      "frec": "",
+      "cuota": 0,
+      "prox": "2026-09-15"
+    },
+    {
+      "id": "mtn8m6u6l6t3",
+      "nombre": "Jimmy",
+      "telefono": "62821320",
+      "deuda": 35000,
+      "frec": 15,
+      "cuota": 12000,
+      "prox": "2026-09-15"
+    },
+    {
+      "id": "mtn9sxjj68j4",
+      "nombre": "Daniel",
+      "telefono": "60564207",
+      "deuda": 20000,
+      "frec": 7,
+      "cuota": 10000,
+      "prox": "2026-09-11"
+    },
+    {
+      "id": "mtnb61pr741s",
+      "nombre": "Dennis",
+      "telefono": "86702930",
+      "deuda": 15000,
+      "frec": 15,
+      "cuota": 7500,
+      "prox": "2026-09-15"
+    },
+    {
+      "id": "mtndhofdt4j9",
+      "nombre": "Richard",
+      "telefono": "86673590",
+      "deuda": 13000,
+      "frec": 15,
+      "cuota": 0,
+      "prox": "2026-09-15"
+    },
+    {
+      "id": "mtnip90c4xtm",
+      "nombre": "David ti",
+      "telefono": "70360406",
+      "deuda": 30000,
+      "frec": "",
+      "cuota": 0,
+      "prox": ""
+    },
+    {
+      "id": "mtniuq5ww29s",
+      "nombre": "Eliecer guerra",
+      "telefono": "63743722",
+      "deuda": 20000,
+      "frec": "",
+      "cuota": 0,
+      "prox": ""
+    },
+    {
+      "id": "mtt8meki30m5",
+      "nombre": "Nachelly",
+      "telefono": "87312026",
+      "deuda": 20000,
+      "frec": 15,
+      "cuota": 10000,
+      "prox": "2026-09-15"
+    },
+    {
+      "id": "mtt8qcqr6k6s",
+      "nombre": "Jorge Segura",
+      "telefono": "",
+      "deuda": 0,
+      "frec": "",
+      "cuota": 0,
+      "prox": ""
+    },
+    {
+      "id": "mtta2w41vlnw",
+      "nombre": "Geovanni Segura",
+      "telefono": "",
+      "deuda": 25000,
+      "frec": 7,
+      "cuota": 5000,
+      "prox": "2026-09-11"
+    }
+  ],
+  "ventas": [
+    {
+      "id": "mtn6h1fxn2xq",
+      "fecha": "4/9/2026",
+      "perfumeId": "mtn5p2ppwwtr",
+      "perfumeNombre": "Mandaryn SKY",
+      "clienteId": "mtn5umblt8vs",
+      "clienteNombre": "Kendall",
+      "cantidad": 1,
+      "total": 30000,
+      "costoTotal": 12500,
+      "metodo": "contado"
+    },
+    {
+      "id": "mtn6pxypbtnw",
+      "fecha": "4/9/2026",
+      "perfumeId": "mtn5x85fgczc",
+      "perfumeNombre": "Normal",
+      "clienteId": "mtn6mcjeqljj",
+      "clienteNombre": "Larry",
+      "cantidad": 1,
+      "total": 13000,
+      "costoTotal": 6400,
+      "metodo": "credito"
+    },
+    {
+      "id": "mtn8h128r0c7",
+      "fecha": "2026-09-04",
+      "perfumeId": "mtn5xvg7ycmw",
+      "perfumeNombre": "Body",
+      "clienteId": "mtn6ork9xmjr",
+      "clienteNombre": "Jonathan",
+      "cantidad": 1,
+      "total": 10000,
+      "costoTotal": 5600,
+      "metodo": "credito"
+    },
+    {
+      "id": "mtn8moze3r8a",
+      "fecha": "2026-09-04",
+      "perfumeId": "mtn5s5lb34i5",
+      "perfumeNombre": "Happy",
+      "clienteId": "mtn8m6u6l6t3",
+      "clienteNombre": "Jimmy",
+      "cantidad": 1,
+      "total": 35000,
+      "costoTotal": 17000,
+      "metodo": "credito"
+    },
+    {
+      "id": "mtnb6jngmjpa",
+      "fecha": "2026-09-04",
+      "perfumeId": "mtn5x85fgczc",
+      "perfumeNombre": "Náutica clásica",
+      "clienteId": "mtnb61pr741s",
+      "clienteNombre": "Dennis",
+      "cantidad": 1,
+      "total": 15000,
+      "costoTotal": 6400,
+      "metodo": "credito"
+    },
+    {
+      "id": "mtndi5zhkpzf",
+      "fecha": "2026-09-04",
+      "perfumeId": "mtn5x85fgczc",
+      "perfumeNombre": "Náutica clásica",
+      "clienteId": "mtndhofdt4j9",
+      "clienteNombre": "Richard",
+      "cantidad": 1,
+      "total": 13000,
+      "costoTotal": 6400,
+      "metodo": "credito"
+    },
+    {
+      "id": "mtni6jswrixe",
+      "fecha": "4/9/2026",
+      "perfumeId": "mtn5p2ppwwtr",
+      "perfumeNombre": "Mandaryn SKY",
+      "clienteId": "mtn9sxjj68j4",
+      "clienteNombre": "Daniel",
+      "cantidad": 1,
+      "total": 30000,
+      "costoTotal": 13500,
+      "metodo": "credito"
+    },
+    {
+      "id": "mtnipq6vmtg7",
+      "fecha": "4/9/2026",
+      "perfumeId": "mtn5qd61pgwg",
+      "perfumeNombre": "9 pm",
+      "clienteId": "mtnip90c4xtm",
+      "clienteNombre": "David ti",
+      "cantidad": 1,
+      "total": 30000,
+      "costoTotal": 14500,
+      "metodo": "credito"
+    },
+    {
+      "id": "mtnivz531cx6",
+      "fecha": "4/9/2026",
+      "perfumeId": "mtn5p2ppwwtr",
+      "perfumeNombre": "Mandaryn SKY",
+      "clienteId": "mtniuq5ww29s",
+      "clienteNombre": "Eliecer guerra",
+      "cantidad": 1,
+      "total": 30000,
+      "costoTotal": 13500,
+      "metodo": "credito"
+    },
+    {
+      "id": "mtt8n1noi70o",
+      "fecha": "2026-09-08",
+      "perfumeId": "mtt7637p0tjy",
+      "perfumeNombre": "Meow",
+      "clienteId": "mtt8meki30m5",
+      "clienteNombre": "Nachelly",
+      "cantidad": 1,
+      "total": 20000,
+      "costoTotal": 13000,
+      "metodo": "credito"
+    },
+    {
+      "id": "mtt8njg01xe8",
+      "fecha": "2026-09-08",
+      "perfumeId": "mtt6p05r4gsq",
+      "perfumeNombre": "Cloud",
+      "clienteId": "mtn5umblt8vs",
+      "clienteNombre": "Kendall",
+      "cantidad": 1,
+      "total": 37000,
+      "costoTotal": 26000,
+      "metodo": "contado"
+    },
+    {
+      "id": "mttakp6ry1uq",
+      "fecha": "2026-09-08",
+      "perfumeId": "mtt73rmvfrer",
+      "perfumeNombre": "Blue Seduction",
+      "clienteId": "mtta2w41vlnw",
+      "clienteNombre": "Geovanni Segura",
+      "cantidad": 1,
+      "total": 25000,
+      "costoTotal": 12500,
+      "metodo": "credito"
+    },
+    {
+      "id": "mttcns2dzmqb",
+      "fecha": "2026-09-08",
+      "perfumeId": "mtn5p2ppwwtr",
+      "perfumeNombre": "Mandaryn SKY",
+      "clienteId": "mtt8qcqr6k6s",
+      "clienteNombre": "Jorge Segura",
+      "cantidad": 1,
+      "total": 30000,
+      "costoTotal": 13000,
+      "metodo": "contado"
+    }
+  ],
+  "abonos": [
+    {
+      "id": "mtn8flb66kja",
+      "fecha": "2026-09-04",
+      "clienteId": "mtn6mcjeqljj",
+      "monto": 5000
+    },
+    {
+      "id": "mtni73hgf2rt",
+      "fecha": "4/9/2026",
+      "clienteId": "mtn9sxjj68j4",
+      "monto": 10000
+    },
+    {
+      "id": "mtniwjg24ecj",
+      "fecha": "4/9/2026",
+      "clienteId": "mtniuq5ww29s",
+      "monto": 10000
+    }
+  ],
+  "compras": [
+    {
+      "id": "mtn6e5yl844m",
+      "fecha": "inicial",
+      "perfumeId": "mtn5p2ppwwtr",
+      "nombre": "Mandaryn SKY",
+      "cantidad": 1,
+      "costoUnit": 12500
+    },
+    {
+      "id": "mtn6e5yls3bq",
+      "fecha": "inicial",
+      "perfumeId": "mtn5qd61pgwg",
+      "nombre": "9 pm",
+      "cantidad": 1,
+      "costoUnit": 14500
+    },
+    {
+      "id": "mtn6e5ylgb53",
+      "fecha": "inicial",
+      "perfumeId": "mtn5s5lb34i5",
+      "nombre": "Happy",
+      "cantidad": 1,
+      "costoUnit": 17000
+    },
+    {
+      "id": "mtn6e5ylzp8v",
+      "fecha": "inicial",
+      "perfumeId": "mtn5x85fgczc",
+      "nombre": "Normal",
+      "cantidad": 1,
+      "costoUnit": 6400
+    },
+    {
+      "id": "mtn6e5yl858d",
+      "fecha": "inicial",
+      "perfumeId": "mtn5xvg7ycmw",
+      "nombre": "Body",
+      "cantidad": 1,
+      "costoUnit": 5600
+    },
+    {
+      "id": "mtngp1vk16lo",
+      "fecha": "2026-09-04",
+      "perfumeId": "mtn5p2ppwwtr",
+      "nombre": "Mandaryn SKY",
+      "cantidad": 2,
+      "costoUnit": 13500
+    },
+    {
+      "id": "mtngqmrezxqj",
+      "fecha": "2026-09-04",
+      "perfumeId": "mtngqmrep70e",
+      "nombre": "Bestia Negra",
+      "cantidad": 2,
+      "costoUnit": 13500
+    },
+    {
+      "id": "mtt6p05r5kts",
+      "fecha": "2026-09-08",
+      "perfumeId": "mtt6p05r4gsq",
+      "nombre": "Cloud",
+      "cantidad": 1,
+      "costoUnit": 26000
+    },
+    {
+      "id": "mtt6rem23om9",
+      "fecha": "2026-09-08",
+      "perfumeId": "mtn5p2ppwwtr",
+      "nombre": "Mandaryn SKY",
+      "cantidad": 2,
+      "costoUnit": 13000
+    },
+    {
+      "id": "mtt71e7ijcgt",
+      "fecha": "2026-09-08",
+      "perfumeId": "mtt71e7i2kzs",
+      "nombre": "Candee",
+      "cantidad": 1,
+      "costoUnit": 13000
+    },
+    {
+      "id": "mtt728xsxktp",
+      "fecha": "2026-09-08",
+      "perfumeId": "mtt728xstoao",
+      "nombre": "In motion",
+      "cantidad": 1,
+      "costoUnit": 14500
+    },
+    {
+      "id": "mtt73rmvscqf",
+      "fecha": "2026-09-08",
+      "perfumeId": "mtt73rmvfrer",
+      "nombre": "Blue Seduction",
+      "cantidad": 1,
+      "costoUnit": 12500
+    },
+    {
+      "id": "mtt74fmfd8tv",
+      "fecha": "2026-09-08",
+      "perfumeId": "mtt74fme5abu",
+      "nombre": "Dark Seduction",
+      "cantidad": 1,
+      "costoUnit": 13000
+    },
+    {
+      "id": "mtt7637pmlx6",
+      "fecha": "2026-09-08",
+      "perfumeId": "mtt7637p0tjy",
+      "nombre": "Meow",
+      "cantidad": 1,
+      "costoUnit": 13000
+    },
+    {
+      "id": "mtt78g5p9n58",
+      "fecha": "2026-09-08",
+      "perfumeId": "mtt78g5p323n",
+      "nombre": "Dunescape",
+      "cantidad": 1,
+      "costoUnit": 18500
+    },
+    {
+      "id": "mttck7e3tx4b",
+      "fecha": "2026-09-08",
+      "perfumeId": "mtt71e7i2kzs",
+      "nombre": "Candee",
+      "cantidad": 1,
+      "costoUnit": 13000
+    }
+  ]
+};
+(function sembrar(){
+  if(localStorage.getItem(SEMILLA)) return;
+  const vacio = ['inventario','clientes','ventas','abonos','compras']
+    .every(k => { try { return !(JSON.parse(localStorage.getItem(k))||[]).length; } catch(e){ return true; } });
+  if(vacio){
+    ['inventario','clientes','ventas','abonos','compras']
+      .forEach(k => localStorage.setItem(k, JSON.stringify(DATOS_INICIALES[k] || [])));
+  }
+  localStorage.setItem(SEMILLA, '1');
+})();
+
 /* ---------- fechas (ISO yyyy-mm-dd, sin zona horaria) ---------- */
 function hoyISO(){
   const d = new Date();

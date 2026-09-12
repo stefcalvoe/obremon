@@ -217,6 +217,7 @@
       <div class="row" style="margin-bottom:8px">Descargá un respaldo antes de cambiar de navegador, borrar caché o mover la app.</div>
       <div class="actions">
         <button class="small gold" onclick="exportarDatos()">Descargar respaldo</button>
+        <button class="small" onclick="verRespaldo()">Ver JSON</button>
         <button class="small" onclick="document.getElementById('fileImport').click()">Restaurar respaldo</button>
       </div>
       <input type="file" id="fileImport" accept=".json,application/json" style="display:none">
@@ -224,6 +225,18 @@
   </section>
 
 </main>
+
+<!-- MODAL RESPALDO EN PANTALLA -->
+<div class="modal-bg" id="modalJson">
+  <div class="modal">
+    <h3>Respaldo en pantalla</h3>
+    <div class="sub">Copiá todo el texto y guardalo en un archivo .json. Sirve para restaurarlo después.</div>
+    <textarea id="jsonTexto" readonly rows="10"
+      style="width:100%;margin-top:10px;padding:10px;background:var(--accent-soft);border:1px solid var(--border);border-radius:8px;color:var(--text);font-size:12px;font-family:monospace;"></textarea>
+    <button class="primary" id="jsonCopiar">Copiar todo</button>
+    <button class="small" id="jsonCerrar" style="width:100%;margin-top:8px;">Cerrar</button>
+  </div>
+</div>
 
 <!-- MODAL ABONO -->
 <div class="modal-bg" id="modalAbono">
@@ -1233,6 +1246,30 @@ function exportarDatos(){
   document.body.appendChild(a); a.click(); document.body.removeChild(a);
   setTimeout(()=>URL.revokeObjectURL(a.href), 2000);
 }
+
+// El visor de algunos navegadores bloquea las descargas: esta vista muestra
+// el mismo JSON del respaldo para copiarlo a mano.
+function verRespaldo(){
+  const data = { version:4, exportado:hoyISO(), inventario, clientes, ventas, abonos, compras };
+  document.getElementById('jsonTexto').value = JSON.stringify(data,null,2);
+  document.getElementById('modalJson').classList.add('open');
+}
+document.getElementById('jsonCopiar').addEventListener('click', async ()=>{
+  const ta = document.getElementById('jsonTexto');
+  try {
+    await navigator.clipboard.writeText(ta.value);
+    alert('Respaldo copiado al portapapeles.');
+  } catch(e){
+    ta.focus(); ta.select();
+    alert('Copialo con el menú del teclado: el texto ya quedó seleccionado.');
+  }
+});
+document.getElementById('jsonCerrar').addEventListener('click',()=>{
+  document.getElementById('modalJson').classList.remove('open');
+});
+document.getElementById('modalJson').addEventListener('click', e=>{
+  if(e.target.id==='modalJson') e.currentTarget.classList.remove('open');
+});
 
 document.getElementById('fileImport').addEventListener('change', e=>{
   const f = e.target.files[0];

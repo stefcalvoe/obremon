@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="theme-color" content="#faf7f2">
+<meta name="theme-color" content="#fff8f3">
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="default">
@@ -13,11 +13,14 @@
 <title>Stef Perfumes</title>
 <style>
   :root {
-    --bg:#faf7f2; --card:#ffffff; --accent:#b8924f; --accent-soft:#f5efe4;
-    --text:#2b2118; --text-dim:#8a7a67; --danger:#b4453c; --success:#4f7d5a;
-    --warn:#b5832c; --border:#e9e0d1;
-    --sombra:0 1px 2px rgba(43,33,24,.05), 0 6px 18px rgba(43,33,24,.05);
+    /* Paleta tomada del logo: fénix naranja-fucsia, frasco dorado, blanco cálido */
+    --bg:#fff8f3; --card:#ffffff; --accent:#e0661a; --accent-soft:#fdeee0;
+    --fucsia:#c2185b; --dorado:#d9a441;
+    --text:#2a1b1f; --text-dim:#8d7580; --danger:#c2185b; --success:#4f7d5a;
+    --warn:#e0952a; --border:#f3e3d7;
+    --sombra:0 1px 2px rgba(42,27,31,.05), 0 6px 18px rgba(42,27,31,.06);
     --serif:Georgia,'Iowan Old Style','Times New Roman',serif;
+    --fuego:linear-gradient(135deg,#f0a323 0%,#e0661a 45%,#c2185b 100%);
   }
   * { box-sizing:border-box; }
   body { margin:0; font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;
@@ -27,10 +30,12 @@
   .marca { display:flex; align-items:center; justify-content:center; gap:10px; }
   .marca-icono { width:44px; height:44px; flex:none; }
   .marca-texto { display:flex; flex-direction:column; align-items:flex-start; line-height:1; }
-  .marca-nombre { font-family:var(--serif); font-size:27px; font-style:italic;
-    color:var(--text); letter-spacing:.5px; }
-  .marca-bajada { font-size:9px; letter-spacing:4px; color:var(--accent); margin-top:5px; font-weight:600; }
-  header { border-bottom:1px solid var(--border); margin-bottom:14px; background:#fffdf9; }
+  .marca-nombre { font-family:var(--serif); font-size:30px; font-style:italic; letter-spacing:.5px;
+    background:var(--fuego); -webkit-background-clip:text; background-clip:text; color:transparent; }
+  .marca-bajada { font-size:9px; letter-spacing:4.5px; color:var(--fucsia); margin-top:5px; font-weight:700; }
+  header { border-bottom:1px solid var(--border); margin-bottom:14px;
+    background:linear-gradient(180deg,#fff4ea 0%,#fffaf6 100%); }
+  .marca-icono { width:52px; height:52px; }
   .piramide { margin-top:10px; border-top:1px solid var(--border); padding-top:10px; }
   .piramide .fila { display:grid; grid-template-columns:62px 1fr; gap:10px; padding:3px 0;
     font-size:12px; color:var(--text); line-height:1.5; }
@@ -41,7 +46,7 @@
   nav button { flex:1; padding:10px 2px; background:var(--card); border:1px solid var(--border);
     color:var(--text-dim); border-radius:999px; font-size:12px; font-weight:600;
     letter-spacing:.2px; box-shadow:var(--sombra); transition:background .15s, color .15s; }
-  nav button.active { background:var(--text); color:var(--bg); border-color:var(--text); }
+  nav button.active { background:var(--fuego); color:#fff; border-color:transparent; box-shadow:0 4px 12px rgba(224,102,26,.28); }
   main { padding:0 12px; }
   .view { display:none; } .view.active { display:block; }
   .card { background:var(--card); border:1px solid var(--border); border-radius:16px; padding:16px;
@@ -52,22 +57,23 @@
   .badge { display:inline-block; padding:2px 8px; border-radius:20px; font-size:11px; font-weight:600; }
   .badge { border:1px solid transparent; }
   .badge.contado,.badge.pagado { background:rgba(79,125,90,.10); color:var(--success); border-color:rgba(79,125,90,.2); }
-  .badge.credito,.badge.vencido,.badge.agotado { background:rgba(180,69,60,.08); color:var(--danger); border-color:rgba(180,69,60,.18); }
+  .badge.credito,.badge.vencido,.badge.agotado { background:rgba(194,24,91,.07); color:var(--danger); border-color:rgba(194,24,91,.18); }
   .badge.hoy { background:rgba(181,131,44,.10); color:var(--warn); border-color:rgba(181,131,44,.22); }
-  .badge.prox { background:var(--accent-soft); color:var(--accent); border-color:rgba(184,146,79,.25); }
+  .badge.prox { background:var(--accent-soft); color:#b1500f; border-color:rgba(224,102,26,.25); }
   form { background:var(--card); border:1px solid var(--border); border-radius:16px; padding:18px;
     margin-bottom:16px; box-shadow:var(--sombra); }
   form h3 { margin-top:0; font-size:16px; font-family:var(--serif); color:var(--text); }
   label { display:block; font-size:12px; color:var(--text-dim); margin:10px 0 4px; }
   input, select { width:100%; padding:11px; background:#fffdfa; border:1px solid var(--border);
     border-radius:10px; color:var(--text); font-size:14px; }
-  input:focus, select:focus { outline:none; border-color:var(--accent); box-shadow:0 0 0 3px rgba(184,146,79,.15); }
+  input:focus, select:focus { outline:none; border-color:var(--accent); box-shadow:0 0 0 3px rgba(224,102,26,.15); }
   label { text-transform:none; }
-  button.primary { margin-top:16px; width:100%; padding:13px; background:var(--text); color:#fffdf8;
-    border:none; border-radius:12px; font-size:14px; font-weight:600; letter-spacing:.3px; }
+  button.primary { margin-top:16px; width:100%; padding:13px; background:var(--fuego); color:#fff;
+    border:none; border-radius:12px; font-size:14px; font-weight:700; letter-spacing:.3px;
+    box-shadow:0 6px 16px rgba(224,102,26,.3); }
   button.small { padding:8px 10px; font-size:12px; background:#fff; color:var(--text);
     border:1px solid var(--border); border-radius:10px; font-weight:500; }
-  button.small.gold { background:var(--accent-soft); color:#8a6c33; border-color:rgba(184,146,79,.35); font-weight:600; }
+  button.small.gold { background:var(--accent-soft); color:#b1500f; border-color:rgba(224,102,26,.3); font-weight:600; }
   .empty { text-align:center; color:var(--text-dim); padding:26px 10px; font-size:13px; }
   .summary { display:flex; gap:8px; margin-bottom:14px; }
   .summary .box { flex:1; background:var(--card); border:1px solid var(--border); border-radius:14px;
@@ -109,10 +115,10 @@
   .chk input { width:auto; }
   textarea { width:100%; padding:11px; background:#fffdfa; border:1px solid var(--border);
     border-radius:10px; color:var(--text); font-size:13px; font-family:inherit; line-height:1.5; }
-  textarea:focus { outline:none; border-color:var(--accent); box-shadow:0 0 0 3px rgba(184,146,79,.15); }
+  textarea:focus { outline:none; border-color:var(--accent); box-shadow:0 0 0 3px rgba(224,102,26,.15); }
   .chips { display:flex; flex-wrap:wrap; gap:6px; margin-top:8px; }
-  .chip { background:var(--accent-soft); border:1px solid rgba(184,146,79,.25); border-radius:999px;
-    padding:4px 11px; font-size:11px; color:#8a6c33; letter-spacing:.2px; }
+  .chip { background:var(--accent-soft); border:1px solid rgba(224,102,26,.22); border-radius:999px;
+    padding:4px 11px; font-size:11px; color:#b1500f; letter-spacing:.2px; }
   .nota { font-size:12px; color:var(--text-dim); margin-top:6px; line-height:1.5; }
   .nota b { color:var(--text); }
   .carrito { border-top:1px solid var(--border); margin-top:12px; padding-top:8px; }
@@ -1317,50 +1323,6 @@ document.getElementById('mGuardar').addEventListener('click',()=>{
    se muestran con aviso para que se confirmen antes de compartirlas. */
 const CATALOGO_BASE = [
   {
-    "nombre": "Sauvage",
-    "marca": "Dior",
-    "familia": "amaderado especiado fresco",
-    "salida": "bergamota, pimienta de Sichuan",
-    "corazon": "lavanda, pimienta rosa, vetiver",
-    "fondo": "ambroxan, cedro, labdano",
-    "duracion": "8-10 h, estela alta",
-    "ocasion": "noche y día, todo el año",
-    "genero": "masculino"
-  },
-  {
-    "nombre": "Bleu de Chanel",
-    "marca": "Chanel",
-    "familia": "amaderado aromático",
-    "salida": "limón, menta, pomelo",
-    "corazon": "jengibre, nuez moscada, jazmín",
-    "fondo": "incienso, cedro, sándalo",
-    "duracion": "7-9 h, estela alta",
-    "ocasion": "oficina y noche",
-    "genero": "masculino"
-  },
-  {
-    "nombre": "Eros",
-    "marca": "Versace",
-    "familia": "aromático fougère",
-    "salida": "menta, manzana verde, limón",
-    "corazon": "haba tonka, ambroxan, geranio",
-    "fondo": "vainilla, cedro, musgo de roble",
-    "duracion": "8-10 h, estela alta",
-    "ocasion": "noche, clima fresco",
-    "genero": "masculino"
-  },
-  {
-    "nombre": "Dylan Blue",
-    "marca": "Versace",
-    "familia": "acuático amaderado",
-    "salida": "bergamota, pomelo, notas acuáticas",
-    "corazon": "pimienta negra, papiro, ambroxan",
-    "fondo": "almizcle, incienso, patchouli",
-    "duracion": "7-9 h, estela alta",
-    "ocasion": "día y noche, uso diario",
-    "genero": "masculino"
-  },
-  {
     "nombre": "1 Million",
     "marca": "Paco Rabanne",
     "familia": "especiado cuero",
@@ -1372,25 +1334,14 @@ const CATALOGO_BASE = [
     "genero": "masculino"
   },
   {
-    "nombre": "Invictus",
-    "marca": "Paco Rabanne",
-    "familia": "acuático fresco",
-    "salida": "pomelo, notas marinas, mandarina",
-    "corazon": "hoja de laurel, jazmín",
-    "fondo": "ámbar gris, guayaco, pachulí",
+    "nombre": "212 Sexy Men",
+    "marca": "Carolina Herrera",
+    "familia": "especiado dulce",
+    "salida": "mandarina, pimienta rosa",
+    "corazon": "flor de azahar, vainilla",
+    "fondo": "sándalo, almizcle, ámbar",
     "duracion": "6-8 h, estela alta",
-    "ocasion": "día, deporte, calor",
-    "genero": "masculino"
-  },
-  {
-    "nombre": "Phantom",
-    "marca": "Paco Rabanne",
-    "familia": "aromático amaderado",
-    "salida": "limón, lavanda",
-    "corazon": "vainilla, humo de madera",
-    "fondo": "pachulí, vetiver",
-    "duracion": "7-9 h, estela alta",
-    "ocasion": "noche, uso diario",
+    "ocasion": "noche",
     "genero": "masculino"
   },
   {
@@ -1405,6 +1356,138 @@ const CATALOGO_BASE = [
     "genero": "masculino"
   },
   {
+    "nombre": "212 VIP Rosé",
+    "marca": "Carolina Herrera",
+    "familia": "floral frutal espumoso",
+    "salida": "champán rosado, durazno",
+    "corazon": "rosa, flores blancas",
+    "fondo": "almizcle, madera de guayaco",
+    "duracion": "6-8 h, estela alta",
+    "ocasion": "fiesta, noche",
+    "genero": "femenino"
+  },
+  {
+    "nombre": "9 PM",
+    "marca": "Afnan",
+    "familia": "ámbar dulce especiado",
+    "salida": "manzana, canela, bergamota",
+    "corazon": "lavanda, azahar",
+    "fondo": "vainilla, haba tonka, ámbar",
+    "duracion": "7-9 h, estela alta",
+    "ocasion": "noche, clima fresco",
+    "genero": "masculino"
+  },
+  {
+    "nombre": "9 PM Rebel",
+    "marca": "Afnan",
+    "familia": "especiado dulce",
+    "salida": "manzana, canela",
+    "corazon": "lavanda, azahar",
+    "fondo": "vainilla, ámbar, haba tonka",
+    "duracion": "8-10 h, estela alta",
+    "ocasion": "noche",
+    "genero": "masculino"
+  },
+  {
+    "nombre": "Acqua di Giò Profumo",
+    "marca": "Giorgio Armani",
+    "familia": "acuático incienso",
+    "salida": "bergamota, notas marinas",
+    "corazon": "romero, salvia, geranio",
+    "fondo": "incienso, pachulí",
+    "duracion": "7-9 h, estela alta",
+    "ocasion": "día y noche",
+    "genero": "masculino"
+  },
+  {
+    "nombre": "Adventure",
+    "marca": "Davidoff",
+    "familia": "cítrico amaderado",
+    "salida": "toronja, mandarina",
+    "corazon": "nuez moscada, cardamomo",
+    "fondo": "cedro, vetiver, almizcle",
+    "duracion": "5-7 h, estela media",
+    "ocasion": "día, uso diario",
+    "genero": "masculino"
+  },
+  {
+    "nombre": "Ajwad",
+    "marca": "Lattafa",
+    "familia": "floral frutal dulce",
+    "salida": "piña, bergamota",
+    "corazon": "rosa, jazmín",
+    "fondo": "vainilla, ámbar, almizcle",
+    "duracion": "8-10 h, estela alta",
+    "ocasion": "día y noche",
+    "genero": "unisex"
+  },
+  {
+    "nombre": "Alien",
+    "marca": "Mugler",
+    "familia": "ámbar floral",
+    "salida": "jazmín sambac",
+    "corazon": "madera de cachemira",
+    "fondo": "ámbar blanco, almizcle",
+    "duracion": "9-12 h, estela muy alta",
+    "ocasion": "noche, invierno",
+    "genero": "femenino"
+  },
+  {
+    "nombre": "Amber Oud Gold",
+    "marca": "Al Haramain",
+    "familia": "ámbar amaderado",
+    "salida": "bergamota, especias",
+    "corazon": "ámbar, oud",
+    "fondo": "almizcle, vainilla, maderas",
+    "duracion": "9-12 h, estela muy alta",
+    "ocasion": "noche, invierno",
+    "genero": "unisex"
+  },
+  {
+    "nombre": "Ana Abiyedh Rouge",
+    "marca": "Lattafa",
+    "familia": "floral amaderado",
+    "salida": "azafrán, notas cítricas",
+    "corazon": "rosa, jazmín",
+    "fondo": "ámbar, sándalo, almizcle",
+    "duracion": "7-9 h, estela alta",
+    "ocasion": "noche",
+    "genero": "unisex"
+  },
+  {
+    "nombre": "Angel",
+    "marca": "Mugler",
+    "familia": "gourmand oriental",
+    "salida": "bergamota, algodón de azúcar",
+    "corazon": "miel, frutas rojas, ciruela",
+    "fondo": "vainilla, pachulí, caramelo",
+    "duracion": "9-12 h, estela muy alta",
+    "ocasion": "noche, invierno",
+    "genero": "femenino"
+  },
+  {
+    "nombre": "Asad",
+    "marca": "Lattafa",
+    "familia": "amaderado especiado dulce",
+    "salida": "pimienta, bergamota, canela",
+    "corazon": "café, cardamomo",
+    "fondo": "vainilla, ámbar, cedro",
+    "duracion": "8-10 h, estela alta",
+    "ocasion": "noche, clima fresco",
+    "genero": "masculino"
+  },
+  {
+    "nombre": "Asad Zanzibar",
+    "marca": "Lattafa",
+    "familia": "gourmand especiado",
+    "salida": "piña, bergamota",
+    "corazon": "café, cardamomo",
+    "fondo": "vainilla, ámbar, maderas",
+    "duracion": "8-10 h, estela alta",
+    "ocasion": "noche",
+    "genero": "masculino"
+  },
+  {
     "nombre": "Bad Boy",
     "marca": "Carolina Herrera",
     "familia": "amaderado especiado",
@@ -1414,6 +1497,182 @@ const CATALOGO_BASE = [
     "duracion": "7-9 h, estela alta",
     "ocasion": "noche, clima fresco",
     "genero": "masculino"
+  },
+  {
+    "nombre": "Badee Al Oud Amethyst",
+    "marca": "Lattafa",
+    "familia": "oriental amaderado",
+    "salida": "frutas rojas, azafrán",
+    "corazon": "rosa, oud",
+    "fondo": "ámbar, almizcle, pachulí",
+    "duracion": "9-12 h, estela muy alta",
+    "ocasion": "noche, invierno",
+    "genero": "unisex"
+  },
+  {
+    "nombre": "Barakkat Rouge 540",
+    "marca": "Maison Alhambra",
+    "familia": "ámbar floral",
+    "salida": "azafrán, jazmín",
+    "corazon": "ámbar gris, madera",
+    "fondo": "cedro, resinas dulces",
+    "duracion": "9-12 h, estela muy alta",
+    "ocasion": "noche, eventos",
+    "genero": "unisex"
+  },
+  {
+    "nombre": "Black Opium",
+    "marca": "Yves Saint Laurent",
+    "familia": "gourmand oriental",
+    "salida": "pera, pimienta rosa, naranja",
+    "corazon": "café, jazmín, flor de azahar",
+    "fondo": "vainilla, pachulí, cedro",
+    "duracion": "8-10 h, estela alta",
+    "ocasion": "noche, clima fresco",
+    "genero": "femenino"
+  },
+  {
+    "nombre": "Black XS",
+    "marca": "Paco Rabanne",
+    "familia": "oriental especiado",
+    "salida": "tamarindo, cardamomo, limón",
+    "corazon": "praliné, canela, jazmín",
+    "fondo": "cacao, sándalo, vetiver",
+    "duracion": "6-8 h, estela alta",
+    "ocasion": "noche",
+    "genero": "masculino"
+  },
+  {
+    "nombre": "Bleu de Chanel",
+    "marca": "Chanel",
+    "familia": "amaderado aromático",
+    "salida": "limón, menta, pomelo",
+    "corazon": "jengibre, nuez moscada, jazmín",
+    "fondo": "incienso, cedro, sándalo",
+    "duracion": "7-9 h, estela alta",
+    "ocasion": "oficina y noche",
+    "genero": "masculino"
+  },
+  {
+    "nombre": "Bleu de Chanel Parfum",
+    "marca": "Chanel",
+    "familia": "amaderado cítrico",
+    "salida": "limón, menta, bergamota",
+    "corazon": "jengibre, incienso",
+    "fondo": "sándalo, cedro, vetiver",
+    "duracion": "9-12 h, estela alta",
+    "ocasion": "noche, eventos",
+    "genero": "masculino"
+  },
+  {
+    "nombre": "Blue Seduction",
+    "marca": "Antonio Banderas",
+    "familia": "acuático fresco",
+    "salida": "melón, menta, bergamota",
+    "corazon": "notas marinas, cardamomo",
+    "fondo": "almizcle, maderas",
+    "duracion": "4-6 h, estela moderada",
+    "ocasion": "día, calor, uso diario",
+    "genero": "masculino"
+  },
+  {
+    "nombre": "Body",
+    "marca": "Victoria's Secret",
+    "familia": "floral almizclado limpio",
+    "salida": "notas verdes cítricas",
+    "corazon": "jazmín, flores blancas",
+    "fondo": "almizcle, madera clara",
+    "duracion": "4-5 h, estela cercana",
+    "ocasion": "diario, uso cotidiano",
+    "genero": "femenino"
+  },
+  {
+    "nombre": "Bombshell",
+    "marca": "Victoria's Secret",
+    "familia": "floral frutal",
+    "salida": "maracuyá, pomelo",
+    "corazon": "peonía, orquídea de vainilla",
+    "fondo": "almizcle, maderas",
+    "duracion": "6-8 h, estela alta",
+    "ocasion": "día y noche",
+    "genero": "femenino"
+  },
+  {
+    "nombre": "Boss Bottled",
+    "marca": "Hugo Boss",
+    "familia": "amaderado especiado",
+    "salida": "manzana, ciruela, bergamota",
+    "corazon": "canela, clavo, geranio",
+    "fondo": "sándalo, vainilla, cedro",
+    "duracion": "6-8 h, estela media-alta",
+    "ocasion": "oficina, uso diario",
+    "genero": "masculino"
+  },
+  {
+    "nombre": "Bright Crystal",
+    "marca": "Versace",
+    "familia": "floral frutal",
+    "salida": "granada, yuzu",
+    "corazon": "peonía, magnolia, loto",
+    "fondo": "almizcle, ámbar, caoba",
+    "duracion": "5-7 h, estela media",
+    "ocasion": "día, calor",
+    "genero": "femenino"
+  },
+  {
+    "nombre": "Burberry Her",
+    "marca": "Burberry",
+    "familia": "frutal gourmand",
+    "salida": "frutas del bosque, fresa",
+    "corazon": "jazmín, violeta",
+    "fondo": "almizcle, ámbar, madera",
+    "duracion": "6-8 h, estela alta",
+    "ocasion": "día y noche",
+    "genero": "femenino"
+  },
+  {
+    "nombre": "CH Men",
+    "marca": "Carolina Herrera",
+    "familia": "cuero amaderado",
+    "salida": "bergamota, toronja",
+    "corazon": "cuero, canela, nuez moscada",
+    "fondo": "cedro, vetiver, ámbar",
+    "duracion": "6-8 h, estela alta",
+    "ocasion": "oficina, noche",
+    "genero": "masculino"
+  },
+  {
+    "nombre": "Chance Eau Tendre",
+    "marca": "Chanel",
+    "familia": "floral frutal",
+    "salida": "membrillo, pomelo",
+    "corazon": "jazmín, jacinto",
+    "fondo": "almizcle blanco, cedro",
+    "duracion": "6-8 h, estela media",
+    "ocasion": "día, uso diario",
+    "genero": "femenino"
+  },
+  {
+    "nombre": "Chrome",
+    "marca": "Azzaro",
+    "familia": "cítrico fresco",
+    "salida": "limón, bergamota, piña",
+    "corazon": "jazmín, cilantro, romero",
+    "fondo": "almizcle, sándalo, cedro",
+    "duracion": "4-6 h, estela moderada",
+    "ocasion": "día, oficina, calor",
+    "genero": "masculino"
+  },
+  {
+    "nombre": "Cloud",
+    "marca": "Ariana Grande",
+    "familia": "floral gourmand",
+    "salida": "lavanda, pera, bergamota",
+    "corazon": "coco, praliné, jazmín",
+    "fondo": "almizcle, vainilla, madera de cachemira",
+    "duracion": "6-8 h, estela alta",
+    "ocasion": "uso diario",
+    "genero": "femenino"
   },
   {
     "nombre": "Club de Nuit Intense Man",
@@ -1427,12 +1686,628 @@ const CATALOGO_BASE = [
     "genero": "masculino"
   },
   {
-    "nombre": "9 PM",
+    "nombre": "Club de Nuit Milestone",
+    "marca": "Armaf",
+    "familia": "frutal amaderado",
+    "salida": "piña, bergamota, manzana",
+    "corazon": "pachulí, jazmín",
+    "fondo": "ámbar, almizcle, vainilla",
+    "duracion": "8-10 h, estela alta",
+    "ocasion": "noche",
+    "genero": "masculino"
+  },
+  {
+    "nombre": "Club de Nuit Sillage",
+    "marca": "Armaf",
+    "familia": "aromático fresco amaderado",
+    "salida": "bergamota, pimienta rosa",
+    "corazon": "ámbar gris, jazmín",
+    "fondo": "cedro, musgo, ámbar",
+    "duracion": "8-10 h, estela muy alta",
+    "ocasion": "noche, eventos",
+    "genero": "unisex"
+  },
+  {
+    "nombre": "Club de Nuit Woman",
+    "marca": "Armaf",
+    "familia": "floral frutal chipre",
+    "salida": "pomelo, grosella, piña",
+    "corazon": "rosa, jazmín",
+    "fondo": "almizcle, ámbar, pachulí",
+    "duracion": "7-9 h, estela alta",
+    "ocasion": "noche",
+    "genero": "femenino"
+  },
+  {
+    "nombre": "Coco Mademoiselle",
+    "marca": "Chanel",
+    "familia": "floral oriental chipre",
+    "salida": "naranja, bergamota",
+    "corazon": "rosa, jazmín, litchi",
+    "fondo": "pachulí, vetiver, vainilla",
+    "duracion": "7-9 h, estela alta",
+    "ocasion": "día y noche",
+    "genero": "femenino"
+  },
+  {
+    "nombre": "Cool Water",
+    "marca": "Davidoff",
+    "familia": "aromático acuático",
+    "salida": "menta, lavanda, romero",
+    "corazon": "notas marinas, geranio, jazmín",
+    "fondo": "almizcle, sándalo, ámbar",
+    "duracion": "5-7 h, estela media-alta",
+    "ocasion": "día, calor",
+    "genero": "masculino"
+  },
+  {
+    "nombre": "Dark Seduction",
+    "marca": "Antonio Banderas",
+    "familia": "oriental dulce",
+    "salida": "cítricos, especias",
+    "corazon": "canela, notas amaderadas",
+    "fondo": "vainilla, ámbar",
+    "duracion": "5-7 h, estela media-alta",
+    "ocasion": "noche, clima fresco",
+    "genero": "masculino"
+  },
+  {
+    "nombre": "Dior Homme Intense",
+    "marca": "Dior",
+    "familia": "amaderado floral",
+    "salida": "lavanda",
+    "corazon": "iris, ámbar",
+    "fondo": "vetiver, cuero, pachulí",
+    "duracion": "8-10 h, estela alta",
+    "ocasion": "noche, eventos",
+    "genero": "masculino"
+  },
+  {
+    "nombre": "Dylan Blue",
+    "marca": "Versace",
+    "familia": "acuático amaderado",
+    "salida": "bergamota, pomelo, notas acuáticas",
+    "corazon": "pimienta negra, papiro, ambroxan",
+    "fondo": "almizcle, incienso, patchouli",
+    "duracion": "7-9 h, estela alta",
+    "ocasion": "día y noche, uso diario",
+    "genero": "masculino"
+  },
+  {
+    "nombre": "Eros",
+    "marca": "Versace",
+    "familia": "aromático fougère",
+    "salida": "menta, manzana verde, limón",
+    "corazon": "haba tonka, ambroxan, geranio",
+    "fondo": "vainilla, cedro, musgo de roble",
+    "duracion": "8-10 h, estela alta",
+    "ocasion": "noche, clima fresco",
+    "genero": "masculino"
+  },
+  {
+    "nombre": "Eros Flame",
+    "marca": "Versace",
+    "familia": "cítrico especiado",
+    "salida": "limón, mandarina, pimienta",
+    "corazon": "romero, geranio, pimienta rosa",
+    "fondo": "vainilla, haba tonka, cedro",
+    "duracion": "8-10 h, estela alta",
+    "ocasion": "noche, invierno",
+    "genero": "masculino"
+  },
+  {
+    "nombre": "Explorer",
+    "marca": "Montblanc",
+    "familia": "amaderado fresco",
+    "salida": "bergamota, pimienta rosa",
+    "corazon": "vetiver, cuero",
+    "fondo": "pachulí, ámbar, cacao",
+    "duracion": "7-9 h, estela alta",
+    "ocasion": "día y noche",
+    "genero": "masculino"
+  },
+  {
+    "nombre": "Fakhar Black",
+    "marca": "Lattafa",
+    "familia": "aromático amaderado",
+    "salida": "lavanda, bergamota",
+    "corazon": "geranio, pachulí",
+    "fondo": "ámbar, almizcle, maderas",
+    "duracion": "8-10 h, estela alta",
+    "ocasion": "noche, uso diario",
+    "genero": "masculino"
+  },
+  {
+    "nombre": "Fakhar Rose",
+    "marca": "Lattafa",
+    "familia": "floral frutal",
+    "salida": "litchi, bergamota",
+    "corazon": "rosa, jazmín",
+    "fondo": "vainilla, almizcle, pachulí",
+    "duracion": "8-10 h, estela alta",
+    "ocasion": "día y noche",
+    "genero": "femenino"
+  },
+  {
+    "nombre": "Fame",
+    "marca": "Paco Rabanne",
+    "familia": "floral gourmand",
+    "salida": "mango, bergamota",
+    "corazon": "jazmín, incienso",
+    "fondo": "vainilla, sándalo",
+    "duracion": "7-9 h, estela alta",
+    "ocasion": "noche",
+    "genero": "femenino"
+  },
+  {
+    "nombre": "Fantasy",
+    "marca": "Britney Spears",
+    "familia": "frutal gourmand",
+    "salida": "kiwi, litchi, mandarina",
+    "corazon": "chocolate blanco, orquídea, jazmín",
+    "fondo": "almizcle, madera, raíz de lirio",
+    "duracion": "5-7 h, estela media-alta",
+    "ocasion": "juvenil, noche",
+    "genero": "femenino"
+  },
+  {
+    "nombre": "Flora Gorgeous Gardenia",
+    "marca": "Gucci",
+    "familia": "floral frutal dulce",
+    "salida": "pera, frutas rojas",
+    "corazon": "gardenia, frangipani",
+    "fondo": "azúcar moreno, pachulí",
+    "duracion": "5-7 h, estela media",
+    "ocasion": "día, juvenil",
+    "genero": "femenino"
+  },
+  {
+    "nombre": "Gentleman Intense",
+    "marca": "Givenchy",
+    "familia": "amaderado especiado",
+    "salida": "bergamota, cardamomo",
+    "corazon": "iris, lavanda",
+    "fondo": "vainilla, pachulí, ámbar",
+    "duracion": "8-10 h, estela alta",
+    "ocasion": "noche",
+    "genero": "masculino"
+  },
+  {
+    "nombre": "Good Girl",
+    "marca": "Carolina Herrera",
+    "familia": "floral oriental",
+    "salida": "almendra, café, bergamota",
+    "corazon": "jazmín, nardo, haba tonka",
+    "fondo": "cacao, vainilla, praliné",
+    "duracion": "8-10 h, estela alta",
+    "ocasion": "noche, eventos",
+    "genero": "femenino"
+  },
+  {
+    "nombre": "Gucci Bloom",
+    "marca": "Gucci",
+    "familia": "floral blanco",
+    "salida": "nardo",
+    "corazon": "jazmín sambac, rangoon",
+    "fondo": "raíz de lirio, almizcle",
+    "duracion": "6-8 h, estela alta",
+    "ocasion": "día y noche",
+    "genero": "femenino"
+  },
+  {
+    "nombre": "Happy",
+    "marca": "Clinique",
+    "familia": "cítrico floral fresco",
+    "salida": "toronja, mandarina, ciruela",
+    "corazon": "magnolia, rosa, lirio",
+    "fondo": "almizcle, maderas suaves",
+    "duracion": "4-6 h, estela moderada",
+    "ocasion": "día, oficina, clima cálido",
+    "genero": "femenino"
+  },
+  {
+    "nombre": "Hawas Ice",
+    "marca": "Rasasi",
+    "familia": "acuático fresco",
+    "salida": "bergamota, manzana, canela",
+    "corazon": "notas marinas, jazmín",
+    "fondo": "ámbar, almizcle, maderas",
+    "duracion": "7-9 h, estela alta",
+    "ocasion": "día y noche, todo el año",
+    "genero": "masculino"
+  },
+  {
+    "nombre": "Hawas for Her",
+    "marca": "Rasasi",
+    "familia": "floral frutal",
+    "salida": "manzana, bergamota",
+    "corazon": "jazmín, azahar",
+    "fondo": "almizcle, ámbar, maderas",
+    "duracion": "7-9 h, estela alta",
+    "ocasion": "día y noche",
+    "genero": "femenino"
+  },
+  {
+    "nombre": "Hayaati",
+    "marca": "Lattafa",
+    "familia": "amaderado especiado",
+    "salida": "bergamota, especias",
+    "corazon": "lavanda, geranio",
+    "fondo": "ámbar, cedro, almizcle",
+    "duracion": "7-9 h, estela alta",
+    "ocasion": "noche",
+    "genero": "masculino"
+  },
+  {
+    "nombre": "Idôle",
+    "marca": "Lancôme",
+    "familia": "floral almizclado limpio",
+    "salida": "pera, bergamota, rosa mosqueta",
+    "corazon": "rosa, jazmín",
+    "fondo": "vainilla, almizcle blanco, pachulí",
+    "duracion": "6-8 h, estela media",
+    "ocasion": "día, oficina",
+    "genero": "femenino"
+  },
+  {
+    "nombre": "In Motion",
+    "marca": "Hugo Boss",
+    "familia": "cítrico amaderado",
+    "salida": "toronja, mandarina",
+    "corazon": "notas verdes, especias suaves",
+    "fondo": "cedro, almizcle",
+    "duracion": "4-6 h, estela moderada",
+    "ocasion": "día, oficina",
+    "genero": "masculino"
+  },
+  {
+    "nombre": "Invictus",
+    "marca": "Paco Rabanne",
+    "familia": "acuático fresco",
+    "salida": "pomelo, notas marinas, mandarina",
+    "corazon": "hoja de laurel, jazmín",
+    "fondo": "ámbar gris, guayaco, pachulí",
+    "duracion": "6-8 h, estela alta",
+    "ocasion": "día, deporte, calor",
+    "genero": "masculino"
+  },
+  {
+    "nombre": "J'adore",
+    "marca": "Dior",
+    "familia": "floral",
+    "salida": "pera, melón, magnolia",
+    "corazon": "jazmín, rosa, orquídea",
+    "fondo": "almizcle, cedro, vainilla",
+    "duracion": "7-9 h, estela alta",
+    "ocasion": "noche, eventos",
+    "genero": "femenino"
+  },
+  {
+    "nombre": "K",
+    "marca": "Dolce & Gabbana",
+    "familia": "amaderado especiado",
+    "salida": "limón, naranja sanguina, pimienta",
+    "corazon": "lavanda, geranio, salvia",
+    "fondo": "cedro, vetiver, pachulí",
+    "duracion": "6-8 h, estela media-alta",
+    "ocasion": "día y noche",
+    "genero": "masculino"
+  },
+  {
+    "nombre": "Khamrah",
+    "marca": "Lattafa",
+    "familia": "gourmand especiado",
+    "salida": "canela, nuez moscada, bergamota",
+    "corazon": "dátil, praliné, haba tonka",
+    "fondo": "vainilla, benjuí, mirra",
+    "duracion": "8-10 h, estela alta",
+    "ocasion": "noche, invierno",
+    "genero": "unisex"
+  },
+  {
+    "nombre": "King of Seduction",
+    "marca": "Antonio Banderas",
+    "familia": "cítrico amaderado",
+    "salida": "bergamota, limón, cardamomo",
+    "corazon": "lavanda, notas acuáticas",
+    "fondo": "cedro, almizcle, ámbar",
+    "duracion": "4-6 h, estela moderada",
+    "ocasion": "día, uso diario",
+    "genero": "masculino"
+  },
+  {
+    "nombre": "L'Aventure",
+    "marca": "Al Haramain",
+    "familia": "aromático amaderado",
+    "salida": "bergamota, lavanda",
+    "corazon": "geranio, pachulí",
+    "fondo": "ámbar, almizcle",
+    "duracion": "8-10 h, estela alta",
+    "ocasion": "noche, uso diario",
+    "genero": "masculino"
+  },
+  {
+    "nombre": "L'Interdit",
+    "marca": "Givenchy",
+    "familia": "floral blanco amaderado",
+    "salida": "pera, bergamota",
+    "corazon": "nardo, jazmín, azahar",
+    "fondo": "vetiver, pachulí, vainilla",
+    "duracion": "7-9 h, estela alta",
+    "ocasion": "noche",
+    "genero": "femenino"
+  },
+  {
+    "nombre": "La Vie Est Belle",
+    "marca": "Lancôme",
+    "familia": "floral gourmand",
+    "salida": "grosella negra, pera",
+    "corazon": "iris, jazmín, azahar",
+    "fondo": "praliné, vainilla, pachulí",
+    "duracion": "8-10 h, estela alta",
+    "ocasion": "noche y día, uso diario",
+    "genero": "femenino"
+  },
+  {
+    "nombre": "La Yuqawam",
+    "marca": "Rasasi",
+    "familia": "cuero amaderado",
+    "salida": "cítricos, especias",
+    "corazon": "cuero, rosa",
+    "fondo": "sándalo, ámbar, almizcle",
+    "duracion": "8-10 h, estela alta",
+    "ocasion": "noche, eventos",
+    "genero": "masculino"
+  },
+  {
+    "nombre": "Lady Million",
+    "marca": "Paco Rabanne",
+    "familia": "floral frutal amaderado",
+    "salida": "frambuesa, neroli, limón",
+    "corazon": "jazmín, azahar, gardenia",
+    "fondo": "miel, pachulí, ámbar",
+    "duracion": "6-8 h, estela alta",
+    "ocasion": "noche, fiesta",
+    "genero": "femenino"
+  },
+  {
+    "nombre": "Le Male",
+    "marca": "Jean Paul Gaultier",
+    "familia": "fougère oriental",
+    "salida": "menta, lavanda, bergamota",
+    "corazon": "canela, comino, flor de azahar",
+    "fondo": "vainilla, haba tonka, sándalo",
+    "duracion": "7-9 h, estela alta",
+    "ocasion": "noche, clima fresco",
+    "genero": "masculino"
+  },
+  {
+    "nombre": "Legend",
+    "marca": "Montblanc",
+    "familia": "fougère fresco",
+    "salida": "lavanda, piña, bergamota",
+    "corazon": "manzana, rosa, jazmín",
+    "fondo": "haba tonka, sándalo, musgo",
+    "duracion": "5-7 h, estela media-alta",
+    "ocasion": "día, oficina",
+    "genero": "masculino"
+  },
+  {
+    "nombre": "Libre",
+    "marca": "Yves Saint Laurent",
+    "familia": "floral lavanda",
+    "salida": "lavanda, mandarina, grosella",
+    "corazon": "azahar, jazmín",
+    "fondo": "vainilla, almizcle, cedro",
+    "duracion": "7-9 h, estela alta",
+    "ocasion": "día y noche",
+    "genero": "femenino"
+  },
+  {
+    "nombre": "Light Blue",
+    "marca": "Dolce & Gabbana",
+    "familia": "cítrico frutal fresco",
+    "salida": "limón, manzana verde, campanilla",
+    "corazon": "bambú, jazmín, rosa blanca",
+    "fondo": "cedro, ámbar, almizcle",
+    "duracion": "4-6 h, estela moderada",
+    "ocasion": "día, calor",
+    "genero": "femenino"
+  },
+  {
+    "nombre": "Meow",
+    "marca": "Katy Perry",
+    "familia": "frutal dulce",
+    "salida": "pera, mandarina",
+    "corazon": "flor de naranjo, jazmín",
+    "fondo": "vainilla, almizcle, ámbar",
+    "duracion": "4-6 h, estela moderada",
+    "ocasion": "día, juvenil",
+    "genero": "femenino"
+  },
+  {
+    "nombre": "Miss Dior",
+    "marca": "Dior",
+    "familia": "floral chipre",
+    "salida": "mandarina, bergamota",
+    "corazon": "rosa, peonía, lirio",
+    "fondo": "pachulí, almizcle",
+    "duracion": "6-8 h, estela media-alta",
+    "ocasion": "día y noche",
+    "genero": "femenino"
+  },
+  {
+    "nombre": "My Way",
+    "marca": "Giorgio Armani",
+    "familia": "floral almizclado",
+    "salida": "azahar, bergamota",
+    "corazon": "nardo, jazmín",
+    "fondo": "vainilla, madera de cedro, almizcle",
+    "duracion": "6-8 h, estela media-alta",
+    "ocasion": "día y noche",
+    "genero": "femenino"
+  },
+  {
+    "nombre": "Nautica Blue",
+    "marca": "Nautica",
+    "familia": "acuático fresco",
+    "salida": "notas marinas, cítricos",
+    "corazon": "jazmín, notas verdes",
+    "fondo": "almizcle, maderas",
+    "duracion": "4-6 h, estela moderada",
+    "ocasion": "día, calor",
+    "genero": "masculino"
+  },
+  {
+    "nombre": "Nina",
+    "marca": "Nina Ricci",
+    "familia": "frutal floral",
+    "salida": "manzana caramelizada, limón",
+    "corazon": "praliné, peonía, flor de algodón",
+    "fondo": "almizcle, sándalo, vainilla",
+    "duracion": "5-7 h, estela media",
+    "ocasion": "día, juvenil",
+    "genero": "femenino"
+  },
+  {
+    "nombre": "Nomade",
+    "marca": "Chloé",
+    "familia": "chipre floral",
+    "salida": "ciruela mirabel, freesia",
+    "corazon": "rosa, melocotón",
+    "fondo": "musgo de roble, almizcle",
+    "duracion": "6-8 h, estela media-alta",
+    "ocasion": "día y noche",
+    "genero": "femenino"
+  },
+  {
+    "nombre": "Olympéa",
+    "marca": "Paco Rabanne",
+    "familia": "floral acuático dulce",
+    "salida": "mandarina verde, jazmín acuático",
+    "corazon": "vainilla salada, jazmín",
+    "fondo": "sándalo, ámbar gris, cachemira",
+    "duracion": "7-9 h, estela alta",
+    "ocasion": "noche, uso diario",
+    "genero": "femenino"
+  },
+  {
+    "nombre": "Oud Mood",
+    "marca": "Lattafa",
+    "familia": "oriental oud",
+    "salida": "azafrán, especias",
+    "corazon": "rosa, oud",
+    "fondo": "ámbar, almizcle, vainilla",
+    "duracion": "9-12 h, estela muy alta",
+    "ocasion": "noche, invierno",
+    "genero": "unisex"
+  },
+  {
+    "nombre": "Phantom",
+    "marca": "Paco Rabanne",
+    "familia": "aromático amaderado",
+    "salida": "limón, lavanda",
+    "corazon": "vainilla, humo de madera",
+    "fondo": "pachulí, vetiver",
+    "duracion": "7-9 h, estela alta",
+    "ocasion": "noche, uso diario",
+    "genero": "masculino"
+  },
+  {
+    "nombre": "Phantom Legion",
+    "marca": "Paco Rabanne",
+    "familia": "aromático amaderado",
+    "salida": "bergamota, lavanda",
+    "corazon": "manzana, vainilla",
+    "fondo": "pachulí, maderas ahumadas",
+    "duracion": "7-9 h, estela alta",
+    "ocasion": "noche",
+    "genero": "masculino"
+  },
+  {
+    "nombre": "Polo Blue",
+    "marca": "Ralph Lauren",
+    "familia": "acuático fresco",
+    "salida": "melón, pepino, mandarina",
+    "corazon": "albahaca, salvia, geranio",
+    "fondo": "almizcle, musgo, madera de teca",
+    "duracion": "5-7 h, estela media",
+    "ocasion": "día, uso diario",
+    "genero": "masculino"
+  },
+  {
+    "nombre": "Raghba",
+    "marca": "Lattafa",
+    "familia": "oriental dulce amaderado",
+    "salida": "azúcar, notas cálidas",
+    "corazon": "incienso, oud",
+    "fondo": "vainilla, sándalo, almizcle",
+    "duracion": "8-10 h, estela alta",
+    "ocasion": "noche, invierno",
+    "genero": "unisex"
+  },
+  {
+    "nombre": "Rare Tiffany",
     "marca": "Afnan",
-    "familia": "ámbar dulce especiado",
-    "salida": "manzana, canela, bergamota",
-    "corazon": "lavanda, azahar",
-    "fondo": "vainilla, haba tonka, ámbar",
+    "familia": "floral frutal",
+    "salida": "frutas rojas, bergamota",
+    "corazon": "rosa, jazmín",
+    "fondo": "vainilla, ámbar, almizcle",
+    "duracion": "7-9 h, estela alta",
+    "ocasion": "noche",
+    "genero": "femenino"
+  },
+  {
+    "nombre": "Sauvage",
+    "marca": "Dior",
+    "familia": "amaderado especiado fresco",
+    "salida": "bergamota, pimienta de Sichuan",
+    "corazon": "lavanda, pimienta rosa, vetiver",
+    "fondo": "ambroxan, cedro, labdano",
+    "duracion": "8-10 h, estela alta",
+    "ocasion": "noche y día, todo el año",
+    "genero": "masculino"
+  },
+  {
+    "nombre": "Sauvage Elixir",
+    "marca": "Dior",
+    "familia": "especiado amaderado",
+    "salida": "canela, nuez moscada, toronja",
+    "corazon": "lavanda, regaliz",
+    "fondo": "sándalo, ámbar, pachulí",
+    "duracion": "9-12 h, estela muy alta",
+    "ocasion": "noche, invierno",
+    "genero": "masculino"
+  },
+  {
+    "nombre": "Scandal",
+    "marca": "Jean Paul Gaultier",
+    "familia": "gourmand miel",
+    "salida": "miel, naranja sanguina",
+    "corazon": "gardenia, azahar",
+    "fondo": "cera de abeja, pachulí, caramelo",
+    "duracion": "7-9 h, estela alta",
+    "ocasion": "noche",
+    "genero": "femenino"
+  },
+  {
+    "nombre": "Si",
+    "marca": "Giorgio Armani",
+    "familia": "chipre frutal",
+    "salida": "grosella negra, mandarina",
+    "corazon": "rosa, freesia",
+    "fondo": "vainilla, pachulí, almizcle",
+    "duracion": "7-9 h, estela alta",
+    "ocasion": "noche",
+    "genero": "femenino"
+  },
+  {
+    "nombre": "Stronger With You",
+    "marca": "Giorgio Armani",
+    "familia": "gourmand especiado",
+    "salida": "cardamomo, castaña, violeta",
+    "corazon": "salvia, lavanda",
+    "fondo": "vainilla, ámbar, madera",
     "duracion": "7-9 h, estela alta",
     "ocasion": "noche, clima fresco",
     "genero": "masculino"
@@ -1449,135 +2324,69 @@ const CATALOGO_BASE = [
     "genero": "masculino"
   },
   {
-    "nombre": "Asad",
-    "marca": "Lattafa",
-    "familia": "amaderado especiado dulce",
-    "salida": "pimienta, bergamota, canela",
-    "corazon": "café, cardamomo",
-    "fondo": "vainilla, ámbar, cedro",
-    "duracion": "8-10 h, estela alta",
-    "ocasion": "noche, clima fresco",
-    "genero": "masculino"
-  },
-  {
-    "nombre": "Khamrah",
-    "marca": "Lattafa",
-    "familia": "gourmand especiado",
-    "salida": "canela, nuez moscada, bergamota",
-    "corazon": "dátil, praliné, haba tonka",
-    "fondo": "vainilla, benjuí, mirra",
-    "duracion": "8-10 h, estela alta",
-    "ocasion": "noche, invierno",
-    "genero": "unisex"
-  },
-  {
-    "nombre": "Voyage",
-    "marca": "Nautica",
-    "familia": "acuático fresco verde",
-    "salida": "manzana verde, hoja de loto",
-    "corazon": "mimosa, notas acuáticas",
-    "fondo": "almizcle, madera de cedro",
-    "duracion": "4-6 h, estela moderada",
-    "ocasion": "día, calor, uso diario",
-    "genero": "masculino"
-  },
-  {
-    "nombre": "Boss Bottled",
-    "marca": "Hugo Boss",
-    "familia": "amaderado especiado",
-    "salida": "manzana, ciruela, bergamota",
-    "corazon": "canela, clavo, geranio",
-    "fondo": "sándalo, vainilla, cedro",
-    "duracion": "6-8 h, estela media-alta",
-    "ocasion": "oficina, uso diario",
-    "genero": "masculino"
-  },
-  {
-    "nombre": "Le Male",
-    "marca": "Jean Paul Gaultier",
-    "familia": "fougère oriental",
-    "salida": "menta, lavanda, bergamota",
-    "corazon": "canela, comino, flor de azahar",
-    "fondo": "vainilla, haba tonka, sándalo",
+    "nombre": "Supremacy Silver",
+    "marca": "Afnan",
+    "familia": "aromático fresco",
+    "salida": "bergamota, notas verdes",
+    "corazon": "lavanda, jazmín",
+    "fondo": "ámbar, almizcle, maderas",
     "duracion": "7-9 h, estela alta",
-    "ocasion": "noche, clima fresco",
+    "ocasion": "día y noche",
     "genero": "masculino"
   },
   {
-    "nombre": "Chrome",
+    "nombre": "The Most Wanted",
     "marca": "Azzaro",
-    "familia": "cítrico fresco",
-    "salida": "limón, bergamota, piña",
-    "corazon": "jazmín, cilantro, romero",
-    "fondo": "almizcle, sándalo, cedro",
-    "duracion": "4-6 h, estela moderada",
-    "ocasion": "día, oficina, calor",
+    "familia": "gourmand amaderado",
+    "salida": "cardamomo, lavanda",
+    "corazon": "toffee, cuero",
+    "fondo": "ámbar, madera",
+    "duracion": "8-10 h, estela muy alta",
+    "ocasion": "noche, invierno",
     "genero": "masculino"
   },
   {
-    "nombre": "Polo Blue",
-    "marca": "Ralph Lauren",
-    "familia": "acuático fresco",
-    "salida": "melón, pepino, mandarina",
-    "corazon": "albahaca, salvia, geranio",
-    "fondo": "almizcle, musgo, madera de teca",
-    "duracion": "5-7 h, estela media",
-    "ocasion": "día, uso diario",
+    "nombre": "The One for Men",
+    "marca": "Dolce & Gabbana",
+    "familia": "oriental especiado",
+    "salida": "pomelo, cilantro, albahaca",
+    "corazon": "cardamomo, jengibre, azahar",
+    "fondo": "ámbar, cedro, tabaco",
+    "duracion": "6-8 h, estela media-alta",
+    "ocasion": "oficina, noche",
     "genero": "masculino"
   },
   {
-    "nombre": "King of Seduction",
-    "marca": "Antonio Banderas",
-    "familia": "cítrico amaderado",
-    "salida": "bergamota, limón, cardamomo",
-    "corazon": "lavanda, notas acuáticas",
-    "fondo": "cedro, almizcle, ámbar",
-    "duracion": "4-6 h, estela moderada",
-    "ocasion": "día, uso diario",
-    "genero": "masculino"
-  },
-  {
-    "nombre": "Blue Seduction",
-    "marca": "Antonio Banderas",
-    "familia": "acuático fresco",
-    "salida": "melón, menta, bergamota",
-    "corazon": "notas marinas, cardamomo",
-    "fondo": "almizcle, maderas",
-    "duracion": "4-6 h, estela moderada",
-    "ocasion": "día, calor, uso diario",
-    "genero": "masculino"
-  },
-  {
-    "nombre": "In Motion",
-    "marca": "Hugo Boss",
-    "familia": "cítrico amaderado",
-    "salida": "toronja, mandarina",
-    "corazon": "notas verdes, especias suaves",
-    "fondo": "cedro, almizcle",
-    "duracion": "4-6 h, estela moderada",
-    "ocasion": "día, oficina",
-    "genero": "masculino"
-  },
-  {
-    "nombre": "XY",
-    "marca": "Hugo Boss",
-    "familia": "cítrico frutal fresco",
-    "salida": "lima, mandarina, manzana",
-    "corazon": "notas florales ligeras",
-    "fondo": "maderas, almizcle",
-    "duracion": "4-5 h, estela cercana",
-    "ocasion": "día, juvenil",
-    "genero": "masculino"
-  },
-  {
-    "nombre": "Good Girl",
-    "marca": "Carolina Herrera",
-    "familia": "floral oriental",
-    "salida": "almendra, café, bergamota",
-    "corazon": "jazmín, nardo, haba tonka",
-    "fondo": "cacao, vainilla, praliné",
-    "duracion": "8-10 h, estela alta",
+    "nombre": "Turathi Blue",
+    "marca": "Afnan",
+    "familia": "frutal amaderado",
+    "salida": "piña, bergamota",
+    "corazon": "jazmín, abedul",
+    "fondo": "ámbar, almizcle, vainilla",
+    "duracion": "8-10 h, estela muy alta",
     "ocasion": "noche, eventos",
+    "genero": "masculino"
+  },
+  {
+    "nombre": "Ultra Male",
+    "marca": "Jean Paul Gaultier",
+    "familia": "gourmand frutal",
+    "salida": "pera, lavanda, menta",
+    "corazon": "canela, azahar",
+    "fondo": "vainilla, ámbar, haba tonka",
+    "duracion": "8-10 h, estela muy alta",
+    "ocasion": "noche, fiesta",
+    "genero": "masculino"
+  },
+  {
+    "nombre": "Ventana Sul",
+    "marca": "Armaf",
+    "familia": "frutal dulce",
+    "salida": "mango, piña",
+    "corazon": "flores blancas",
+    "fondo": "vainilla, maderas",
+    "duracion": "6-8 h, estela alta",
+    "ocasion": "día, calor",
     "genero": "femenino"
   },
   {
@@ -1592,169 +2401,37 @@ const CATALOGO_BASE = [
     "genero": "femenino"
   },
   {
-    "nombre": "La Vie Est Belle",
-    "marca": "Lancôme",
-    "familia": "floral gourmand",
-    "salida": "grosella negra, pera",
-    "corazon": "iris, jazmín, azahar",
-    "fondo": "praliné, vainilla, pachulí",
-    "duracion": "8-10 h, estela alta",
-    "ocasion": "noche y día, uso diario",
-    "genero": "femenino"
+    "nombre": "Voyage",
+    "marca": "Nautica",
+    "familia": "acuático fresco verde",
+    "salida": "manzana verde, hoja de loto",
+    "corazon": "mimosa, notas acuáticas",
+    "fondo": "almizcle, madera de cedro",
+    "duracion": "4-6 h, estela moderada",
+    "ocasion": "día, calor, uso diario",
+    "genero": "masculino"
   },
   {
-    "nombre": "Idôle",
-    "marca": "Lancôme",
-    "familia": "floral almizclado limpio",
-    "salida": "pera, bergamota, rosa mosqueta",
-    "corazon": "rosa, jazmín",
-    "fondo": "vainilla, almizcle blanco, pachulí",
-    "duracion": "6-8 h, estela media",
-    "ocasion": "día, oficina",
-    "genero": "femenino"
-  },
-  {
-    "nombre": "Black Opium",
-    "marca": "Yves Saint Laurent",
-    "familia": "gourmand oriental",
-    "salida": "pera, pimienta rosa, naranja",
-    "corazon": "café, jazmín, flor de azahar",
-    "fondo": "vainilla, pachulí, cedro",
-    "duracion": "8-10 h, estela alta",
-    "ocasion": "noche, clima fresco",
-    "genero": "femenino"
-  },
-  {
-    "nombre": "Libre",
-    "marca": "Yves Saint Laurent",
-    "familia": "floral lavanda",
-    "salida": "lavanda, mandarina, grosella",
-    "corazon": "azahar, jazmín",
-    "fondo": "vainilla, almizcle, cedro",
-    "duracion": "7-9 h, estela alta",
-    "ocasion": "día y noche",
-    "genero": "femenino"
-  },
-  {
-    "nombre": "Olympéa",
-    "marca": "Paco Rabanne",
-    "familia": "floral acuático dulce",
-    "salida": "mandarina verde, jazmín acuático",
-    "corazon": "vainilla salada, jazmín",
-    "fondo": "sándalo, ámbar gris, cachemira",
-    "duracion": "7-9 h, estela alta",
+    "nombre": "Wanted",
+    "marca": "Azzaro",
+    "familia": "especiado amaderado",
+    "salida": "limón, jengibre, cardamomo",
+    "corazon": "lavanda, menta, enebro",
+    "fondo": "haba tonka, vetiver, ámbar",
+    "duracion": "6-8 h, estela alta",
     "ocasion": "noche, uso diario",
-    "genero": "femenino"
+    "genero": "masculino"
   },
   {
-    "nombre": "Lady Million",
-    "marca": "Paco Rabanne",
-    "familia": "floral frutal amaderado",
-    "salida": "frambuesa, neroli, limón",
-    "corazon": "jazmín, azahar, gardenia",
-    "fondo": "miel, pachulí, ámbar",
-    "duracion": "6-8 h, estela alta",
-    "ocasion": "noche, fiesta",
-    "genero": "femenino"
-  },
-  {
-    "nombre": "Miss Dior",
-    "marca": "Dior",
-    "familia": "floral chipre",
-    "salida": "mandarina, bergamota",
-    "corazon": "rosa, peonía, lirio",
-    "fondo": "pachulí, almizcle",
-    "duracion": "6-8 h, estela media-alta",
-    "ocasion": "día y noche",
-    "genero": "femenino"
-  },
-  {
-    "nombre": "J'adore",
-    "marca": "Dior",
-    "familia": "floral",
-    "salida": "pera, melón, magnolia",
-    "corazon": "jazmín, rosa, orquídea",
-    "fondo": "almizcle, cedro, vainilla",
-    "duracion": "7-9 h, estela alta",
-    "ocasion": "noche, eventos",
-    "genero": "femenino"
-  },
-  {
-    "nombre": "Coco Mademoiselle",
-    "marca": "Chanel",
-    "familia": "floral oriental chipre",
-    "salida": "naranja, bergamota",
-    "corazon": "rosa, jazmín, litchi",
-    "fondo": "pachulí, vetiver, vainilla",
-    "duracion": "7-9 h, estela alta",
-    "ocasion": "día y noche",
-    "genero": "femenino"
-  },
-  {
-    "nombre": "Cloud",
-    "marca": "Ariana Grande",
-    "familia": "floral gourmand",
-    "salida": "lavanda, pera, bergamota",
-    "corazon": "coco, praliné, jazmín",
-    "fondo": "almizcle, vainilla, madera de cachemira",
-    "duracion": "6-8 h, estela alta",
-    "ocasion": "uso diario",
-    "genero": "femenino"
-  },
-  {
-    "nombre": "Fantasy",
-    "marca": "Britney Spears",
-    "familia": "frutal gourmand",
-    "salida": "kiwi, litchi, mandarina",
-    "corazon": "chocolate blanco, orquídea, jazmín",
-    "fondo": "almizcle, madera, raíz de lirio",
-    "duracion": "5-7 h, estela media-alta",
-    "ocasion": "juvenil, noche",
-    "genero": "femenino"
-  },
-  {
-    "nombre": "Bombshell",
-    "marca": "Victoria's Secret",
-    "familia": "floral frutal",
-    "salida": "maracuyá, pomelo",
-    "corazon": "peonía, orquídea de vainilla",
-    "fondo": "almizcle, maderas",
-    "duracion": "6-8 h, estela alta",
-    "ocasion": "día y noche",
-    "genero": "femenino"
-  },
-  {
-    "nombre": "Body",
-    "marca": "Victoria's Secret",
-    "familia": "floral almizclado limpio",
-    "salida": "notas verdes cítricas",
-    "corazon": "jazmín, flores blancas",
-    "fondo": "almizcle, madera clara",
+    "nombre": "XY",
+    "marca": "Hugo Boss",
+    "familia": "cítrico frutal fresco",
+    "salida": "lima, mandarina, manzana",
+    "corazon": "notas florales ligeras",
+    "fondo": "maderas, almizcle",
     "duracion": "4-5 h, estela cercana",
-    "ocasion": "diario, uso cotidiano",
-    "genero": "femenino"
-  },
-  {
-    "nombre": "Happy",
-    "marca": "Clinique",
-    "familia": "cítrico floral fresco",
-    "salida": "toronja, mandarina, ciruela",
-    "corazon": "magnolia, rosa, lirio",
-    "fondo": "almizcle, maderas suaves",
-    "duracion": "4-6 h, estela moderada",
-    "ocasion": "día, oficina, clima cálido",
-    "genero": "femenino"
-  },
-  {
-    "nombre": "Meow",
-    "marca": "Katy Perry",
-    "familia": "frutal dulce",
-    "salida": "pera, mandarina",
-    "corazon": "flor de naranjo, jazmín",
-    "fondo": "vainilla, almizcle, ámbar",
-    "duracion": "4-6 h, estela moderada",
     "ocasion": "día, juvenil",
-    "genero": "femenino"
+    "genero": "masculino"
   },
   {
     "nombre": "Yara",
@@ -1768,37 +2445,15 @@ const CATALOGO_BASE = [
     "genero": "femenino"
   },
   {
-    "nombre": "Club de Nuit Woman",
-    "marca": "Armaf",
-    "familia": "floral frutal chipre",
-    "salida": "pomelo, grosella, piña",
-    "corazon": "rosa, jazmín",
-    "fondo": "almizcle, ámbar, pachulí",
-    "duracion": "7-9 h, estela alta",
-    "ocasion": "noche",
+    "nombre": "Yara Moi",
+    "marca": "Lattafa",
+    "familia": "floral gourmand",
+    "salida": "frutas rojas, bergamota",
+    "corazon": "jazmín, gardenia",
+    "fondo": "vainilla, almizcle, sándalo",
+    "duracion": "8-10 h, estela alta",
+    "ocasion": "día y noche",
     "genero": "femenino"
-  },
-  {
-    "nombre": "Nina",
-    "marca": "Nina Ricci",
-    "familia": "frutal floral",
-    "salida": "manzana caramelizada, limón",
-    "corazon": "praliné, peonía, flor de algodón",
-    "fondo": "almizcle, sándalo, vainilla",
-    "duracion": "5-7 h, estela media",
-    "ocasion": "día, juvenil",
-    "genero": "femenino"
-  },
-  {
-    "nombre": "Dark Seduction",
-    "marca": "Antonio Banderas",
-    "familia": "oriental dulce",
-    "salida": "cítricos, especias",
-    "corazon": "canela, notas amaderadas",
-    "fondo": "vainilla, ámbar",
-    "duracion": "5-7 h, estela media-alta",
-    "ocasion": "noche, clima fresco",
-    "genero": "masculino"
   }
 ];
 function claveFicha(nombre){

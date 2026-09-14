@@ -37,6 +37,12 @@
   header { border-bottom:1px solid var(--border); margin-bottom:14px;
     background:linear-gradient(180deg,#fff4ea 0%,#fffaf6 100%); }
   .marca-icono { width:52px; height:52px; }
+  .acordes { margin-top:12px; display:flex; flex-direction:column; gap:5px; }
+  .acordes .barra { position:relative; height:26px; border-radius:6px; overflow:hidden;
+    background:#f6f0ea; display:flex; align-items:center; }
+  .acordes .relleno { position:absolute; inset:0 auto 0 0; border-radius:6px; }
+  .acordes .txt { position:relative; padding:0 10px; font-size:11.5px; font-weight:600;
+    letter-spacing:.3px; color:#2a1b1f; text-transform:lowercase; }
   .piramide { margin-top:10px; border-top:1px solid var(--border); padding-top:10px; }
   .piramide .fila { display:grid; grid-template-columns:62px 1fr; gap:10px; padding:3px 0;
     font-size:12px; color:var(--text); line-height:1.5; }
@@ -326,6 +332,8 @@
     <input type="text" id="fOcasion" placeholder="Ej: noche, invierno">
     <label>Género</label>
     <input type="text" id="fGenero" placeholder="Ej: masculino, unisex">
+    <label>Acordes principales (del más fuerte al más suave, separados por coma)</label>
+    <input type="text" id="fAcordes" placeholder="Ej: cítrico, caramelo, dulce, ámbar">
     <button class="primary" id="fGuardar">Guardar ficha</button>
     <button class="small" id="fCerrar" style="width:100%;margin-top:8px;">Cancelar</button>
   </div>
@@ -1315,7 +1323,37 @@ const CATALOGO_BASE = [
     "fondo": "cuero, ámbar, pachulí",
     "duracion": "7-9 h, estela alta",
     "ocasion": "noche, salidas",
-    "genero": "masculino"
+    "genero": "masculino",
+    "acordes": [
+      {
+        "n": "cuero",
+        "v": 1
+      },
+      {
+        "n": "especiado",
+        "v": 0.94
+      },
+      {
+        "n": "ámbar",
+        "v": 0.7
+      },
+      {
+        "n": "amaderado",
+        "v": 0.7
+      },
+      {
+        "n": "cítrico",
+        "v": 0.67
+      },
+      {
+        "n": "aromático",
+        "v": 0.67
+      },
+      {
+        "n": "floral",
+        "v": 0.64
+      }
+    ]
   },
   {
     "nombre": "212 Sexy Men",
@@ -1326,7 +1364,37 @@ const CATALOGO_BASE = [
     "fondo": "sándalo, almizcle, ámbar",
     "duracion": "6-8 h, estela alta",
     "ocasion": "noche",
-    "genero": "masculino"
+    "genero": "masculino",
+    "acordes": [
+      {
+        "n": "especiado",
+        "v": 1
+      },
+      {
+        "n": "floral",
+        "v": 0.89
+      },
+      {
+        "n": "dulce",
+        "v": 0.76
+      },
+      {
+        "n": "ámbar",
+        "v": 0.72
+      },
+      {
+        "n": "amaderado",
+        "v": 0.72
+      },
+      {
+        "n": "almizclado",
+        "v": 0.72
+      },
+      {
+        "n": "cítrico",
+        "v": 0.69
+      }
+    ]
   },
   {
     "nombre": "212 VIP Men",
@@ -1337,7 +1405,29 @@ const CATALOGO_BASE = [
     "fondo": "ámbar, madera de gaiac",
     "duracion": "6-8 h, estela alta",
     "ocasion": "fiesta, noche",
-    "genero": "masculino"
+    "genero": "masculino",
+    "acordes": [
+      {
+        "n": "amaderado",
+        "v": 1
+      },
+      {
+        "n": "especiado",
+        "v": 0.97
+      },
+      {
+        "n": "ámbar",
+        "v": 0.7
+      },
+      {
+        "n": "cítrico",
+        "v": 0.67
+      },
+      {
+        "n": "aromático",
+        "v": 0.67
+      }
+    ]
   },
   {
     "nombre": "212 VIP Rosé",
@@ -1348,7 +1438,25 @@ const CATALOGO_BASE = [
     "fondo": "almizcle, madera de guayaco",
     "duracion": "6-8 h, estela alta",
     "ocasion": "fiesta, noche",
-    "genero": "femenino"
+    "genero": "femenino",
+    "acordes": [
+      {
+        "n": "floral",
+        "v": 1
+      },
+      {
+        "n": "amaderado",
+        "v": 0.64
+      },
+      {
+        "n": "almizclado",
+        "v": 0.64
+      },
+      {
+        "n": "frutal",
+        "v": 0.62
+      }
+    ]
   },
   {
     "nombre": "9 PM",
@@ -1359,7 +1467,37 @@ const CATALOGO_BASE = [
     "fondo": "vainilla, haba tonka, ámbar",
     "duracion": "7-9 h, estela alta",
     "ocasion": "noche, clima fresco",
-    "genero": "masculino"
+    "genero": "masculino",
+    "acordes": [
+      {
+        "n": "ámbar",
+        "v": 1
+      },
+      {
+        "n": "especiado",
+        "v": 0.97
+      },
+      {
+        "n": "dulce",
+        "v": 0.75
+      },
+      {
+        "n": "avainillado",
+        "v": 0.7
+      },
+      {
+        "n": "almendra",
+        "v": 0.7
+      },
+      {
+        "n": "cítrico",
+        "v": 0.67
+      },
+      {
+        "n": "frutal",
+        "v": 0.67
+      }
+    ]
   },
   {
     "nombre": "9 PM Rebel",
@@ -1370,7 +1508,37 @@ const CATALOGO_BASE = [
     "fondo": "vainilla, ámbar, haba tonka",
     "duracion": "8-10 h, estela alta",
     "ocasion": "noche",
-    "genero": "masculino"
+    "genero": "masculino",
+    "acordes": [
+      {
+        "n": "especiado",
+        "v": 1
+      },
+      {
+        "n": "dulce",
+        "v": 0.76
+      },
+      {
+        "n": "avainillado",
+        "v": 0.72
+      },
+      {
+        "n": "ámbar",
+        "v": 0.72
+      },
+      {
+        "n": "almendra",
+        "v": 0.72
+      },
+      {
+        "n": "frutal",
+        "v": 0.69
+      },
+      {
+        "n": "floral",
+        "v": 0.65
+      }
+    ]
   },
   {
     "nombre": "Acqua di Giò Profumo",
@@ -1381,7 +1549,29 @@ const CATALOGO_BASE = [
     "fondo": "incienso, pachulí",
     "duracion": "7-9 h, estela alta",
     "ocasion": "día y noche",
-    "genero": "masculino"
+    "genero": "masculino",
+    "acordes": [
+      {
+        "n": "ahumado",
+        "v": 1
+      },
+      {
+        "n": "acuático",
+        "v": 0.97
+      },
+      {
+        "n": "amaderado",
+        "v": 0.7
+      },
+      {
+        "n": "cítrico",
+        "v": 0.67
+      },
+      {
+        "n": "aromático",
+        "v": 0.64
+      }
+    ]
   },
   {
     "nombre": "Adventure",
@@ -1392,7 +1582,25 @@ const CATALOGO_BASE = [
     "fondo": "cedro, vetiver, almizcle",
     "duracion": "5-7 h, estela media",
     "ocasion": "día, uso diario",
-    "genero": "masculino"
+    "genero": "masculino",
+    "acordes": [
+      {
+        "n": "amaderado",
+        "v": 1
+      },
+      {
+        "n": "cítrico",
+        "v": 0.97
+      },
+      {
+        "n": "almizclado",
+        "v": 0.7
+      },
+      {
+        "n": "especiado",
+        "v": 0.64
+      }
+    ]
   },
   {
     "nombre": "Ajwad",
@@ -1403,7 +1611,37 @@ const CATALOGO_BASE = [
     "fondo": "vainilla, ámbar, almizcle",
     "duracion": "8-10 h, estela alta",
     "ocasion": "día y noche",
-    "genero": "unisex"
+    "genero": "unisex",
+    "acordes": [
+      {
+        "n": "floral",
+        "v": 1
+      },
+      {
+        "n": "dulce",
+        "v": 0.78
+      },
+      {
+        "n": "avainillado",
+        "v": 0.73
+      },
+      {
+        "n": "ámbar",
+        "v": 0.73
+      },
+      {
+        "n": "almizclado",
+        "v": 0.73
+      },
+      {
+        "n": "cítrico",
+        "v": 0.7
+      },
+      {
+        "n": "frutal",
+        "v": 0.7
+      }
+    ]
   },
   {
     "nombre": "Alien",
@@ -1414,7 +1652,25 @@ const CATALOGO_BASE = [
     "fondo": "ámbar blanco, almizcle",
     "duracion": "9-12 h, estela muy alta",
     "ocasion": "noche, invierno",
-    "genero": "femenino"
+    "genero": "femenino",
+    "acordes": [
+      {
+        "n": "ámbar",
+        "v": 1
+      },
+      {
+        "n": "floral",
+        "v": 0.97
+      },
+      {
+        "n": "almizclado",
+        "v": 0.7
+      },
+      {
+        "n": "amaderado",
+        "v": 0.64
+      }
+    ]
   },
   {
     "nombre": "Amber Oud Gold",
@@ -1425,7 +1681,33 @@ const CATALOGO_BASE = [
     "fondo": "almizcle, vainilla, maderas",
     "duracion": "9-12 h, estela muy alta",
     "ocasion": "noche, invierno",
-    "genero": "unisex"
+    "genero": "unisex",
+    "acordes": [
+      {
+        "n": "amaderado",
+        "v": 1
+      },
+      {
+        "n": "ámbar",
+        "v": 0.81
+      },
+      {
+        "n": "avainillado",
+        "v": 0.64
+      },
+      {
+        "n": "almizclado",
+        "v": 0.64
+      },
+      {
+        "n": "cítrico",
+        "v": 0.61
+      },
+      {
+        "n": "especiado",
+        "v": 0.61
+      }
+    ]
   },
   {
     "nombre": "Ana Abiyedh Rouge",
@@ -1436,7 +1718,33 @@ const CATALOGO_BASE = [
     "fondo": "ámbar, sándalo, almizcle",
     "duracion": "7-9 h, estela alta",
     "ocasion": "noche",
-    "genero": "unisex"
+    "genero": "unisex",
+    "acordes": [
+      {
+        "n": "amaderado",
+        "v": 1
+      },
+      {
+        "n": "floral",
+        "v": 0.94
+      },
+      {
+        "n": "ámbar",
+        "v": 0.7
+      },
+      {
+        "n": "almizclado",
+        "v": 0.7
+      },
+      {
+        "n": "cítrico",
+        "v": 0.67
+      },
+      {
+        "n": "especiado",
+        "v": 0.67
+      }
+    ]
   },
   {
     "nombre": "Angel",
@@ -1447,7 +1755,29 @@ const CATALOGO_BASE = [
     "fondo": "vainilla, pachulí, caramelo",
     "duracion": "9-12 h, estela muy alta",
     "ocasion": "noche, invierno",
-    "genero": "femenino"
+    "genero": "femenino",
+    "acordes": [
+      {
+        "n": "dulce",
+        "v": 1
+      },
+      {
+        "n": "avainillado",
+        "v": 0.59
+      },
+      {
+        "n": "amaderado",
+        "v": 0.59
+      },
+      {
+        "n": "cítrico",
+        "v": 0.58
+      },
+      {
+        "n": "frutal",
+        "v": 0.56
+      }
+    ]
   },
   {
     "nombre": "Asad",
@@ -1458,7 +1788,37 @@ const CATALOGO_BASE = [
     "fondo": "vainilla, ámbar, cedro",
     "duracion": "8-10 h, estela alta",
     "ocasion": "noche, clima fresco",
-    "genero": "masculino"
+    "genero": "masculino",
+    "acordes": [
+      {
+        "n": "especiado",
+        "v": 1
+      },
+      {
+        "n": "amaderado",
+        "v": 0.87
+      },
+      {
+        "n": "dulce",
+        "v": 0.68
+      },
+      {
+        "n": "avainillado",
+        "v": 0.64
+      },
+      {
+        "n": "ámbar",
+        "v": 0.64
+      },
+      {
+        "n": "cítrico",
+        "v": 0.62
+      },
+      {
+        "n": "café",
+        "v": 0.6
+      }
+    ]
   },
   {
     "nombre": "Asad Zanzibar",
@@ -1469,7 +1829,37 @@ const CATALOGO_BASE = [
     "fondo": "vainilla, ámbar, maderas",
     "duracion": "8-10 h, estela alta",
     "ocasion": "noche",
-    "genero": "masculino"
+    "genero": "masculino",
+    "acordes": [
+      {
+        "n": "especiado",
+        "v": 1
+      },
+      {
+        "n": "dulce",
+        "v": 0.78
+      },
+      {
+        "n": "avainillado",
+        "v": 0.73
+      },
+      {
+        "n": "ámbar",
+        "v": 0.73
+      },
+      {
+        "n": "amaderado",
+        "v": 0.73
+      },
+      {
+        "n": "cítrico",
+        "v": 0.7
+      },
+      {
+        "n": "frutal",
+        "v": 0.7
+      }
+    ]
   },
   {
     "nombre": "Bad Boy",
@@ -1480,7 +1870,37 @@ const CATALOGO_BASE = [
     "fondo": "haba tonka, cacao, ámbar",
     "duracion": "7-9 h, estela alta",
     "ocasion": "noche, clima fresco",
-    "genero": "masculino"
+    "genero": "masculino",
+    "acordes": [
+      {
+        "n": "especiado",
+        "v": 1
+      },
+      {
+        "n": "amaderado",
+        "v": 0.97
+      },
+      {
+        "n": "ámbar",
+        "v": 0.72
+      },
+      {
+        "n": "café",
+        "v": 0.72
+      },
+      {
+        "n": "almendra",
+        "v": 0.72
+      },
+      {
+        "n": "cítrico",
+        "v": 0.69
+      },
+      {
+        "n": "aromático",
+        "v": 0.65
+      }
+    ]
   },
   {
     "nombre": "Badee Al Oud Amethyst",
@@ -1491,7 +1911,33 @@ const CATALOGO_BASE = [
     "fondo": "ámbar, almizcle, pachulí",
     "duracion": "9-12 h, estela muy alta",
     "ocasion": "noche, invierno",
-    "genero": "unisex"
+    "genero": "unisex",
+    "acordes": [
+      {
+        "n": "amaderado",
+        "v": 1
+      },
+      {
+        "n": "ámbar",
+        "v": 0.64
+      },
+      {
+        "n": "almizclado",
+        "v": 0.64
+      },
+      {
+        "n": "frutal",
+        "v": 0.61
+      },
+      {
+        "n": "especiado",
+        "v": 0.61
+      },
+      {
+        "n": "floral",
+        "v": 0.59
+      }
+    ]
   },
   {
     "nombre": "Barakkat Rouge 540",
@@ -1502,7 +1948,33 @@ const CATALOGO_BASE = [
     "fondo": "cedro, resinas dulces",
     "duracion": "9-12 h, estela muy alta",
     "ocasion": "noche, eventos",
-    "genero": "unisex"
+    "genero": "unisex",
+    "acordes": [
+      {
+        "n": "floral",
+        "v": 1
+      },
+      {
+        "n": "ámbar",
+        "v": 0.97
+      },
+      {
+        "n": "amaderado",
+        "v": 0.92
+      },
+      {
+        "n": "dulce",
+        "v": 0.72
+      },
+      {
+        "n": "ahumado",
+        "v": 0.72
+      },
+      {
+        "n": "especiado",
+        "v": 0.69
+      }
+    ]
   },
   {
     "nombre": "Black Opium",
@@ -1513,7 +1985,37 @@ const CATALOGO_BASE = [
     "fondo": "vainilla, pachulí, cedro",
     "duracion": "8-10 h, estela alta",
     "ocasion": "noche, clima fresco",
-    "genero": "femenino"
+    "genero": "femenino",
+    "acordes": [
+      {
+        "n": "floral",
+        "v": 1
+      },
+      {
+        "n": "dulce",
+        "v": 0.84
+      },
+      {
+        "n": "avainillado",
+        "v": 0.78
+      },
+      {
+        "n": "amaderado",
+        "v": 0.78
+      },
+      {
+        "n": "cítrico",
+        "v": 0.74
+      },
+      {
+        "n": "frutal",
+        "v": 0.74
+      },
+      {
+        "n": "especiado",
+        "v": 0.74
+      }
+    ]
   },
   {
     "nombre": "Black XS",
@@ -1524,7 +2026,37 @@ const CATALOGO_BASE = [
     "fondo": "cacao, sándalo, vetiver",
     "duracion": "6-8 h, estela alta",
     "ocasion": "noche",
-    "genero": "masculino"
+    "genero": "masculino",
+    "acordes": [
+      {
+        "n": "especiado",
+        "v": 1
+      },
+      {
+        "n": "amaderado",
+        "v": 0.64
+      },
+      {
+        "n": "café",
+        "v": 0.64
+      },
+      {
+        "n": "cítrico",
+        "v": 0.62
+      },
+      {
+        "n": "frutal",
+        "v": 0.62
+      },
+      {
+        "n": "dulce",
+        "v": 0.6
+      },
+      {
+        "n": "floral",
+        "v": 0.6
+      }
+    ]
   },
   {
     "nombre": "Bleu de Chanel",
@@ -1535,7 +2067,33 @@ const CATALOGO_BASE = [
     "fondo": "incienso, cedro, sándalo",
     "duracion": "7-9 h, estela alta",
     "ocasion": "oficina y noche",
-    "genero": "masculino"
+    "genero": "masculino",
+    "acordes": [
+      {
+        "n": "amaderado",
+        "v": 1
+      },
+      {
+        "n": "aromático",
+        "v": 0.97
+      },
+      {
+        "n": "ahumado",
+        "v": 0.7
+      },
+      {
+        "n": "cítrico",
+        "v": 0.67
+      },
+      {
+        "n": "floral",
+        "v": 0.64
+      },
+      {
+        "n": "especiado",
+        "v": 0.64
+      }
+    ]
   },
   {
     "nombre": "Bleu de Chanel Parfum",
@@ -1546,7 +2104,29 @@ const CATALOGO_BASE = [
     "fondo": "sándalo, cedro, vetiver",
     "duracion": "9-12 h, estela alta",
     "ocasion": "noche, eventos",
-    "genero": "masculino"
+    "genero": "masculino",
+    "acordes": [
+      {
+        "n": "amaderado",
+        "v": 1
+      },
+      {
+        "n": "cítrico",
+        "v": 0.97
+      },
+      {
+        "n": "aromático",
+        "v": 0.67
+      },
+      {
+        "n": "especiado",
+        "v": 0.64
+      },
+      {
+        "n": "ahumado",
+        "v": 0.64
+      }
+    ]
   },
   {
     "nombre": "Blue Seduction",
@@ -1557,7 +2137,37 @@ const CATALOGO_BASE = [
     "fondo": "almizcle, maderas",
     "duracion": "4-6 h, estela moderada",
     "ocasion": "día, calor, uso diario",
-    "genero": "masculino"
+    "genero": "masculino",
+    "acordes": [
+      {
+        "n": "acuático",
+        "v": 1
+      },
+      {
+        "n": "fresco",
+        "v": 0.78
+      },
+      {
+        "n": "amaderado",
+        "v": 0.73
+      },
+      {
+        "n": "almizclado",
+        "v": 0.73
+      },
+      {
+        "n": "cítrico",
+        "v": 0.7
+      },
+      {
+        "n": "frutal",
+        "v": 0.7
+      },
+      {
+        "n": "aromático",
+        "v": 0.7
+      }
+    ]
   },
   {
     "nombre": "Body",
@@ -1568,7 +2178,29 @@ const CATALOGO_BASE = [
     "fondo": "almizcle, madera clara",
     "duracion": "4-5 h, estela cercana",
     "ocasion": "diario, uso cotidiano",
-    "genero": "femenino"
+    "genero": "femenino",
+    "acordes": [
+      {
+        "n": "floral",
+        "v": 1
+      },
+      {
+        "n": "amaderado",
+        "v": 0.73
+      },
+      {
+        "n": "almizclado",
+        "v": 0.73
+      },
+      {
+        "n": "cítrico",
+        "v": 0.7
+      },
+      {
+        "n": "fresco",
+        "v": 0.7
+      }
+    ]
   },
   {
     "nombre": "Bombshell",
@@ -1579,7 +2211,29 @@ const CATALOGO_BASE = [
     "fondo": "almizcle, maderas",
     "duracion": "6-8 h, estela alta",
     "ocasion": "día y noche",
-    "genero": "femenino"
+    "genero": "femenino",
+    "acordes": [
+      {
+        "n": "floral",
+        "v": 1
+      },
+      {
+        "n": "amaderado",
+        "v": 0.73
+      },
+      {
+        "n": "almizclado",
+        "v": 0.73
+      },
+      {
+        "n": "cítrico",
+        "v": 0.7
+      },
+      {
+        "n": "avainillado",
+        "v": 0.67
+      }
+    ]
   },
   {
     "nombre": "Boss Bottled",
@@ -1590,7 +2244,29 @@ const CATALOGO_BASE = [
     "fondo": "sándalo, vainilla, cedro",
     "duracion": "6-8 h, estela media-alta",
     "ocasion": "oficina, uso diario",
-    "genero": "masculino"
+    "genero": "masculino",
+    "acordes": [
+      {
+        "n": "amaderado",
+        "v": 1
+      },
+      {
+        "n": "especiado",
+        "v": 0.94
+      },
+      {
+        "n": "avainillado",
+        "v": 0.7
+      },
+      {
+        "n": "cítrico",
+        "v": 0.67
+      },
+      {
+        "n": "frutal",
+        "v": 0.67
+      }
+    ]
   },
   {
     "nombre": "Bright Crystal",
@@ -1601,7 +2277,33 @@ const CATALOGO_BASE = [
     "fondo": "almizcle, ámbar, caoba",
     "duracion": "5-7 h, estela media",
     "ocasion": "día, calor",
-    "genero": "femenino"
+    "genero": "femenino",
+    "acordes": [
+      {
+        "n": "floral",
+        "v": 1
+      },
+      {
+        "n": "ámbar",
+        "v": 0.73
+      },
+      {
+        "n": "almizclado",
+        "v": 0.73
+      },
+      {
+        "n": "cítrico",
+        "v": 0.7
+      },
+      {
+        "n": "frutal",
+        "v": 0.7
+      },
+      {
+        "n": "acuático",
+        "v": 0.67
+      }
+    ]
   },
   {
     "nombre": "Burberry Her",
@@ -1612,7 +2314,33 @@ const CATALOGO_BASE = [
     "fondo": "almizcle, ámbar, madera",
     "duracion": "6-8 h, estela alta",
     "ocasion": "día y noche",
-    "genero": "femenino"
+    "genero": "femenino",
+    "acordes": [
+      {
+        "n": "dulce",
+        "v": 1
+      },
+      {
+        "n": "ámbar",
+        "v": 0.92
+      },
+      {
+        "n": "amaderado",
+        "v": 0.92
+      },
+      {
+        "n": "almizclado",
+        "v": 0.92
+      },
+      {
+        "n": "frutal",
+        "v": 0.86
+      },
+      {
+        "n": "floral",
+        "v": 0.81
+      }
+    ]
   },
   {
     "nombre": "CH Men",
@@ -1623,7 +2351,29 @@ const CATALOGO_BASE = [
     "fondo": "cedro, vetiver, ámbar",
     "duracion": "6-8 h, estela alta",
     "ocasion": "oficina, noche",
-    "genero": "masculino"
+    "genero": "masculino",
+    "acordes": [
+      {
+        "n": "amaderado",
+        "v": 1
+      },
+      {
+        "n": "cuero",
+        "v": 0.94
+      },
+      {
+        "n": "ámbar",
+        "v": 0.7
+      },
+      {
+        "n": "cítrico",
+        "v": 0.67
+      },
+      {
+        "n": "especiado",
+        "v": 0.64
+      }
+    ]
   },
   {
     "nombre": "Chance Eau Tendre",
@@ -1634,7 +2384,29 @@ const CATALOGO_BASE = [
     "fondo": "almizcle blanco, cedro",
     "duracion": "6-8 h, estela media",
     "ocasion": "día, uso diario",
-    "genero": "femenino"
+    "genero": "femenino",
+    "acordes": [
+      {
+        "n": "floral",
+        "v": 1
+      },
+      {
+        "n": "amaderado",
+        "v": 0.73
+      },
+      {
+        "n": "almizclado",
+        "v": 0.73
+      },
+      {
+        "n": "cítrico",
+        "v": 0.7
+      },
+      {
+        "n": "frutal",
+        "v": 0.7
+      }
+    ]
   },
   {
     "nombre": "Chrome",
@@ -1645,7 +2417,37 @@ const CATALOGO_BASE = [
     "fondo": "almizcle, sándalo, cedro",
     "duracion": "4-6 h, estela moderada",
     "ocasion": "día, oficina, calor",
-    "genero": "masculino"
+    "genero": "masculino",
+    "acordes": [
+      {
+        "n": "cítrico",
+        "v": 1
+      },
+      {
+        "n": "fresco",
+        "v": 0.76
+      },
+      {
+        "n": "amaderado",
+        "v": 0.72
+      },
+      {
+        "n": "almizclado",
+        "v": 0.72
+      },
+      {
+        "n": "frutal",
+        "v": 0.69
+      },
+      {
+        "n": "floral",
+        "v": 0.65
+      },
+      {
+        "n": "especiado",
+        "v": 0.65
+      }
+    ]
   },
   {
     "nombre": "Cloud",
@@ -1656,7 +2458,37 @@ const CATALOGO_BASE = [
     "fondo": "almizcle, vainilla, madera de cachemira",
     "duracion": "6-8 h, estela alta",
     "ocasion": "uso diario",
-    "genero": "femenino"
+    "genero": "femenino",
+    "acordes": [
+      {
+        "n": "dulce",
+        "v": 1
+      },
+      {
+        "n": "floral",
+        "v": 1
+      },
+      {
+        "n": "avainillado",
+        "v": 0.73
+      },
+      {
+        "n": "amaderado",
+        "v": 0.73
+      },
+      {
+        "n": "almizclado",
+        "v": 0.73
+      },
+      {
+        "n": "cítrico",
+        "v": 0.7
+      },
+      {
+        "n": "frutal",
+        "v": 0.7
+      }
+    ]
   },
   {
     "nombre": "Club de Nuit Intense Man",
@@ -1667,7 +2499,37 @@ const CATALOGO_BASE = [
     "fondo": "almizcle, ámbar, vainilla",
     "duracion": "9-12 h, estela muy alta",
     "ocasion": "noche, eventos",
-    "genero": "masculino"
+    "genero": "masculino",
+    "acordes": [
+      {
+        "n": "amaderado",
+        "v": 1
+      },
+      {
+        "n": "avainillado",
+        "v": 0.73
+      },
+      {
+        "n": "ámbar",
+        "v": 0.73
+      },
+      {
+        "n": "almizclado",
+        "v": 0.73
+      },
+      {
+        "n": "cítrico",
+        "v": 0.7
+      },
+      {
+        "n": "frutal",
+        "v": 0.7
+      },
+      {
+        "n": "floral",
+        "v": 0.67
+      }
+    ]
   },
   {
     "nombre": "Club de Nuit Milestone",
@@ -1678,7 +2540,37 @@ const CATALOGO_BASE = [
     "fondo": "ámbar, almizcle, vainilla",
     "duracion": "8-10 h, estela alta",
     "ocasion": "noche",
-    "genero": "masculino"
+    "genero": "masculino",
+    "acordes": [
+      {
+        "n": "amaderado",
+        "v": 1
+      },
+      {
+        "n": "avainillado",
+        "v": 0.73
+      },
+      {
+        "n": "ámbar",
+        "v": 0.73
+      },
+      {
+        "n": "almizclado",
+        "v": 0.73
+      },
+      {
+        "n": "cítrico",
+        "v": 0.7
+      },
+      {
+        "n": "frutal",
+        "v": 0.7
+      },
+      {
+        "n": "floral",
+        "v": 0.67
+      }
+    ]
   },
   {
     "nombre": "Club de Nuit Sillage",
@@ -1689,7 +2581,37 @@ const CATALOGO_BASE = [
     "fondo": "cedro, musgo, ámbar",
     "duracion": "8-10 h, estela muy alta",
     "ocasion": "noche, eventos",
-    "genero": "unisex"
+    "genero": "unisex",
+    "acordes": [
+      {
+        "n": "amaderado",
+        "v": 1
+      },
+      {
+        "n": "ámbar",
+        "v": 0.9
+      },
+      {
+        "n": "floral",
+        "v": 0.87
+      },
+      {
+        "n": "aromático",
+        "v": 0.75
+      },
+      {
+        "n": "fresco",
+        "v": 0.75
+      },
+      {
+        "n": "cítrico",
+        "v": 0.67
+      },
+      {
+        "n": "especiado",
+        "v": 0.67
+      }
+    ]
   },
   {
     "nombre": "Club de Nuit Woman",
@@ -1700,7 +2622,33 @@ const CATALOGO_BASE = [
     "fondo": "almizcle, ámbar, pachulí",
     "duracion": "7-9 h, estela alta",
     "ocasion": "noche",
-    "genero": "femenino"
+    "genero": "femenino",
+    "acordes": [
+      {
+        "n": "floral",
+        "v": 1
+      },
+      {
+        "n": "ámbar",
+        "v": 0.73
+      },
+      {
+        "n": "amaderado",
+        "v": 0.73
+      },
+      {
+        "n": "almizclado",
+        "v": 0.73
+      },
+      {
+        "n": "cítrico",
+        "v": 0.7
+      },
+      {
+        "n": "frutal",
+        "v": 0.7
+      }
+    ]
   },
   {
     "nombre": "Coco Mademoiselle",
@@ -1711,7 +2659,29 @@ const CATALOGO_BASE = [
     "fondo": "pachulí, vetiver, vainilla",
     "duracion": "7-9 h, estela alta",
     "ocasion": "día y noche",
-    "genero": "femenino"
+    "genero": "femenino",
+    "acordes": [
+      {
+        "n": "floral",
+        "v": 1
+      },
+      {
+        "n": "avainillado",
+        "v": 0.73
+      },
+      {
+        "n": "amaderado",
+        "v": 0.73
+      },
+      {
+        "n": "cítrico",
+        "v": 0.7
+      },
+      {
+        "n": "frutal",
+        "v": 0.67
+      }
+    ]
   },
   {
     "nombre": "Cool Water",
@@ -1722,7 +2692,33 @@ const CATALOGO_BASE = [
     "fondo": "almizcle, sándalo, ámbar",
     "duracion": "5-7 h, estela media-alta",
     "ocasion": "día, calor",
-    "genero": "masculino"
+    "genero": "masculino",
+    "acordes": [
+      {
+        "n": "aromático",
+        "v": 1
+      },
+      {
+        "n": "acuático",
+        "v": 0.97
+      },
+      {
+        "n": "ámbar",
+        "v": 0.72
+      },
+      {
+        "n": "amaderado",
+        "v": 0.72
+      },
+      {
+        "n": "almizclado",
+        "v": 0.72
+      },
+      {
+        "n": "floral",
+        "v": 0.65
+      }
+    ]
   },
   {
     "nombre": "Dark Seduction",
@@ -1733,7 +2729,33 @@ const CATALOGO_BASE = [
     "fondo": "vainilla, ámbar",
     "duracion": "5-7 h, estela media-alta",
     "ocasion": "noche, clima fresco",
-    "genero": "masculino"
+    "genero": "masculino",
+    "acordes": [
+      {
+        "n": "especiado",
+        "v": 1
+      },
+      {
+        "n": "dulce",
+        "v": 0.84
+      },
+      {
+        "n": "avainillado",
+        "v": 0.78
+      },
+      {
+        "n": "ámbar",
+        "v": 0.78
+      },
+      {
+        "n": "cítrico",
+        "v": 0.74
+      },
+      {
+        "n": "amaderado",
+        "v": 0.71
+      }
+    ]
   },
   {
     "nombre": "Dior Homme Intense",
@@ -1744,7 +2766,29 @@ const CATALOGO_BASE = [
     "fondo": "vetiver, cuero, pachulí",
     "duracion": "8-10 h, estela alta",
     "ocasion": "noche, eventos",
-    "genero": "masculino"
+    "genero": "masculino",
+    "acordes": [
+      {
+        "n": "amaderado",
+        "v": 1
+      },
+      {
+        "n": "floral",
+        "v": 0.94
+      },
+      {
+        "n": "cuero",
+        "v": 0.7
+      },
+      {
+        "n": "aromático",
+        "v": 0.67
+      },
+      {
+        "n": "ámbar",
+        "v": 0.64
+      }
+    ]
   },
   {
     "nombre": "Dylan Blue",
@@ -1755,7 +2799,37 @@ const CATALOGO_BASE = [
     "fondo": "almizcle, incienso, patchouli",
     "duracion": "7-9 h, estela alta",
     "ocasion": "día y noche, uso diario",
-    "genero": "masculino"
+    "genero": "masculino",
+    "acordes": [
+      {
+        "n": "acuático",
+        "v": 1
+      },
+      {
+        "n": "amaderado",
+        "v": 0.76
+      },
+      {
+        "n": "almizclado",
+        "v": 0.72
+      },
+      {
+        "n": "ahumado",
+        "v": 0.72
+      },
+      {
+        "n": "cítrico",
+        "v": 0.69
+      },
+      {
+        "n": "ámbar",
+        "v": 0.65
+      },
+      {
+        "n": "especiado",
+        "v": 0.65
+      }
+    ]
   },
   {
     "nombre": "Eros",
@@ -1766,7 +2840,37 @@ const CATALOGO_BASE = [
     "fondo": "vainilla, cedro, musgo de roble",
     "duracion": "8-10 h, estela alta",
     "ocasion": "noche, clima fresco",
-    "genero": "masculino"
+    "genero": "masculino",
+    "acordes": [
+      {
+        "n": "aromático",
+        "v": 1
+      },
+      {
+        "n": "avainillado",
+        "v": 0.72
+      },
+      {
+        "n": "amaderado",
+        "v": 0.72
+      },
+      {
+        "n": "cítrico",
+        "v": 0.69
+      },
+      {
+        "n": "frutal",
+        "v": 0.69
+      },
+      {
+        "n": "fresco",
+        "v": 0.69
+      },
+      {
+        "n": "ámbar",
+        "v": 0.65
+      }
+    ]
   },
   {
     "nombre": "Eros Flame",
@@ -1777,7 +2881,37 @@ const CATALOGO_BASE = [
     "fondo": "vainilla, haba tonka, cedro",
     "duracion": "8-10 h, estela alta",
     "ocasion": "noche, invierno",
-    "genero": "masculino"
+    "genero": "masculino",
+    "acordes": [
+      {
+        "n": "especiado",
+        "v": 1
+      },
+      {
+        "n": "cítrico",
+        "v": 0.85
+      },
+      {
+        "n": "avainillado",
+        "v": 0.64
+      },
+      {
+        "n": "amaderado",
+        "v": 0.64
+      },
+      {
+        "n": "almendra",
+        "v": 0.64
+      },
+      {
+        "n": "floral",
+        "v": 0.6
+      },
+      {
+        "n": "aromático",
+        "v": 0.6
+      }
+    ]
   },
   {
     "nombre": "Explorer",
@@ -1788,7 +2922,37 @@ const CATALOGO_BASE = [
     "fondo": "pachulí, ámbar, cacao",
     "duracion": "7-9 h, estela alta",
     "ocasion": "día y noche",
-    "genero": "masculino"
+    "genero": "masculino",
+    "acordes": [
+      {
+        "n": "amaderado",
+        "v": 1
+      },
+      {
+        "n": "fresco",
+        "v": 0.67
+      },
+      {
+        "n": "ámbar",
+        "v": 0.64
+      },
+      {
+        "n": "café",
+        "v": 0.64
+      },
+      {
+        "n": "cítrico",
+        "v": 0.61
+      },
+      {
+        "n": "floral",
+        "v": 0.61
+      },
+      {
+        "n": "especiado",
+        "v": 0.61
+      }
+    ]
   },
   {
     "nombre": "Fakhar Black",
@@ -1799,7 +2963,29 @@ const CATALOGO_BASE = [
     "fondo": "ámbar, almizcle, maderas",
     "duracion": "8-10 h, estela alta",
     "ocasion": "noche, uso diario",
-    "genero": "masculino"
+    "genero": "masculino",
+    "acordes": [
+      {
+        "n": "amaderado",
+        "v": 1
+      },
+      {
+        "n": "aromático",
+        "v": 0.83
+      },
+      {
+        "n": "ámbar",
+        "v": 0.64
+      },
+      {
+        "n": "almizclado",
+        "v": 0.64
+      },
+      {
+        "n": "cítrico",
+        "v": 0.61
+      }
+    ]
   },
   {
     "nombre": "Fakhar Rose",
@@ -1810,7 +2996,33 @@ const CATALOGO_BASE = [
     "fondo": "vainilla, almizcle, pachulí",
     "duracion": "8-10 h, estela alta",
     "ocasion": "día y noche",
-    "genero": "femenino"
+    "genero": "femenino",
+    "acordes": [
+      {
+        "n": "floral",
+        "v": 1
+      },
+      {
+        "n": "avainillado",
+        "v": 0.73
+      },
+      {
+        "n": "amaderado",
+        "v": 0.73
+      },
+      {
+        "n": "almizclado",
+        "v": 0.73
+      },
+      {
+        "n": "cítrico",
+        "v": 0.7
+      },
+      {
+        "n": "frutal",
+        "v": 0.7
+      }
+    ]
   },
   {
     "nombre": "Fame",
@@ -1821,7 +3033,37 @@ const CATALOGO_BASE = [
     "fondo": "vainilla, sándalo",
     "duracion": "7-9 h, estela alta",
     "ocasion": "noche",
-    "genero": "femenino"
+    "genero": "femenino",
+    "acordes": [
+      {
+        "n": "floral",
+        "v": 1
+      },
+      {
+        "n": "dulce",
+        "v": 0.78
+      },
+      {
+        "n": "avainillado",
+        "v": 0.73
+      },
+      {
+        "n": "amaderado",
+        "v": 0.73
+      },
+      {
+        "n": "cítrico",
+        "v": 0.7
+      },
+      {
+        "n": "frutal",
+        "v": 0.7
+      },
+      {
+        "n": "ahumado",
+        "v": 0.67
+      }
+    ]
   },
   {
     "nombre": "Fantasy",
@@ -1832,7 +3074,37 @@ const CATALOGO_BASE = [
     "fondo": "almizcle, madera, raíz de lirio",
     "duracion": "5-7 h, estela media-alta",
     "ocasion": "juvenil, noche",
-    "genero": "femenino"
+    "genero": "femenino",
+    "acordes": [
+      {
+        "n": "floral",
+        "v": 1
+      },
+      {
+        "n": "dulce",
+        "v": 0.82
+      },
+      {
+        "n": "amaderado",
+        "v": 0.76
+      },
+      {
+        "n": "almizclado",
+        "v": 0.76
+      },
+      {
+        "n": "cítrico",
+        "v": 0.73
+      },
+      {
+        "n": "frutal",
+        "v": 0.73
+      },
+      {
+        "n": "café",
+        "v": 0.69
+      }
+    ]
   },
   {
     "nombre": "Flora Gorgeous Gardenia",
@@ -1843,7 +3115,25 @@ const CATALOGO_BASE = [
     "fondo": "azúcar moreno, pachulí",
     "duracion": "5-7 h, estela media",
     "ocasion": "día, juvenil",
-    "genero": "femenino"
+    "genero": "femenino",
+    "acordes": [
+      {
+        "n": "dulce",
+        "v": 1
+      },
+      {
+        "n": "floral",
+        "v": 0.94
+      },
+      {
+        "n": "amaderado",
+        "v": 0.7
+      },
+      {
+        "n": "frutal",
+        "v": 0.67
+      }
+    ]
   },
   {
     "nombre": "Gentleman Intense",
@@ -1854,7 +3144,37 @@ const CATALOGO_BASE = [
     "fondo": "vainilla, pachulí, ámbar",
     "duracion": "8-10 h, estela alta",
     "ocasion": "noche",
-    "genero": "masculino"
+    "genero": "masculino",
+    "acordes": [
+      {
+        "n": "amaderado",
+        "v": 1
+      },
+      {
+        "n": "especiado",
+        "v": 0.97
+      },
+      {
+        "n": "avainillado",
+        "v": 0.7
+      },
+      {
+        "n": "ámbar",
+        "v": 0.7
+      },
+      {
+        "n": "cítrico",
+        "v": 0.67
+      },
+      {
+        "n": "floral",
+        "v": 0.64
+      },
+      {
+        "n": "aromático",
+        "v": 0.64
+      }
+    ]
   },
   {
     "nombre": "Good Girl",
@@ -1865,7 +3185,33 @@ const CATALOGO_BASE = [
     "fondo": "cacao, vainilla, praliné",
     "duracion": "8-10 h, estela alta",
     "ocasion": "noche, eventos",
-    "genero": "femenino"
+    "genero": "femenino",
+    "acordes": [
+      {
+        "n": "floral",
+        "v": 1
+      },
+      {
+        "n": "café",
+        "v": 0.98
+      },
+      {
+        "n": "almendra",
+        "v": 0.92
+      },
+      {
+        "n": "dulce",
+        "v": 0.73
+      },
+      {
+        "n": "avainillado",
+        "v": 0.73
+      },
+      {
+        "n": "cítrico",
+        "v": 0.7
+      }
+    ]
   },
   {
     "nombre": "Gucci Bloom",
@@ -1876,7 +3222,17 @@ const CATALOGO_BASE = [
     "fondo": "raíz de lirio, almizcle",
     "duracion": "6-8 h, estela alta",
     "ocasion": "día y noche",
-    "genero": "femenino"
+    "genero": "femenino",
+    "acordes": [
+      {
+        "n": "floral",
+        "v": 1
+      },
+      {
+        "n": "almizclado",
+        "v": 0.59
+      }
+    ]
   },
   {
     "nombre": "Happy",
@@ -1887,7 +3243,33 @@ const CATALOGO_BASE = [
     "fondo": "almizcle, maderas suaves",
     "duracion": "4-6 h, estela moderada",
     "ocasion": "día, oficina, clima cálido",
-    "genero": "femenino"
+    "genero": "femenino",
+    "acordes": [
+      {
+        "n": "cítrico",
+        "v": 1
+      },
+      {
+        "n": "floral",
+        "v": 0.97
+      },
+      {
+        "n": "fresco",
+        "v": 0.76
+      },
+      {
+        "n": "amaderado",
+        "v": 0.72
+      },
+      {
+        "n": "almizclado",
+        "v": 0.72
+      },
+      {
+        "n": "frutal",
+        "v": 0.69
+      }
+    ]
   },
   {
     "nombre": "Hawas Ice",
@@ -1898,7 +3280,37 @@ const CATALOGO_BASE = [
     "fondo": "ámbar, almizcle, maderas",
     "duracion": "7-9 h, estela alta",
     "ocasion": "día y noche, todo el año",
-    "genero": "masculino"
+    "genero": "masculino",
+    "acordes": [
+      {
+        "n": "acuático",
+        "v": 1
+      },
+      {
+        "n": "fresco",
+        "v": 0.78
+      },
+      {
+        "n": "ámbar",
+        "v": 0.73
+      },
+      {
+        "n": "amaderado",
+        "v": 0.73
+      },
+      {
+        "n": "almizclado",
+        "v": 0.73
+      },
+      {
+        "n": "cítrico",
+        "v": 0.7
+      },
+      {
+        "n": "frutal",
+        "v": 0.7
+      }
+    ]
   },
   {
     "nombre": "Hawas for Her",
@@ -1909,7 +3321,33 @@ const CATALOGO_BASE = [
     "fondo": "almizcle, ámbar, maderas",
     "duracion": "7-9 h, estela alta",
     "ocasion": "día y noche",
-    "genero": "femenino"
+    "genero": "femenino",
+    "acordes": [
+      {
+        "n": "floral",
+        "v": 1
+      },
+      {
+        "n": "ámbar",
+        "v": 0.73
+      },
+      {
+        "n": "amaderado",
+        "v": 0.73
+      },
+      {
+        "n": "almizclado",
+        "v": 0.73
+      },
+      {
+        "n": "cítrico",
+        "v": 0.7
+      },
+      {
+        "n": "frutal",
+        "v": 0.7
+      }
+    ]
   },
   {
     "nombre": "Hayaati",
@@ -1920,7 +3358,33 @@ const CATALOGO_BASE = [
     "fondo": "ámbar, cedro, almizcle",
     "duracion": "7-9 h, estela alta",
     "ocasion": "noche",
-    "genero": "masculino"
+    "genero": "masculino",
+    "acordes": [
+      {
+        "n": "amaderado",
+        "v": 1
+      },
+      {
+        "n": "especiado",
+        "v": 0.97
+      },
+      {
+        "n": "ámbar",
+        "v": 0.7
+      },
+      {
+        "n": "almizclado",
+        "v": 0.7
+      },
+      {
+        "n": "cítrico",
+        "v": 0.67
+      },
+      {
+        "n": "aromático",
+        "v": 0.64
+      }
+    ]
   },
   {
     "nombre": "Idôle",
@@ -1931,7 +3395,33 @@ const CATALOGO_BASE = [
     "fondo": "vainilla, almizcle blanco, pachulí",
     "duracion": "6-8 h, estela media",
     "ocasion": "día, oficina",
-    "genero": "femenino"
+    "genero": "femenino",
+    "acordes": [
+      {
+        "n": "floral",
+        "v": 1
+      },
+      {
+        "n": "avainillado",
+        "v": 0.64
+      },
+      {
+        "n": "amaderado",
+        "v": 0.64
+      },
+      {
+        "n": "almizclado",
+        "v": 0.64
+      },
+      {
+        "n": "cítrico",
+        "v": 0.62
+      },
+      {
+        "n": "frutal",
+        "v": 0.62
+      }
+    ]
   },
   {
     "nombre": "In Motion",
@@ -1942,7 +3432,29 @@ const CATALOGO_BASE = [
     "fondo": "cedro, almizcle",
     "duracion": "4-6 h, estela moderada",
     "ocasion": "día, oficina",
-    "genero": "masculino"
+    "genero": "masculino",
+    "acordes": [
+      {
+        "n": "amaderado",
+        "v": 1
+      },
+      {
+        "n": "cítrico",
+        "v": 0.97
+      },
+      {
+        "n": "almizclado",
+        "v": 0.7
+      },
+      {
+        "n": "especiado",
+        "v": 0.64
+      },
+      {
+        "n": "fresco",
+        "v": 0.64
+      }
+    ]
   },
   {
     "nombre": "Invictus",
@@ -1953,7 +3465,37 @@ const CATALOGO_BASE = [
     "fondo": "ámbar gris, guayaco, pachulí",
     "duracion": "6-8 h, estela alta",
     "ocasion": "día, deporte, calor",
-    "genero": "masculino"
+    "genero": "masculino",
+    "acordes": [
+      {
+        "n": "acuático",
+        "v": 1
+      },
+      {
+        "n": "fresco",
+        "v": 0.76
+      },
+      {
+        "n": "ámbar",
+        "v": 0.72
+      },
+      {
+        "n": "amaderado",
+        "v": 0.72
+      },
+      {
+        "n": "cítrico",
+        "v": 0.69
+      },
+      {
+        "n": "floral",
+        "v": 0.65
+      },
+      {
+        "n": "aromático",
+        "v": 0.65
+      }
+    ]
   },
   {
     "nombre": "J'adore",
@@ -1964,7 +3506,29 @@ const CATALOGO_BASE = [
     "fondo": "almizcle, cedro, vainilla",
     "duracion": "7-9 h, estela alta",
     "ocasion": "noche, eventos",
-    "genero": "femenino"
+    "genero": "femenino",
+    "acordes": [
+      {
+        "n": "floral",
+        "v": 1
+      },
+      {
+        "n": "avainillado",
+        "v": 0.64
+      },
+      {
+        "n": "amaderado",
+        "v": 0.64
+      },
+      {
+        "n": "almizclado",
+        "v": 0.64
+      },
+      {
+        "n": "frutal",
+        "v": 0.62
+      }
+    ]
   },
   {
     "nombre": "K",
@@ -1975,7 +3539,25 @@ const CATALOGO_BASE = [
     "fondo": "cedro, vetiver, pachulí",
     "duracion": "6-8 h, estela media-alta",
     "ocasion": "día y noche",
-    "genero": "masculino"
+    "genero": "masculino",
+    "acordes": [
+      {
+        "n": "amaderado",
+        "v": 1
+      },
+      {
+        "n": "especiado",
+        "v": 0.97
+      },
+      {
+        "n": "cítrico",
+        "v": 0.67
+      },
+      {
+        "n": "aromático",
+        "v": 0.64
+      }
+    ]
   },
   {
     "nombre": "Khamrah",
@@ -1986,7 +3568,37 @@ const CATALOGO_BASE = [
     "fondo": "vainilla, benjuí, mirra",
     "duracion": "8-10 h, estela alta",
     "ocasion": "noche, invierno",
-    "genero": "unisex"
+    "genero": "unisex",
+    "acordes": [
+      {
+        "n": "especiado",
+        "v": 1
+      },
+      {
+        "n": "dulce",
+        "v": 0.97
+      },
+      {
+        "n": "avainillado",
+        "v": 0.72
+      },
+      {
+        "n": "ámbar",
+        "v": 0.72
+      },
+      {
+        "n": "ahumado",
+        "v": 0.72
+      },
+      {
+        "n": "cítrico",
+        "v": 0.69
+      },
+      {
+        "n": "frutal",
+        "v": 0.65
+      }
+    ]
   },
   {
     "nombre": "King of Seduction",
@@ -1997,7 +3609,37 @@ const CATALOGO_BASE = [
     "fondo": "cedro, almizcle, ámbar",
     "duracion": "4-6 h, estela moderada",
     "ocasion": "día, uso diario",
-    "genero": "masculino"
+    "genero": "masculino",
+    "acordes": [
+      {
+        "n": "amaderado",
+        "v": 1
+      },
+      {
+        "n": "cítrico",
+        "v": 0.97
+      },
+      {
+        "n": "ámbar",
+        "v": 0.7
+      },
+      {
+        "n": "almizclado",
+        "v": 0.7
+      },
+      {
+        "n": "especiado",
+        "v": 0.67
+      },
+      {
+        "n": "aromático",
+        "v": 0.64
+      },
+      {
+        "n": "acuático",
+        "v": 0.64
+      }
+    ]
   },
   {
     "nombre": "L'Aventure",
@@ -2008,7 +3650,29 @@ const CATALOGO_BASE = [
     "fondo": "ámbar, almizcle",
     "duracion": "8-10 h, estela alta",
     "ocasion": "noche, uso diario",
-    "genero": "masculino"
+    "genero": "masculino",
+    "acordes": [
+      {
+        "n": "aromático",
+        "v": 1
+      },
+      {
+        "n": "amaderado",
+        "v": 0.97
+      },
+      {
+        "n": "ámbar",
+        "v": 0.72
+      },
+      {
+        "n": "almizclado",
+        "v": 0.72
+      },
+      {
+        "n": "cítrico",
+        "v": 0.69
+      }
+    ]
   },
   {
     "nombre": "L'Interdit",
@@ -2019,7 +3683,29 @@ const CATALOGO_BASE = [
     "fondo": "vetiver, pachulí, vainilla",
     "duracion": "7-9 h, estela alta",
     "ocasion": "noche",
-    "genero": "femenino"
+    "genero": "femenino",
+    "acordes": [
+      {
+        "n": "amaderado",
+        "v": 1
+      },
+      {
+        "n": "floral",
+        "v": 0.94
+      },
+      {
+        "n": "avainillado",
+        "v": 0.7
+      },
+      {
+        "n": "cítrico",
+        "v": 0.67
+      },
+      {
+        "n": "frutal",
+        "v": 0.67
+      }
+    ]
   },
   {
     "nombre": "La Vie Est Belle",
@@ -2030,7 +3716,29 @@ const CATALOGO_BASE = [
     "fondo": "praliné, vainilla, pachulí",
     "duracion": "8-10 h, estela alta",
     "ocasion": "noche y día, uso diario",
-    "genero": "femenino"
+    "genero": "femenino",
+    "acordes": [
+      {
+        "n": "dulce",
+        "v": 1
+      },
+      {
+        "n": "floral",
+        "v": 0.94
+      },
+      {
+        "n": "avainillado",
+        "v": 0.7
+      },
+      {
+        "n": "amaderado",
+        "v": 0.7
+      },
+      {
+        "n": "frutal",
+        "v": 0.67
+      }
+    ]
   },
   {
     "nombre": "La Yuqawam",
@@ -2041,7 +3749,37 @@ const CATALOGO_BASE = [
     "fondo": "sándalo, ámbar, almizcle",
     "duracion": "8-10 h, estela alta",
     "ocasion": "noche, eventos",
-    "genero": "masculino"
+    "genero": "masculino",
+    "acordes": [
+      {
+        "n": "amaderado",
+        "v": 1
+      },
+      {
+        "n": "cuero",
+        "v": 0.94
+      },
+      {
+        "n": "ámbar",
+        "v": 0.7
+      },
+      {
+        "n": "almizclado",
+        "v": 0.7
+      },
+      {
+        "n": "cítrico",
+        "v": 0.67
+      },
+      {
+        "n": "especiado",
+        "v": 0.67
+      },
+      {
+        "n": "floral",
+        "v": 0.64
+      }
+    ]
   },
   {
     "nombre": "Lady Million",
@@ -2052,7 +3790,33 @@ const CATALOGO_BASE = [
     "fondo": "miel, pachulí, ámbar",
     "duracion": "6-8 h, estela alta",
     "ocasion": "noche, fiesta",
-    "genero": "femenino"
+    "genero": "femenino",
+    "acordes": [
+      {
+        "n": "amaderado",
+        "v": 1
+      },
+      {
+        "n": "floral",
+        "v": 0.94
+      },
+      {
+        "n": "dulce",
+        "v": 0.7
+      },
+      {
+        "n": "ámbar",
+        "v": 0.7
+      },
+      {
+        "n": "cítrico",
+        "v": 0.67
+      },
+      {
+        "n": "frutal",
+        "v": 0.67
+      }
+    ]
   },
   {
     "nombre": "Le Male",
@@ -2063,7 +3827,37 @@ const CATALOGO_BASE = [
     "fondo": "vainilla, haba tonka, sándalo",
     "duracion": "7-9 h, estela alta",
     "ocasion": "noche, clima fresco",
-    "genero": "masculino"
+    "genero": "masculino",
+    "acordes": [
+      {
+        "n": "aromático",
+        "v": 1
+      },
+      {
+        "n": "avainillado",
+        "v": 0.72
+      },
+      {
+        "n": "amaderado",
+        "v": 0.72
+      },
+      {
+        "n": "almendra",
+        "v": 0.72
+      },
+      {
+        "n": "cítrico",
+        "v": 0.69
+      },
+      {
+        "n": "floral",
+        "v": 0.65
+      },
+      {
+        "n": "especiado",
+        "v": 0.65
+      }
+    ]
   },
   {
     "nombre": "Legend",
@@ -2074,7 +3868,37 @@ const CATALOGO_BASE = [
     "fondo": "haba tonka, sándalo, musgo",
     "duracion": "5-7 h, estela media-alta",
     "ocasion": "día, oficina",
-    "genero": "masculino"
+    "genero": "masculino",
+    "acordes": [
+      {
+        "n": "aromático",
+        "v": 1
+      },
+      {
+        "n": "frutal",
+        "v": 0.89
+      },
+      {
+        "n": "fresco",
+        "v": 0.76
+      },
+      {
+        "n": "amaderado",
+        "v": 0.72
+      },
+      {
+        "n": "almendra",
+        "v": 0.72
+      },
+      {
+        "n": "cítrico",
+        "v": 0.69
+      },
+      {
+        "n": "floral",
+        "v": 0.65
+      }
+    ]
   },
   {
     "nombre": "Libre",
@@ -2085,7 +3909,37 @@ const CATALOGO_BASE = [
     "fondo": "vainilla, almizcle, cedro",
     "duracion": "7-9 h, estela alta",
     "ocasion": "día y noche",
-    "genero": "femenino"
+    "genero": "femenino",
+    "acordes": [
+      {
+        "n": "aromático",
+        "v": 1
+      },
+      {
+        "n": "floral",
+        "v": 0.97
+      },
+      {
+        "n": "avainillado",
+        "v": 0.72
+      },
+      {
+        "n": "amaderado",
+        "v": 0.72
+      },
+      {
+        "n": "almizclado",
+        "v": 0.72
+      },
+      {
+        "n": "cítrico",
+        "v": 0.69
+      },
+      {
+        "n": "frutal",
+        "v": 0.69
+      }
+    ]
   },
   {
     "nombre": "Light Blue",
@@ -2096,7 +3950,37 @@ const CATALOGO_BASE = [
     "fondo": "cedro, ámbar, almizcle",
     "duracion": "4-6 h, estela moderada",
     "ocasion": "día, calor",
-    "genero": "femenino"
+    "genero": "femenino",
+    "acordes": [
+      {
+        "n": "cítrico",
+        "v": 1
+      },
+      {
+        "n": "fresco",
+        "v": 1
+      },
+      {
+        "n": "ámbar",
+        "v": 0.72
+      },
+      {
+        "n": "amaderado",
+        "v": 0.72
+      },
+      {
+        "n": "almizclado",
+        "v": 0.72
+      },
+      {
+        "n": "frutal",
+        "v": 0.69
+      },
+      {
+        "n": "floral",
+        "v": 0.65
+      }
+    ]
   },
   {
     "nombre": "Meow",
@@ -2107,7 +3991,37 @@ const CATALOGO_BASE = [
     "fondo": "vainilla, almizcle, ámbar",
     "duracion": "4-6 h, estela moderada",
     "ocasion": "día, juvenil",
-    "genero": "femenino"
+    "genero": "femenino",
+    "acordes": [
+      {
+        "n": "dulce",
+        "v": 1
+      },
+      {
+        "n": "avainillado",
+        "v": 0.92
+      },
+      {
+        "n": "ámbar",
+        "v": 0.92
+      },
+      {
+        "n": "almizclado",
+        "v": 0.92
+      },
+      {
+        "n": "cítrico",
+        "v": 0.86
+      },
+      {
+        "n": "frutal",
+        "v": 0.86
+      },
+      {
+        "n": "floral",
+        "v": 0.81
+      }
+    ]
   },
   {
     "nombre": "Miss Dior",
@@ -2118,7 +4032,25 @@ const CATALOGO_BASE = [
     "fondo": "pachulí, almizcle",
     "duracion": "6-8 h, estela media-alta",
     "ocasion": "día y noche",
-    "genero": "femenino"
+    "genero": "femenino",
+    "acordes": [
+      {
+        "n": "floral",
+        "v": 1
+      },
+      {
+        "n": "amaderado",
+        "v": 0.73
+      },
+      {
+        "n": "almizclado",
+        "v": 0.73
+      },
+      {
+        "n": "cítrico",
+        "v": 0.7
+      }
+    ]
   },
   {
     "nombre": "My Way",
@@ -2129,7 +4061,29 @@ const CATALOGO_BASE = [
     "fondo": "vainilla, madera de cedro, almizcle",
     "duracion": "6-8 h, estela media-alta",
     "ocasion": "día y noche",
-    "genero": "femenino"
+    "genero": "femenino",
+    "acordes": [
+      {
+        "n": "floral",
+        "v": 1
+      },
+      {
+        "n": "avainillado",
+        "v": 0.64
+      },
+      {
+        "n": "amaderado",
+        "v": 0.64
+      },
+      {
+        "n": "almizclado",
+        "v": 0.64
+      },
+      {
+        "n": "cítrico",
+        "v": 0.62
+      }
+    ]
   },
   {
     "nombre": "Nautica Blue",
@@ -2140,7 +4094,33 @@ const CATALOGO_BASE = [
     "fondo": "almizcle, maderas",
     "duracion": "4-6 h, estela moderada",
     "ocasion": "día, calor",
-    "genero": "masculino"
+    "genero": "masculino",
+    "acordes": [
+      {
+        "n": "acuático",
+        "v": 1
+      },
+      {
+        "n": "fresco",
+        "v": 0.97
+      },
+      {
+        "n": "amaderado",
+        "v": 0.72
+      },
+      {
+        "n": "almizclado",
+        "v": 0.72
+      },
+      {
+        "n": "cítrico",
+        "v": 0.69
+      },
+      {
+        "n": "floral",
+        "v": 0.65
+      }
+    ]
   },
   {
     "nombre": "Nina",
@@ -2151,7 +4131,37 @@ const CATALOGO_BASE = [
     "fondo": "almizcle, sándalo, vainilla",
     "duracion": "5-7 h, estela media",
     "ocasion": "día, juvenil",
-    "genero": "femenino"
+    "genero": "femenino",
+    "acordes": [
+      {
+        "n": "floral",
+        "v": 1
+      },
+      {
+        "n": "avainillado",
+        "v": 0.73
+      },
+      {
+        "n": "amaderado",
+        "v": 0.73
+      },
+      {
+        "n": "almizclado",
+        "v": 0.73
+      },
+      {
+        "n": "cítrico",
+        "v": 0.7
+      },
+      {
+        "n": "frutal",
+        "v": 0.7
+      },
+      {
+        "n": "dulce",
+        "v": 0.67
+      }
+    ]
   },
   {
     "nombre": "Nomade",
@@ -2162,7 +4172,66 @@ const CATALOGO_BASE = [
     "fondo": "musgo de roble, almizcle",
     "duracion": "6-8 h, estela media-alta",
     "ocasion": "día y noche",
-    "genero": "femenino"
+    "genero": "femenino",
+    "acordes": [
+      {
+        "n": "floral",
+        "v": 1
+      },
+      {
+        "n": "frutal",
+        "v": 0.77
+      },
+      {
+        "n": "almizclado",
+        "v": 0.64
+      }
+    ]
+  },
+  {
+    "nombre": "Odyssey Mandarin Sky",
+    "marca": "Armaf",
+    "familia": "cítrico dulce amaderado",
+    "salida": "mandarina, cítricos",
+    "corazon": "notas aromáticas, ámbar",
+    "fondo": "caramelo, vainilla, maderas",
+    "duracion": "7-9 h, estela alta",
+    "ocasion": "día y noche, uso diario",
+    "genero": "masculino",
+    "acordes": [
+      {
+        "n": "cítrico",
+        "v": 1
+      },
+      {
+        "n": "caramelo",
+        "v": 0.82
+      },
+      {
+        "n": "dulce",
+        "v": 0.74
+      },
+      {
+        "n": "ámbar",
+        "v": 0.66
+      },
+      {
+        "n": "aromático",
+        "v": 0.58
+      },
+      {
+        "n": "avainillado",
+        "v": 0.5
+      },
+      {
+        "n": "amaderado",
+        "v": 0.44
+      }
+    ],
+    "alias": [
+      "Mandaryn SKY",
+      "Mandarin Sky"
+    ]
   },
   {
     "nombre": "Olympéa",
@@ -2173,7 +4242,37 @@ const CATALOGO_BASE = [
     "fondo": "sándalo, ámbar gris, cachemira",
     "duracion": "7-9 h, estela alta",
     "ocasion": "noche, uso diario",
-    "genero": "femenino"
+    "genero": "femenino",
+    "acordes": [
+      {
+        "n": "floral",
+        "v": 1
+      },
+      {
+        "n": "acuático",
+        "v": 0.85
+      },
+      {
+        "n": "dulce",
+        "v": 0.68
+      },
+      {
+        "n": "ámbar",
+        "v": 0.64
+      },
+      {
+        "n": "amaderado",
+        "v": 0.64
+      },
+      {
+        "n": "cítrico",
+        "v": 0.62
+      },
+      {
+        "n": "fresco",
+        "v": 0.62
+      }
+    ]
   },
   {
     "nombre": "Oud Mood",
@@ -2184,7 +4283,33 @@ const CATALOGO_BASE = [
     "fondo": "ámbar, almizcle, vainilla",
     "duracion": "9-12 h, estela muy alta",
     "ocasion": "noche, invierno",
-    "genero": "unisex"
+    "genero": "unisex",
+    "acordes": [
+      {
+        "n": "amaderado",
+        "v": 1
+      },
+      {
+        "n": "avainillado",
+        "v": 0.73
+      },
+      {
+        "n": "ámbar",
+        "v": 0.73
+      },
+      {
+        "n": "almizclado",
+        "v": 0.73
+      },
+      {
+        "n": "especiado",
+        "v": 0.7
+      },
+      {
+        "n": "floral",
+        "v": 0.67
+      }
+    ]
   },
   {
     "nombre": "Phantom",
@@ -2195,7 +4320,29 @@ const CATALOGO_BASE = [
     "fondo": "pachulí, vetiver",
     "duracion": "7-9 h, estela alta",
     "ocasion": "noche, uso diario",
-    "genero": "masculino"
+    "genero": "masculino",
+    "acordes": [
+      {
+        "n": "amaderado",
+        "v": 1
+      },
+      {
+        "n": "aromático",
+        "v": 0.83
+      },
+      {
+        "n": "cítrico",
+        "v": 0.61
+      },
+      {
+        "n": "avainillado",
+        "v": 0.59
+      },
+      {
+        "n": "ahumado",
+        "v": 0.59
+      }
+    ]
   },
   {
     "nombre": "Phantom Legion",
@@ -2206,7 +4353,33 @@ const CATALOGO_BASE = [
     "fondo": "pachulí, maderas ahumadas",
     "duracion": "7-9 h, estela alta",
     "ocasion": "noche",
-    "genero": "masculino"
+    "genero": "masculino",
+    "acordes": [
+      {
+        "n": "amaderado",
+        "v": 1
+      },
+      {
+        "n": "aromático",
+        "v": 0.97
+      },
+      {
+        "n": "ahumado",
+        "v": 0.7
+      },
+      {
+        "n": "cítrico",
+        "v": 0.67
+      },
+      {
+        "n": "avainillado",
+        "v": 0.64
+      },
+      {
+        "n": "frutal",
+        "v": 0.64
+      }
+    ]
   },
   {
     "nombre": "Polo Blue",
@@ -2217,7 +4390,37 @@ const CATALOGO_BASE = [
     "fondo": "almizcle, musgo, madera de teca",
     "duracion": "5-7 h, estela media",
     "ocasion": "día, uso diario",
-    "genero": "masculino"
+    "genero": "masculino",
+    "acordes": [
+      {
+        "n": "acuático",
+        "v": 1
+      },
+      {
+        "n": "fresco",
+        "v": 0.76
+      },
+      {
+        "n": "amaderado",
+        "v": 0.72
+      },
+      {
+        "n": "almizclado",
+        "v": 0.72
+      },
+      {
+        "n": "cítrico",
+        "v": 0.69
+      },
+      {
+        "n": "frutal",
+        "v": 0.69
+      },
+      {
+        "n": "aromático",
+        "v": 0.65
+      }
+    ]
   },
   {
     "nombre": "Raghba",
@@ -2228,7 +4431,29 @@ const CATALOGO_BASE = [
     "fondo": "vainilla, sándalo, almizcle",
     "duracion": "8-10 h, estela alta",
     "ocasion": "noche, invierno",
-    "genero": "unisex"
+    "genero": "unisex",
+    "acordes": [
+      {
+        "n": "amaderado",
+        "v": 1
+      },
+      {
+        "n": "dulce",
+        "v": 0.83
+      },
+      {
+        "n": "avainillado",
+        "v": 0.64
+      },
+      {
+        "n": "almizclado",
+        "v": 0.64
+      },
+      {
+        "n": "ahumado",
+        "v": 0.59
+      }
+    ]
   },
   {
     "nombre": "Rare Tiffany",
@@ -2239,7 +4464,33 @@ const CATALOGO_BASE = [
     "fondo": "vainilla, ámbar, almizcle",
     "duracion": "7-9 h, estela alta",
     "ocasion": "noche",
-    "genero": "femenino"
+    "genero": "femenino",
+    "acordes": [
+      {
+        "n": "floral",
+        "v": 1
+      },
+      {
+        "n": "avainillado",
+        "v": 0.73
+      },
+      {
+        "n": "ámbar",
+        "v": 0.73
+      },
+      {
+        "n": "almizclado",
+        "v": 0.73
+      },
+      {
+        "n": "cítrico",
+        "v": 0.7
+      },
+      {
+        "n": "frutal",
+        "v": 0.7
+      }
+    ]
   },
   {
     "nombre": "Sauvage",
@@ -2250,7 +4501,37 @@ const CATALOGO_BASE = [
     "fondo": "ambroxan, cedro, labdano",
     "duracion": "8-10 h, estela alta",
     "ocasion": "noche y día, todo el año",
-    "genero": "masculino"
+    "genero": "masculino",
+    "acordes": [
+      {
+        "n": "amaderado",
+        "v": 1
+      },
+      {
+        "n": "especiado",
+        "v": 0.98
+      },
+      {
+        "n": "fresco",
+        "v": 0.67
+      },
+      {
+        "n": "ámbar",
+        "v": 0.64
+      },
+      {
+        "n": "cítrico",
+        "v": 0.61
+      },
+      {
+        "n": "floral",
+        "v": 0.59
+      },
+      {
+        "n": "aromático",
+        "v": 0.59
+      }
+    ]
   },
   {
     "nombre": "Sauvage Elixir",
@@ -2261,7 +4542,29 @@ const CATALOGO_BASE = [
     "fondo": "sándalo, ámbar, pachulí",
     "duracion": "9-12 h, estela muy alta",
     "ocasion": "noche, invierno",
-    "genero": "masculino"
+    "genero": "masculino",
+    "acordes": [
+      {
+        "n": "amaderado",
+        "v": 1
+      },
+      {
+        "n": "especiado",
+        "v": 0.97
+      },
+      {
+        "n": "ámbar",
+        "v": 0.7
+      },
+      {
+        "n": "cítrico",
+        "v": 0.67
+      },
+      {
+        "n": "aromático",
+        "v": 0.64
+      }
+    ]
   },
   {
     "nombre": "Scandal",
@@ -2272,7 +4575,25 @@ const CATALOGO_BASE = [
     "fondo": "cera de abeja, pachulí, caramelo",
     "duracion": "7-9 h, estela alta",
     "ocasion": "noche",
-    "genero": "femenino"
+    "genero": "femenino",
+    "acordes": [
+      {
+        "n": "dulce",
+        "v": 1
+      },
+      {
+        "n": "amaderado",
+        "v": 0.63
+      },
+      {
+        "n": "cítrico",
+        "v": 0.61
+      },
+      {
+        "n": "floral",
+        "v": 0.59
+      }
+    ]
   },
   {
     "nombre": "Si",
@@ -2283,7 +4604,33 @@ const CATALOGO_BASE = [
     "fondo": "vainilla, pachulí, almizcle",
     "duracion": "7-9 h, estela alta",
     "ocasion": "noche",
-    "genero": "femenino"
+    "genero": "femenino",
+    "acordes": [
+      {
+        "n": "avainillado",
+        "v": 1
+      },
+      {
+        "n": "amaderado",
+        "v": 1
+      },
+      {
+        "n": "almizclado",
+        "v": 1
+      },
+      {
+        "n": "cítrico",
+        "v": 0.94
+      },
+      {
+        "n": "frutal",
+        "v": 0.94
+      },
+      {
+        "n": "floral",
+        "v": 0.87
+      }
+    ]
   },
   {
     "nombre": "Stronger With You",
@@ -2294,7 +4641,37 @@ const CATALOGO_BASE = [
     "fondo": "vainilla, ámbar, madera",
     "duracion": "7-9 h, estela alta",
     "ocasion": "noche, clima fresco",
-    "genero": "masculino"
+    "genero": "masculino",
+    "acordes": [
+      {
+        "n": "especiado",
+        "v": 1
+      },
+      {
+        "n": "dulce",
+        "v": 0.76
+      },
+      {
+        "n": "avainillado",
+        "v": 0.72
+      },
+      {
+        "n": "ámbar",
+        "v": 0.72
+      },
+      {
+        "n": "amaderado",
+        "v": 0.72
+      },
+      {
+        "n": "floral",
+        "v": 0.69
+      },
+      {
+        "n": "aromático",
+        "v": 0.65
+      }
+    ]
   },
   {
     "nombre": "Supremacy Not Only Intense",
@@ -2305,7 +4682,37 @@ const CATALOGO_BASE = [
     "fondo": "ámbar, almizcle, vainilla",
     "duracion": "8-10 h, estela muy alta",
     "ocasion": "noche, eventos",
-    "genero": "masculino"
+    "genero": "masculino",
+    "acordes": [
+      {
+        "n": "amaderado",
+        "v": 1
+      },
+      {
+        "n": "avainillado",
+        "v": 0.73
+      },
+      {
+        "n": "ámbar",
+        "v": 0.73
+      },
+      {
+        "n": "almizclado",
+        "v": 0.73
+      },
+      {
+        "n": "cítrico",
+        "v": 0.7
+      },
+      {
+        "n": "frutal",
+        "v": 0.7
+      },
+      {
+        "n": "floral",
+        "v": 0.67
+      }
+    ]
   },
   {
     "nombre": "Supremacy Silver",
@@ -2316,7 +4723,37 @@ const CATALOGO_BASE = [
     "fondo": "ámbar, almizcle, maderas",
     "duracion": "7-9 h, estela alta",
     "ocasion": "día y noche",
-    "genero": "masculino"
+    "genero": "masculino",
+    "acordes": [
+      {
+        "n": "fresco",
+        "v": 1
+      },
+      {
+        "n": "aromático",
+        "v": 0.97
+      },
+      {
+        "n": "ámbar",
+        "v": 0.72
+      },
+      {
+        "n": "amaderado",
+        "v": 0.72
+      },
+      {
+        "n": "almizclado",
+        "v": 0.72
+      },
+      {
+        "n": "cítrico",
+        "v": 0.69
+      },
+      {
+        "n": "floral",
+        "v": 0.65
+      }
+    ]
   },
   {
     "nombre": "The Most Wanted",
@@ -2327,7 +4764,33 @@ const CATALOGO_BASE = [
     "fondo": "ámbar, madera",
     "duracion": "8-10 h, estela muy alta",
     "ocasion": "noche, invierno",
-    "genero": "masculino"
+    "genero": "masculino",
+    "acordes": [
+      {
+        "n": "amaderado",
+        "v": 1
+      },
+      {
+        "n": "dulce",
+        "v": 0.94
+      },
+      {
+        "n": "ámbar",
+        "v": 0.7
+      },
+      {
+        "n": "especiado",
+        "v": 0.67
+      },
+      {
+        "n": "aromático",
+        "v": 0.67
+      },
+      {
+        "n": "cuero",
+        "v": 0.64
+      }
+    ]
   },
   {
     "nombre": "The One for Men",
@@ -2338,7 +4801,33 @@ const CATALOGO_BASE = [
     "fondo": "ámbar, cedro, tabaco",
     "duracion": "6-8 h, estela media-alta",
     "ocasion": "oficina, noche",
-    "genero": "masculino"
+    "genero": "masculino",
+    "acordes": [
+      {
+        "n": "especiado",
+        "v": 1
+      },
+      {
+        "n": "ámbar",
+        "v": 0.64
+      },
+      {
+        "n": "amaderado",
+        "v": 0.64
+      },
+      {
+        "n": "cítrico",
+        "v": 0.62
+      },
+      {
+        "n": "aromático",
+        "v": 0.62
+      },
+      {
+        "n": "floral",
+        "v": 0.6
+      }
+    ]
   },
   {
     "nombre": "Turathi Blue",
@@ -2349,7 +4838,37 @@ const CATALOGO_BASE = [
     "fondo": "ámbar, almizcle, vainilla",
     "duracion": "8-10 h, estela muy alta",
     "ocasion": "noche, eventos",
-    "genero": "masculino"
+    "genero": "masculino",
+    "acordes": [
+      {
+        "n": "amaderado",
+        "v": 1
+      },
+      {
+        "n": "avainillado",
+        "v": 0.73
+      },
+      {
+        "n": "ámbar",
+        "v": 0.73
+      },
+      {
+        "n": "almizclado",
+        "v": 0.73
+      },
+      {
+        "n": "cítrico",
+        "v": 0.7
+      },
+      {
+        "n": "frutal",
+        "v": 0.7
+      },
+      {
+        "n": "floral",
+        "v": 0.67
+      }
+    ]
   },
   {
     "nombre": "Ultra Male",
@@ -2360,7 +4879,37 @@ const CATALOGO_BASE = [
     "fondo": "vainilla, ámbar, haba tonka",
     "duracion": "8-10 h, estela muy alta",
     "ocasion": "noche, fiesta",
-    "genero": "masculino"
+    "genero": "masculino",
+    "acordes": [
+      {
+        "n": "dulce",
+        "v": 1
+      },
+      {
+        "n": "avainillado",
+        "v": 0.92
+      },
+      {
+        "n": "ámbar",
+        "v": 0.92
+      },
+      {
+        "n": "almendra",
+        "v": 0.92
+      },
+      {
+        "n": "frutal",
+        "v": 0.86
+      },
+      {
+        "n": "aromático",
+        "v": 0.86
+      },
+      {
+        "n": "floral",
+        "v": 0.81
+      }
+    ]
   },
   {
     "nombre": "Ventana Sul",
@@ -2371,7 +4920,29 @@ const CATALOGO_BASE = [
     "fondo": "vainilla, maderas",
     "duracion": "6-8 h, estela alta",
     "ocasion": "día, calor",
-    "genero": "femenino"
+    "genero": "femenino",
+    "acordes": [
+      {
+        "n": "dulce",
+        "v": 1
+      },
+      {
+        "n": "avainillado",
+        "v": 0.92
+      },
+      {
+        "n": "amaderado",
+        "v": 0.92
+      },
+      {
+        "n": "frutal",
+        "v": 0.86
+      },
+      {
+        "n": "floral",
+        "v": 0.81
+      }
+    ]
   },
   {
     "nombre": "Very Good Girl",
@@ -2382,7 +4953,25 @@ const CATALOGO_BASE = [
     "fondo": "haba tonka, sándalo",
     "duracion": "7-9 h, estela alta",
     "ocasion": "noche, uso diario",
-    "genero": "femenino"
+    "genero": "femenino",
+    "acordes": [
+      {
+        "n": "floral",
+        "v": 1
+      },
+      {
+        "n": "amaderado",
+        "v": 0.73
+      },
+      {
+        "n": "almendra",
+        "v": 0.73
+      },
+      {
+        "n": "frutal",
+        "v": 0.7
+      }
+    ]
   },
   {
     "nombre": "Voyage",
@@ -2393,7 +4982,33 @@ const CATALOGO_BASE = [
     "fondo": "almizcle, madera de cedro",
     "duracion": "4-6 h, estela moderada",
     "ocasion": "día, calor, uso diario",
-    "genero": "masculino"
+    "genero": "masculino",
+    "acordes": [
+      {
+        "n": "acuático",
+        "v": 1
+      },
+      {
+        "n": "fresco",
+        "v": 0.85
+      },
+      {
+        "n": "amaderado",
+        "v": 0.64
+      },
+      {
+        "n": "almizclado",
+        "v": 0.64
+      },
+      {
+        "n": "frutal",
+        "v": 0.62
+      }
+    ],
+    "alias": [
+      "Náutica clásica",
+      "Nautica clasica"
+    ]
   },
   {
     "nombre": "Wanted",
@@ -2404,7 +5019,33 @@ const CATALOGO_BASE = [
     "fondo": "haba tonka, vetiver, ámbar",
     "duracion": "6-8 h, estela alta",
     "ocasion": "noche, uso diario",
-    "genero": "masculino"
+    "genero": "masculino",
+    "acordes": [
+      {
+        "n": "amaderado",
+        "v": 1
+      },
+      {
+        "n": "especiado",
+        "v": 0.97
+      },
+      {
+        "n": "ámbar",
+        "v": 0.7
+      },
+      {
+        "n": "almendra",
+        "v": 0.7
+      },
+      {
+        "n": "cítrico",
+        "v": 0.67
+      },
+      {
+        "n": "aromático",
+        "v": 0.64
+      }
+    ]
   },
   {
     "nombre": "XY",
@@ -2415,7 +5056,33 @@ const CATALOGO_BASE = [
     "fondo": "maderas, almizcle",
     "duracion": "4-5 h, estela cercana",
     "ocasion": "día, juvenil",
-    "genero": "masculino"
+    "genero": "masculino",
+    "acordes": [
+      {
+        "n": "cítrico",
+        "v": 1
+      },
+      {
+        "n": "fresco",
+        "v": 0.76
+      },
+      {
+        "n": "amaderado",
+        "v": 0.72
+      },
+      {
+        "n": "almizclado",
+        "v": 0.72
+      },
+      {
+        "n": "frutal",
+        "v": 0.69
+      },
+      {
+        "n": "floral",
+        "v": 0.65
+      }
+    ]
   },
   {
     "nombre": "Yara",
@@ -2426,7 +5093,29 @@ const CATALOGO_BASE = [
     "fondo": "vainilla, almizcle, sándalo",
     "duracion": "8-10 h, estela alta",
     "ocasion": "día y noche",
-    "genero": "femenino"
+    "genero": "femenino",
+    "acordes": [
+      {
+        "n": "floral",
+        "v": 1
+      },
+      {
+        "n": "dulce",
+        "v": 0.68
+      },
+      {
+        "n": "avainillado",
+        "v": 0.64
+      },
+      {
+        "n": "amaderado",
+        "v": 0.64
+      },
+      {
+        "n": "almizclado",
+        "v": 0.64
+      }
+    ]
   },
   {
     "nombre": "Yara Moi",
@@ -2437,21 +5126,69 @@ const CATALOGO_BASE = [
     "fondo": "vainilla, almizcle, sándalo",
     "duracion": "8-10 h, estela alta",
     "ocasion": "día y noche",
-    "genero": "femenino"
+    "genero": "femenino",
+    "acordes": [
+      {
+        "n": "floral",
+        "v": 1
+      },
+      {
+        "n": "dulce",
+        "v": 0.78
+      },
+      {
+        "n": "avainillado",
+        "v": 0.73
+      },
+      {
+        "n": "amaderado",
+        "v": 0.73
+      },
+      {
+        "n": "almizclado",
+        "v": 0.73
+      },
+      {
+        "n": "cítrico",
+        "v": 0.7
+      },
+      {
+        "n": "frutal",
+        "v": 0.7
+      }
+    ]
   }
 ];
+/* Colores de acordes al estilo de las fichas de perfumería: cada familia
+   tiene su color y la barra muestra qué tan dominante es. */
+const COLOR_ACORDE = {
+  'cítrico':'#f2e34a', 'dulce':'#f08aa0', 'caramelo':'#d9a15e', 'avainillado':'#f5efd6',
+  'ámbar':'#d9925e', 'amaderado':'#a8825c', 'floral':'#f4c4d6', 'frutal':'#f2a05c',
+  'especiado':'#d1734a', 'aromático':'#8fc7b0', 'almizclado':'#e6dcc8', 'acuático':'#8fc2de',
+  'fresco':'#b7d98f', 'cuero':'#9a6b4a', 'ahumado':'#9c9a95', 'café':'#7b5030',
+  'coco':'#efe6d2', 'almendra':'#e0c9a0'
+};
+function pintaAcordes(lista){
+  if(!lista || !lista.length) return '';
+  return '<div class="acordes">' + lista.map(a =>
+    '<div class="barra"><div class="relleno" style="width:' + Math.round(a.v*100) + '%;' +
+    'background:' + (COLOR_ACORDE[a.n] || '#e3d6c6') + '"></div>' +
+    '<span class="txt">' + a.n + '</span></div>').join('') + '</div>';
+}
+
 function claveFicha(nombre){
   return String(nombre||'').trim().toLowerCase()
     .normalize('NFD').replace(/[\u0300-\u036f]/g,'');
 }
 function delCatalogo(nombre){
   const k = claveFicha(nombre);
-  return CATALOGO_BASE.find(c => claveFicha(c.nombre) === k) || null;
+  return CATALOGO_BASE.find(c => claveFicha(c.nombre) === k ||
+    (c.alias || []).some(a => claveFicha(a) === k)) || null;
 }
 function fichaDe(p){
   const base = delCatalogo(p.nombre) || {};
   const propia = fichas.find(f => f.perfumeId === p.id) || {};
-  return Object.assign({ familia:'', salida:'', corazon:'', fondo:'', duracion:'', ocasion:'', genero:'' },
+  return Object.assign({ familia:'', salida:'', corazon:'', fondo:'', duracion:'', ocasion:'', genero:'', acordes:[] },
                        base, propia);
 }
 function fichaCompleta(f){ return !!(f.familia || f.salida || f.fondo); }
@@ -2478,7 +5215,7 @@ function renderCatalogo(){
       '<h3>' + p.nombre + (p.stock>0 ? '' : ' <span class="badge agotado">Agotado</span>') + '</h3>' +
       '<div class="row"><span>' + (p.marca||'Sin marca') + '</span><span class="precio-cat">' + crc(p.precio) + '</span></div>' +
       (chips ? '<div class="chips">' + chips + '</div>' : '') +
-      notas + aviso +
+      pintaAcordes(f.acordes) + notas + aviso +
       '<div class="actions">' +
         '<button class="small gold" onclick="abrirFicha(\'' + p.id + '\')">Editar ficha</button>' +
         '<button class="small" onclick="compartirFicha(\'' + p.id + '\')">Compartir</button>' +
@@ -2503,6 +5240,7 @@ function renderReferencia(){
       return '<div class="card"><h3>' + c.nombre + '</h3>' +
         '<div class="row"><span>' + c.marca + '</span></div>' +
         '<div class="chips">' + chips + '</div>' +
+        pintaAcordes(c.acordes) +
         '<div class="piramide">' +
           (c.salida  ? '<div class="fila"><span>Salida</span><span>' + c.salida + '</span></div>' : '') +
           (c.corazon ? '<div class="fila"><span>Corazón</span><span>' + c.corazon + '</span></div>' : '') +
@@ -2525,6 +5263,7 @@ function abrirFicha(id){
   document.getElementById('fDuracion').value = f.duracion;
   document.getElementById('fOcasion').value = f.ocasion;
   document.getElementById('fGenero').value = f.genero;
+  document.getElementById('fAcordes').value = (f.acordes || []).map(a => a.n).join(', ');
   document.getElementById('modalFicha').classList.add('open');
 }
 document.getElementById('fGuardar').addEventListener('click', () => {
@@ -2537,7 +5276,13 @@ document.getElementById('fGuardar').addEventListener('click', () => {
     fondo: document.getElementById('fFondo').value.trim(),
     duracion: document.getElementById('fDuracion').value.trim(),
     ocasion: document.getElementById('fOcasion').value.trim(),
-    genero: document.getElementById('fGenero').value.trim()
+    genero: document.getElementById('fGenero').value.trim(),
+    acordes: (() => {
+      const nombres = document.getElementById('fAcordes').value.split(',')
+        .map(s => s.trim().toLowerCase()).filter(Boolean).slice(0,8);
+      // el primero manda; los siguientes bajan parejo hasta 45%
+      return nombres.map((n,i) => ({ n, v: +(1 - (i * (0.55 / Math.max(1, nombres.length - 1)))).toFixed(2) }));
+    })()
   };
   const i = fichas.findIndex(f => f.perfumeId === id);
   if(i >= 0) fichas[i] = datos; else fichas.push(datos);

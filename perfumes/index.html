@@ -214,6 +214,7 @@
 
     <div class="card">
       <h3 style="color:var(--accent)">Respaldo de datos</h3>
+      <div class="row"><span>Estado</span><b id="nubeEstado">Revisando…</b></div>
       <div class="row" style="margin-bottom:8px">Descargá un respaldo antes de cambiar de navegador, borrar caché o mover la app.</div>
       <div class="actions">
         <button class="small gold" onclick="exportarDatos()">Descargar respaldo</button>
@@ -257,7 +258,26 @@
 <script>
 /* ---------- almacenamiento ---------- */
 function load(k){ try { return JSON.parse(localStorage.getItem(k)) || []; } catch(e){ return []; } }
-function save(k,d){ localStorage.setItem(k, JSON.stringify(d)); }
+function save(k,d){ localStorage.setItem(k, JSON.stringify(d)); guardarNube(k); }
+
+/* ---------- nube (almacenamiento del servidor) ----------
+   localStorage sigue siendo la copia local e inmediata; si la página corre
+   con la capacidad `db`, cada guardado se replica a un documento por clave
+   y al abrir manda lo que haya en el servidor. */
+const CLAVES_NEGOCIO = ['inventario','clientes','ventas','abonos','compras'];
+let dbNube = null;
+function estadoNube(txt){
+  const el = document.getElementById('nubeEstado');
+  if(el) el.textContent = txt;
+}
+function guardarNube(k){
+  if(!dbNube) return;
+  let items = [];
+  try { items = JSON.parse(localStorage.getItem(k)) || []; } catch(e){ items = []; }
+  dbNube.doc('negocio/' + k).set({ items, actualizado: new Date().toISOString() })
+    .then(()=> estadoNube('Guardado en la nube'))
+    .catch(()=> estadoNube('Guardado solo en este dispositivo'));
+}
 function uid(){ return Date.now().toString(36) + Math.random().toString(36).slice(2,6); }
 function crc(n){ return '₡' + Math.round(n).toLocaleString('es-CR'); }
 
@@ -1296,6 +1316,33 @@ document.getElementById('fileImport').addEventListener('change', e=>{
 
 function renderAll(){ renderInventario(); renderClientes(); renderVentas(); renderBalance(); }
 renderAll();
+
+(async function iniciarNube(){
+  const api = window.claude;
+  if(!api || typeof api.use !== 'function'){ estadoNube('Solo en este dispositivo'); return; }
+  let db = null;
+  try { db = await api.use('db'); } catch(e){ db = null; }
+  if(!db){ estadoNube('Solo en este dispositivo'); return; }
+  dbNube = db;
+  try {
+    const snaps = await Promise.all(CLAVES_NEGOCIO.map(k => db.doc('negocio/' + k).get()));
+    if(snaps.some(s => s.exists)){
+      CLAVES_NEGOCIO.forEach((k,i) => {
+        const items = snaps[i].exists ? (snaps[i].data().items || []) : [];
+        localStorage.setItem(k, JSON.stringify(items));
+      });
+      inventario = load('inventario'); clientes = load('clientes'); ventas = load('ventas');
+      abonos = load('abonos'); compras = load('compras');
+      renderAll();
+      estadoNube('Datos cargados de la nube');
+    } else {
+      CLAVES_NEGOCIO.forEach(guardarNube);
+      estadoNube('Datos subidos a la nube');
+    }
+  } catch(e){
+    estadoNube('Nube no disponible; guardando local');
+  }
+})();
 </script>
 </body>
 </html>

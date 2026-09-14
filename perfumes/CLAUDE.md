@@ -1,6 +1,7 @@
 # App de perfumes — contexto del proyecto
 
-Negocio personal de venta de perfumes en Costa Rica. Un solo usuario (el dueño),
+Negocio personal de venta de perfumes en Costa Rica, marca **Stef Perfumes**
+(logo y monograma en el encabezado y el favicon). Un solo usuario (el dueño),
 se usa desde el teléfono. Moneda: colones (₡).
 
 ## Restricciones duras
@@ -66,11 +67,11 @@ hay que ajustar los slices.
 
 Identidad que siempre debe cumplirse: `contado + abonos + pendiente = vendido`.
 
-## Estado actual (v6)
+## Estado actual (v7)
 
-Funciona: inventario con reabastecimiento y edición, catálogo con fichas técnicas
-editables, clientes con plan de cobro semanal/quincenal, mensajes de WhatsApp
-(estado de cuenta, recordatorio de cobro, agradecimiento por abono), agenda de
+Funciona: inventario con reabastecimiento y edición, catálogo maestro precargado (`CATALOGO_BASE`) con fichas técnicas
+editables y alta de perfumes desde la lista, clientes con plan de cobro semanal/quincenal, mensajes de WhatsApp desde un modal único
+(estado de cuenta, recordatorio de cobro, agradecimiento por abono, ficha), agenda de
 cobros con vencidos, abonos con modal, ventas de varios perfumes en una sola
 transacción (líneas unidas por `grupo`), balance con costos/ganancias/flujo,
 respaldo exportar/importar en JSON y guardado en el servidor cuando corre como

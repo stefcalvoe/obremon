@@ -23,6 +23,7 @@ se usa desde el teléfono. Moneda: colones (₡).
 | `ventas` | `{id, fecha, perfumeId, perfumeNombre, clienteId, clienteNombre, cantidad, total, costoTotal, metodo}` |
 | `abonos` | `{id, fecha, clienteId, monto}` |
 | `compras` | `{id, fecha, perfumeId, nombre, cantidad, costoUnit}` |
+| `fichas` | `{perfumeId, familia, salida, corazon, fondo, duracion, ocasion, genero}` |
 
 `frec` es `7` (semanal), `15` (quincenal) o `''` (sin plan). `prox` es la fecha
 del próximo cobro en ISO `yyyy-mm-dd`.
@@ -65,12 +66,19 @@ hay que ajustar los slices.
 
 Identidad que siempre debe cumplirse: `contado + abonos + pendiente = vendido`.
 
-## Estado actual (v5)
+## Estado actual (v6)
 
-Funciona: inventario con reabastecimiento y edición, clientes con plan de cobro
-semanal/quincenal, agenda de cobros con vencidos, abonos con modal, historial por
-cliente con borrado de abonos, balance con costos/ganancias/flujo, respaldo
-exportar/importar en JSON.
+Funciona: inventario con reabastecimiento y edición, catálogo con fichas técnicas
+editables, clientes con plan de cobro semanal/quincenal, mensajes de WhatsApp
+(estado de cuenta, recordatorio de cobro, agradecimiento por abono), agenda de
+cobros con vencidos, abonos con modal, ventas de varios perfumes en una sola
+transacción (líneas unidas por `grupo`), balance con costos/ganancias/flujo,
+respaldo exportar/importar en JSON y guardado en el servidor cuando corre como
+artifact con la capacidad `db`.
+
+Una venta con varios perfumes guarda **una línea por perfume** con el mismo
+`grupo`: así se conserva la ganancia por perfume y el borrado arrastra todas las
+líneas del grupo. Las ventas viejas no tienen `grupo` y se tratan como línea única.
 
 Pendiente o posible: alertas de stock bajo (el usuario las pospuso hasta que el
 negocio crezca), despliegue en Netlify Drop para poder instalar como PWA desde el

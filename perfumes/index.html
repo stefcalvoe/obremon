@@ -83,6 +83,20 @@
   .modal .sub { font-size:12px; color:var(--text-dim); margin-bottom:6px; }
   .chk { display:flex; align-items:center; gap:8px; margin-top:12px; font-size:13px; color:var(--text-dim); }
   .chk input { width:auto; }
+  textarea { width:100%; padding:10px; background:var(--accent-soft); border:1px solid var(--border);
+    border-radius:8px; color:var(--text); font-size:13px; font-family:inherit; }
+  .chips { display:flex; flex-wrap:wrap; gap:6px; margin-top:8px; }
+  .chip { background:var(--accent-soft); border:1px solid var(--border); border-radius:20px;
+    padding:4px 10px; font-size:11px; color:var(--text-dim); }
+  .nota { font-size:12px; color:var(--text-dim); margin-top:6px; line-height:1.5; }
+  .nota b { color:var(--text); }
+  .carrito { border-top:1px solid var(--border); margin-top:12px; padding-top:8px; }
+  .carrito .item { display:flex; justify-content:space-between; font-size:13px; padding:5px 0; }
+  .carrito .item button { background:transparent; border:none; color:var(--danger); font-size:14px; padding:0 6px; }
+  .carrito .tot { display:flex; justify-content:space-between; font-size:14px; font-weight:700;
+    border-top:1px solid var(--border); padding-top:8px; margin-top:4px; }
+  nav { flex-wrap:wrap; }
+  nav button { min-width:60px; }
 </style>
 </head>
 <body>
@@ -94,6 +108,7 @@
 
 <nav>
   <button data-view="inventario" class="active">Inventario</button>
+  <button data-view="catalogo">Catálogo</button>
   <button data-view="clientes">Clientes</button>
   <button data-view="ventas">Ventas</button>
   <button data-view="balance">Balance</button>
@@ -125,6 +140,16 @@
       <button type="button" class="small" id="btnCancelarP" style="display:none;width:100%;margin-top:8px;">Cancelar edición</button>
     </form>
     <div id="listaInventario"></div>
+  </section>
+
+  <!-- CATÁLOGO -->
+  <section id="catalogo" class="view">
+    <form onsubmit="return false">
+      <h3>Catálogo y fichas técnicas</h3>
+      <label>Buscar por nombre o marca</label>
+      <input type="text" id="catBuscar" placeholder="Ej: Afnan, Cloud, amaderado" oninput="renderCatalogo()">
+    </form>
+    <div id="listaCatalogo"></div>
   </section>
 
   <!-- CLIENTES -->
@@ -165,14 +190,16 @@
   <section id="ventas" class="view">
     <form id="formVenta">
       <h3>Registrar venta</h3>
-      <label>Perfume</label>
-      <select id="vPerfume" required></select>
       <label>Cliente</label>
       <select id="vCliente" required></select>
+      <label>Perfume</label>
+      <select id="vPerfume"></select>
       <label>Cantidad</label>
-      <input type="number" id="vCantidad" required min="1" step="1" value="1">
-      <label>Precio de venta total (₡) — vacío usa el precio de lista</label>
+      <input type="number" id="vCantidad" min="1" step="1" value="1">
+      <label>Precio total de esta línea (₡) — vacío usa el precio de lista</label>
       <input type="number" id="vPrecio" min="0" step="1" placeholder="Automático">
+      <button type="button" class="small gold" id="btnAgregarLinea" style="width:100%;margin-top:10px;">+ Agregar al carrito</button>
+      <div class="carrito" id="carrito"></div>
       <label>Método de pago</label>
       <select id="vMetodo" required>
         <option value="contado">Contado</option>
@@ -227,6 +254,31 @@
 
 </main>
 
+<!-- MODAL FICHA TÉCNICA -->
+<div class="modal-bg" id="modalFicha">
+  <div class="modal">
+    <h3 id="fTitulo">Ficha técnica</h3>
+    <div class="sub">Completá o corregí los datos; se guardan con el resto del negocio.</div>
+    <input type="hidden" id="fId">
+    <label>Familia olfativa</label>
+    <input type="text" id="fFamilia" placeholder="Ej: ámbar dulce">
+    <label>Notas de salida</label>
+    <input type="text" id="fSalida" placeholder="Ej: manzana, canela">
+    <label>Notas de corazón</label>
+    <input type="text" id="fCorazon" placeholder="Ej: azahar, lavanda">
+    <label>Notas de fondo</label>
+    <input type="text" id="fFondo" placeholder="Ej: vainilla, haba tonka">
+    <label>Duración y estela</label>
+    <input type="text" id="fDuracion" placeholder="Ej: 7-9 h, estela alta">
+    <label>Ocasión</label>
+    <input type="text" id="fOcasion" placeholder="Ej: noche, invierno">
+    <label>Género</label>
+    <input type="text" id="fGenero" placeholder="Ej: masculino, unisex">
+    <button class="primary" id="fGuardar">Guardar ficha</button>
+    <button class="small" id="fCerrar" style="width:100%;margin-top:8px;">Cancelar</button>
+  </div>
+</div>
+
 <!-- MODAL RESPALDO EN PANTALLA -->
 <div class="modal-bg" id="modalJson">
   <div class="modal">
@@ -264,7 +316,7 @@ function save(k,d){ localStorage.setItem(k, JSON.stringify(d)); guardarNube(k); 
    localStorage sigue siendo la copia local e inmediata; si la página corre
    con la capacidad `db`, cada guardado se replica a un documento por clave
    y al abrir manda lo que haya en el servidor. */
-const CLAVES_NEGOCIO = ['inventario','clientes','ventas','abonos','compras'];
+const CLAVES_NEGOCIO = ['inventario','clientes','ventas','abonos','compras','fichas'];
 let dbNube = null;
 function estadoNube(txt){
   const el = document.getElementById('nubeEstado');
@@ -871,6 +923,7 @@ let clientes   = load('clientes');
 let ventas     = load('ventas');
 let abonos     = load('abonos');
 let compras    = load('compras');
+let fichas     = load('fichas');
 
 // migración: reconstruir compras iniciales si faltan
 if(!compras.length && inventario.length){
@@ -1041,7 +1094,8 @@ function renderClientes(){
       return `<div class="cobro ${e.clase}">
         <div class="top"><span class="nm">${c.nombre}</span><span class="badge ${e.badge}">${e.txt}</span></div>
         <div class="sub">Saldo ${crc(c.deuda)} · cuota ${crc(cuota)}${c.prox?' · '+fmtFecha(c.prox):''}${c.frec?(c.frec===7?' · semanal':' · quincenal'):' · sin plan'}</div>
-        <div class="actions"><button class="small gold" onclick="abrirAbono('${c.id}')">Registrar abono</button></div>
+        <div class="actions"><button class="small gold" onclick="abrirAbono('${c.id}')">Registrar abono</button>
+          <button class="small" onclick="mandarCobro('${c.id}')">Recordar por WhatsApp</button></div>
       </div>`;
     }).join('');
   } else {
@@ -1068,6 +1122,11 @@ function renderClientes(){
         <button class="small" onclick="editarCliente('${c.id}')">Editar</button>
         <button class="small" onclick="toggleHist('h_${c.id}')">Historial</button>
         <button class="small" onclick="eliminarCliente('${c.id}')">Eliminar</button>
+      </div>
+      <div class="actions">
+        <button class="small gold" onclick="mandarHistorial('${c.id}')">Enviar estado</button>
+        ${c.deuda>0?`<button class="small" onclick="mandarCobro('${c.id}')">Recordar cobro</button>`:''}
+        <button class="small" onclick="mandarGracias('${c.id}')">Agradecer abono</button>
       </div>
       <div class="hist" id="h_${c.id}" style="display:none">
         ${movs.length ? movs.map(m=>`
@@ -1160,6 +1219,200 @@ document.getElementById('mGuardar').addEventListener('click',()=>{
   renderAll();
 });
 
+
+/* ---------- CATÁLOGO Y FICHAS TÉCNICAS ----------
+   `FICHAS_BASE` trae lo que se conoce de cada perfume; lo que el usuario
+   escriba en el modal se guarda en la clave `fichas` y manda sobre la base.
+   Las fichas marcadas `revisar` son de perfumes cuyo original no es seguro:
+   se muestran con aviso para que se confirmen antes de compartirlas. */
+const FICHAS_BASE = {
+  'happy': { familia:'cítrico floral fresco', salida:'toronja, mandarina, ciruela',
+    corazon:'magnolia, rosa, lirio', fondo:'almizcle, maderas suaves',
+    duracion:'4-6 h, estela moderada', ocasion:'día, oficina, clima cálido', genero:'femenino' },
+  '9 pm': { familia:'ámbar dulce especiado', salida:'manzana, canela, bergamota',
+    corazon:'lavanda, azahar', fondo:'vainilla, haba tonka, ámbar',
+    duracion:'7-9 h, estela alta', ocasion:'noche, salidas, clima fresco', genero:'masculino' },
+  'cloud': { familia:'floral gourmand', salida:'lavanda, pera, bergamota',
+    corazon:'coco, praliné, jazmín', fondo:'almizcle, vainilla, madera de cachemira',
+    duracion:'6-8 h, estela alta', ocasion:'todo el día, uso diario', genero:'femenino' },
+  'body': { familia:'floral almizclado limpio', salida:'notas verdes cítricas',
+    corazon:'jazmín, flores blancas', fondo:'almizcle, madera clara',
+    duracion:'4-5 h, estela cercana', ocasion:'diario, uso cotidiano', genero:'femenino' },
+  'blue seduction': { familia:'acuático fresco', salida:'melón, menta, bergamota',
+    corazon:'notas marinas, cardamomo', fondo:'almizcle, maderas',
+    duracion:'4-6 h, estela moderada', ocasion:'día, calor, uso diario', genero:'masculino' },
+  'dark seduction': { familia:'oriental dulce', salida:'cítricos, especias',
+    corazon:'canela, notas amaderadas', fondo:'vainilla, ámbar',
+    duracion:'5-7 h, estela media-alta', ocasion:'noche, clima fresco', genero:'masculino' },
+  'in motion': { familia:'cítrico amaderado', salida:'toronja, mandarina',
+    corazon:'notas verdes, especias suaves', fondo:'cedro, almizcle',
+    duracion:'4-6 h, estela moderada', ocasion:'día, oficina', genero:'masculino' },
+  'x y': { familia:'cítrico frutal fresco', salida:'lima, mandarina, manzana',
+    corazon:'notas florales ligeras', fondo:'maderas, almizcle',
+    duracion:'4-5 h, estela cercana', ocasion:'día, juvenil', genero:'masculino' },
+  'meow': { familia:'frutal dulce', salida:'pera, mandarina',
+    corazon:'flor de naranjo, jazmín', fondo:'vainilla, almizcle, ámbar',
+    duracion:'4-6 h, estela moderada', ocasion:'día, juvenil', genero:'femenino' },
+  'náutica clásica': { familia:'acuático fresco', salida:'cítricos, notas marinas',
+    corazon:'notas verdes acuáticas', fondo:'maderas, almizcle',
+    duracion:'4-6 h, estela moderada', ocasion:'día, calor', genero:'masculino', revisar:true },
+  'mandaryn sky': { familia:'cítrico', salida:'mandarina, cítricos',
+    corazon:'', fondo:'', duracion:'', ocasion:'día', genero:'unisex', revisar:true },
+  'bestia negra': { familia:'', salida:'', corazon:'', fondo:'', duracion:'', ocasion:'', genero:'', revisar:true },
+  'candee': { familia:'gourmand dulce', salida:'', corazon:'', fondo:'', duracion:'', ocasion:'', genero:'femenino', revisar:true },
+  'dunescape': { familia:'', salida:'', corazon:'', fondo:'', duracion:'', ocasion:'', genero:'', revisar:true }
+};
+function claveFicha(nombre){ return String(nombre||'').trim().toLowerCase(); }
+function fichaDe(p){
+  const base = FICHAS_BASE[claveFicha(p.nombre)] || {};
+  const propia = fichas.find(f => f.perfumeId === p.id) || {};
+  return Object.assign({ familia:'', salida:'', corazon:'', fondo:'', duracion:'', ocasion:'', genero:'' },
+                       base, propia);
+}
+function fichaCompleta(f){ return !!(f.familia || f.salida || f.fondo); }
+
+function renderCatalogo(){
+  const q = (document.getElementById('catBuscar').value || '').trim().toLowerCase();
+  const cont = document.getElementById('listaCatalogo');
+  const lista = inventario.filter(p => !q ||
+    (p.nombre + ' ' + (p.marca||'') + ' ' + JSON.stringify(fichaDe(p))).toLowerCase().includes(q));
+  if(!lista.length){ cont.innerHTML = '<div class="empty">Sin resultados</div>'; return; }
+  cont.innerHTML = lista.map(p => {
+    const f = fichaDe(p);
+    const chips = [f.familia, f.genero, f.ocasion].filter(Boolean)
+      .map(t => '<span class="chip">' + t + '</span>').join('');
+    const notas = [
+      f.salida  ? '<div class="nota"><b>Salida:</b> ' + f.salida + '</div>' : '',
+      f.corazon ? '<div class="nota"><b>Corazón:</b> ' + f.corazon + '</div>' : '',
+      f.fondo   ? '<div class="nota"><b>Fondo:</b> ' + f.fondo + '</div>' : '',
+      f.duracion? '<div class="nota"><b>Duración:</b> ' + f.duracion + '</div>' : ''
+    ].join('');
+    const aviso = (FICHAS_BASE[claveFicha(p.nombre)] || {}).revisar && !fichas.find(x=>x.perfumeId===p.id)
+      ? '<div class="nota" style="color:var(--warn)">Ficha por confirmar: completala antes de compartirla.</div>' : '';
+    return '<div class="card">' +
+      '<h3>' + p.nombre + (p.stock>0 ? '' : ' <span class="badge agotado">Agotado</span>') + '</h3>' +
+      '<div class="row"><span>' + (p.marca||'Sin marca') + '</span><span>' + crc(p.precio) + '</span></div>' +
+      (chips ? '<div class="chips">' + chips + '</div>' : '') +
+      notas + aviso +
+      (fichaCompleta(f) ? '' : '<div class="nota">Todavía sin ficha. Agregala para poder compartirla.</div>') +
+      '<div class="actions">' +
+        '<button class="small gold" onclick="abrirFicha(\'' + p.id + '\')">Editar ficha</button>' +
+        '<button class="small" onclick="compartirFicha(\'' + p.id + '\')">Compartir</button>' +
+      '</div></div>';
+  }).join('');
+}
+function abrirFicha(id){
+  const p = inventario.find(x => x.id === id);
+  const f = fichaDe(p);
+  document.getElementById('fId').value = id;
+  document.getElementById('fTitulo').textContent = 'Ficha de ' + p.nombre;
+  document.getElementById('fFamilia').value = f.familia;
+  document.getElementById('fSalida').value = f.salida;
+  document.getElementById('fCorazon').value = f.corazon;
+  document.getElementById('fFondo').value = f.fondo;
+  document.getElementById('fDuracion').value = f.duracion;
+  document.getElementById('fOcasion').value = f.ocasion;
+  document.getElementById('fGenero').value = f.genero;
+  document.getElementById('modalFicha').classList.add('open');
+}
+document.getElementById('fGuardar').addEventListener('click', () => {
+  const id = document.getElementById('fId').value;
+  const datos = {
+    perfumeId: id,
+    familia: document.getElementById('fFamilia').value.trim(),
+    salida: document.getElementById('fSalida').value.trim(),
+    corazon: document.getElementById('fCorazon').value.trim(),
+    fondo: document.getElementById('fFondo').value.trim(),
+    duracion: document.getElementById('fDuracion').value.trim(),
+    ocasion: document.getElementById('fOcasion').value.trim(),
+    genero: document.getElementById('fGenero').value.trim()
+  };
+  const i = fichas.findIndex(f => f.perfumeId === id);
+  if(i >= 0) fichas[i] = datos; else fichas.push(datos);
+  save('fichas', fichas);
+  document.getElementById('modalFicha').classList.remove('open');
+  renderCatalogo();
+});
+document.getElementById('fCerrar').addEventListener('click', () => {
+  document.getElementById('modalFicha').classList.remove('open');
+});
+document.getElementById('modalFicha').addEventListener('click', e => {
+  if(e.target.id === 'modalFicha') e.currentTarget.classList.remove('open');
+});
+
+/* ---------- MENSAJES PARA CLIENTES ----------
+   Abren WhatsApp con el texto ya escrito; el usuario decide si lo manda. */
+function telWhatsapp(tel){
+  const d = String(tel || '').replace(/\D/g, '');
+  if(!d) return '';
+  return d.length === 8 ? '506' + d : d;
+}
+function enviarWhatsapp(tel, texto){
+  const n = telWhatsapp(tel);
+  if(!n){ alert('Ese cliente no tiene teléfono guardado. Agregalo en Editar.'); return; }
+  window.open('https://wa.me/' + n + '?text=' + encodeURIComponent(texto), '_blank');
+}
+function textoFicha(p){
+  const f = fichaDe(p);
+  const l = ['✦ *' + p.nombre + '*' + (p.marca ? ' — ' + p.marca : '')];
+  if(f.familia)  l.push('Familia: ' + f.familia);
+  if(f.salida)   l.push('Salida: ' + f.salida);
+  if(f.corazon)  l.push('Corazón: ' + f.corazon);
+  if(f.fondo)    l.push('Fondo: ' + f.fondo);
+  if(f.duracion) l.push('Duración: ' + f.duracion);
+  if(f.ocasion)  l.push('Ideal para: ' + f.ocasion);
+  if(f.genero)   l.push('Género: ' + f.genero);
+  l.push('Precio: ' + crc(p.precio));
+  return 'En *Stef Perfumes* te comparto la ficha de este perfume 🌟\n\n' + l.join('\n') +
+         '\n\nCon gusto te lo aparto cuando querás.';
+}
+function compartirFicha(id){
+  const p = inventario.find(x => x.id === id);
+  const texto = textoFicha(p);
+  if(navigator.share){ navigator.share({ text: texto }).catch(()=>{}); return; }
+  const cliente = prompt('Escribí el número de WhatsApp (o dejalo vacío para copiar el texto):', '');
+  if(cliente){ enviarWhatsapp(cliente, texto); return; }
+  if(navigator.clipboard) navigator.clipboard.writeText(texto).then(()=>alert('Ficha copiada.'), ()=>{});
+}
+function msgHistorial(c){
+  const movs = movimientosCliente(c);
+  const lineas = movs.length
+    ? movs.map(m => '• ' + fmtFecha(m.fecha) + ' — ' + m.txt + ': ' +
+        (m.tipo === 'abono' ? '−' : '') + crc(m.monto)).join('\n')
+    : '• Todavía sin movimientos';
+  return '¡Hola ' + c.nombre + '! 🌸\nEn *Stef Perfumes* nos complace tenerte como cliente. ' +
+    'Te comparto tu estado de cuenta:\n\n' + lineas +
+    '\n\nSaldo actual: *' + crc(c.deuda) + '*' +
+    (c.deuda > 0 && c.prox ? '\nPróximo cobro: ' + fmtFecha(c.prox) : '') +
+    '\n\nGracias por tu confianza. Cualquier consulta, con gusto te atiendo. 💛';
+}
+function msgCobro(c){
+  const cuota = c.cuota ? Math.min(c.cuota, c.deuda) : c.deuda;
+  const dd = diasDesdeHoy(c.prox);
+  const cuerpo = (dd !== null && dd < 0)
+    ? 'Te recuerdo con cariño que tu cuota quedó pendiente desde el ' + fmtFecha(c.prox) + '.'
+    : 'Te recuerdo que tu próximo pago es el ' + (c.prox ? fmtFecha(c.prox) : 'que podás') + '.';
+  return '¡Hola ' + c.nombre + '! 🌸 Te saluda *Stef Perfumes*.\n\n' + cuerpo +
+    '\nSaldo actual: *' + crc(c.deuda) + '*' +
+    (cuota && cuota !== c.deuda ? '\nCuota sugerida: ' + crc(cuota) : '') +
+    '\n\nSi te queda mejor otra fecha o otro monto, decime y lo acomodamos. ¡Gracias por tu preferencia! 💛';
+}
+function msgGracias(c){
+  const mios = abonos.filter(a => a.clienteId === c.id)
+    .sort((a,b) => claveFecha(a.fecha).localeCompare(claveFecha(b.fecha)));
+  const ultimo = mios[mios.length - 1];
+  return '¡Hola ' + c.nombre + '! 🌟\nEn *Stef Perfumes* te agradecemos tu abono' +
+    (ultimo ? ' de ' + crc(ultimo.monto) + ' del ' + fmtFecha(ultimo.fecha) : '') +
+    ' y tu puntualidad.\n\n' +
+    (c.deuda > 0
+      ? 'Tu saldo queda en *' + crc(c.deuda) + '*' + (c.prox ? ', próximo cobro el ' + fmtFecha(c.prox) : '') + '.'
+      : '¡Tu cuenta quedó al día! 🎉') +
+    '\n\nGracias por la confianza; cuando querás estrenar fragancia, aquí estoy. 💛';
+}
+function mandarHistorial(id){ const c = clientes.find(x=>x.id===id); enviarWhatsapp(c.telefono, msgHistorial(c)); }
+function mandarCobro(id){ const c = clientes.find(x=>x.id===id); enviarWhatsapp(c.telefono, msgCobro(c)); }
+function mandarGracias(id){ const c = clientes.find(x=>x.id===id); enviarWhatsapp(c.telefono, msgGracias(c)); }
+
 /* ---------- VENTAS ---------- */
 function poblarSelects(){
   const selP = document.getElementById('vPerfume'), selC = document.getElementById('vCliente');
@@ -1169,47 +1422,105 @@ function poblarSelects(){
   selC.innerHTML = clientes.map(c=>`<option value="${c.id}">${c.nombre}</option>`).join('')
     || '<option value="">Registrá un cliente primero</option>';
 }
+/* Carrito: una venta puede llevar varios perfumes. Cada perfume sigue siendo
+   una línea en `ventas` (para no perder la ganancia por perfume), pero todas
+   las líneas comparten `grupo`, así se muestran y se borran juntas. */
+let carrito = [];
+function renderCarrito(){
+  const cont = document.getElementById('carrito');
+  if(!carrito.length){ cont.innerHTML = '<div class="nota">Agregá uno o varios perfumes al carrito.</div>'; return; }
+  const total = carrito.reduce((a,l) => a + l.total, 0);
+  cont.innerHTML = carrito.map((l,i) =>
+    '<div class="item"><span>' + l.perfumeNombre + ' ×' + l.cantidad + '</span>' +
+    '<span>' + crc(l.total) + ' <button onclick="quitarLinea(' + i + ')" title="Quitar">✕</button></span></div>'
+  ).join('') + '<div class="tot"><span>Total</span><span>' + crc(total) + '</span></div>';
+}
+function quitarLinea(i){ carrito.splice(i,1); renderCarrito(); }
+document.getElementById('btnAgregarLinea').addEventListener('click', () => {
+  const pid = document.getElementById('vPerfume').value;
+  const cant = parseInt(document.getElementById('vCantidad').value);
+  const pm = document.getElementById('vPrecio').value;
+  if(!pid){ alert('No hay perfumes con stock disponible.'); return; }
+  if(isNaN(cant) || cant <= 0){ alert('Poné una cantidad válida.'); return; }
+  const p = inventario.find(x => x.id === pid);
+  const yaEnCarrito = carrito.filter(l => l.perfumeId === pid).reduce((a,l) => a + l.cantidad, 0);
+  if(cant + yaEnCarrito > p.stock){ alert('No hay suficiente stock de ' + p.nombre + '.'); return; }
+  carrito.push({ perfumeId:p.id, perfumeNombre:p.nombre, cantidad:cant,
+    total: pm !== '' ? parseFloat(pm) : p.precio * cant, costoTotal: p.costo * cant });
+  document.getElementById('vCantidad').value = 1;
+  document.getElementById('vPrecio').value = '';
+  renderCarrito();
+});
 document.getElementById('formVenta').addEventListener('submit', e=>{
   e.preventDefault();
-  const pid=document.getElementById('vPerfume').value, cid=document.getElementById('vCliente').value;
-  const cant=parseInt(document.getElementById('vCantidad').value);
-  const metodo=document.getElementById('vMetodo').value;
-  const pm=document.getElementById('vPrecio').value;
-  if(!pid||!cid){ alert('Necesitás al menos un perfume en stock y un cliente registrado.'); return; }
-  const p=inventario.find(x=>x.id===pid), c=clientes.find(x=>x.id===cid);
-  if(cant>p.stock){ alert('No hay suficiente stock.'); return; }
-  const total = pm!=='' ? parseFloat(pm) : p.precio*cant;
-  p.stock -= cant;
-  if(metodo==='credito'){
-    c.deuda += total;
+  const cid = document.getElementById('vCliente').value;
+  const metodo = document.getElementById('vMetodo').value;
+  if(!cid){ alert('Registrá un cliente primero.'); return; }
+  if(!carrito.length){ alert('Agregá al menos un perfume al carrito.'); return; }
+  const c = clientes.find(x => x.id === cid);
+  const grupo = uid(), fecha = hoyISO();
+  const totalVenta = carrito.reduce((a,l) => a + l.total, 0);
+  carrito.forEach(l => {
+    const p = inventario.find(x => x.id === l.perfumeId);
+    if(p) p.stock -= l.cantidad;
+    ventas.push({ id:uid(), grupo, fecha, perfumeId:l.perfumeId, perfumeNombre:l.perfumeNombre,
+      clienteId:c.id, clienteNombre:c.nombre, cantidad:l.cantidad, total:l.total,
+      costoTotal:l.costoTotal, metodo });
+  });
+  if(metodo === 'credito'){
+    c.deuda += totalVenta;
     if(!c.prox && c.frec) c.prox = addDays(hoyISO(), c.frec);
   }
-  ventas.push({ id:uid(), fecha:hoyISO(), perfumeId:p.id, perfumeNombre:p.nombre,
-    clienteId:c.id, clienteNombre:c.nombre, cantidad:cant, total, costoTotal:p.costo*cant, metodo });
   save('inventario',inventario); save('clientes',clientes); save('ventas',ventas);
-  e.target.reset(); document.getElementById('vCantidad').value=1; renderAll();
+  carrito = []; e.target.reset(); document.getElementById('vCantidad').value = 1;
+  renderAll();
 });
+function lineasDeVenta(v){
+  return v.grupo ? ventas.filter(x => x.grupo === v.grupo) : [v];
+}
 function renderVentas(){
-  poblarSelects();
+  poblarSelects(); renderCarrito();
   const cont=document.getElementById('listaVentas');
   if(!ventas.length){ cont.innerHTML='<div class="empty">Todavía no hay ventas registradas</div>'; return; }
-  cont.innerHTML = ventas.slice().reverse().map(v=>`
-    <div class="card">
-      <h3>${v.perfumeNombre}</h3>
-      <div class="row"><span>${v.clienteNombre}</span><span>${fmtFecha(v.fecha)}</span></div>
-      <div class="row"><span>Cant: ${v.cantidad} · <b>${crc(v.total)}</b></span>
-        <span class="badge ${v.metodo}">${v.metodo==='contado'?'Contado':'Crédito'}</span></div>
-      <div class="row"><span>Ganancia</span><span style="color:var(--success)">${crc(v.total-(v.costoTotal||0))}</span></div>
-      <div class="actions"><button class="small" onclick="eliminarVenta('${v.id}')">Eliminar venta</button></div>
-    </div>`).join('');
+  const vistos = {};
+  const tarjetas = ventas.slice().reverse().filter(v => {
+    const k = v.grupo || v.id;
+    if(vistos[k]) return false;
+    vistos[k] = true; return true;
+  });
+  cont.innerHTML = tarjetas.map(v => {
+    const ls = lineasDeVenta(v);
+    const total = ls.reduce((a,l) => a + l.total, 0);
+    const costo = ls.reduce((a,l) => a + (l.costoTotal||0), 0);
+    const titulo = ls.length > 1 ? ls.length + ' perfumes' : ls[0].perfumeNombre;
+    const detalle = ls.length > 1
+      ? ls.map(l => '<div class="row"><span>' + l.perfumeNombre + ' ×' + l.cantidad + '</span><span>' + crc(l.total) + '</span></div>').join('')
+      : '<div class="row"><span>Cant: ' + ls[0].cantidad + '</span><span><b>' + crc(total) + '</b></span></div>';
+    return '<div class="card">' +
+      '<h3>' + titulo + '</h3>' +
+      '<div class="row"><span>' + v.clienteNombre + '</span><span>' + fmtFecha(v.fecha) + '</span></div>' +
+      detalle +
+      '<div class="row"><span><b>' + crc(total) + '</b></span>' +
+        '<span class="badge ' + v.metodo + '">' + (v.metodo==='contado'?'Contado':'Crédito') + '</span></div>' +
+      '<div class="row"><span>Ganancia</span><span style="color:var(--success)">' + crc(total - costo) + '</span></div>' +
+      '<div class="actions"><button class="small" onclick="eliminarVenta(\'' + v.id + '\')">Eliminar venta</button></div>' +
+    '</div>';
+  }).join('');
 }
 function eliminarVenta(id){
-  if(!confirm('¿Eliminar esta venta? Se devuelve el stock y se ajusta la deuda.')) return;
-  const v=ventas.find(x=>x.id===id);
-  const p=inventario.find(x=>x.id===v.perfumeId); if(p) p.stock+=v.cantidad;
-  const c=clientes.find(x=>x.id===v.clienteId);
-  if(c && v.metodo==='credito'){ c.deuda=Math.max(0,c.deuda-v.total); if(c.deuda===0) c.prox=''; }
-  ventas=ventas.filter(x=>x.id!==id);
+  const v = ventas.find(x => x.id === id);
+  if(!v) return;
+  const ls = lineasDeVenta(v);
+  const aviso = ls.length > 1
+    ? '¿Eliminar esta venta de ' + ls.length + ' perfumes? Se devuelve el stock de todos y se ajusta la deuda.'
+    : '¿Eliminar esta venta? Se devuelve el stock y se ajusta la deuda.';
+  if(!confirm(aviso)) return;
+  const total = ls.reduce((a,l) => a + l.total, 0);
+  ls.forEach(l => { const p = inventario.find(x => x.id === l.perfumeId); if(p) p.stock += l.cantidad; });
+  const c = clientes.find(x => x.id === v.clienteId);
+  if(c && v.metodo === 'credito'){ c.deuda = Math.max(0, c.deuda - total); if(c.deuda === 0) c.prox = ''; }
+  const fuera = {}; ls.forEach(l => fuera[l.id] = true);
+  ventas = ventas.filter(x => !fuera[x.id]);
   save('ventas',ventas); save('inventario',inventario); save('clientes',clientes); renderAll();
 }
 
@@ -1258,7 +1569,7 @@ function renderBalance(){
 
 /* ---------- RESPALDO ---------- */
 function exportarDatos(){
-  const data = { version:4, exportado:hoyISO(), inventario, clientes, ventas, abonos, compras };
+  const data = { version:5, exportado:hoyISO(), inventario, clientes, ventas, abonos, compras, fichas };
   const blob = new Blob([JSON.stringify(data,null,2)], {type:'application/json'});
   const a = document.createElement('a');
   a.href = URL.createObjectURL(blob);
@@ -1270,7 +1581,7 @@ function exportarDatos(){
 // El visor de algunos navegadores bloquea las descargas: esta vista muestra
 // el mismo JSON del respaldo para copiarlo a mano.
 function verRespaldo(){
-  const data = { version:4, exportado:hoyISO(), inventario, clientes, ventas, abonos, compras };
+  const data = { version:5, exportado:hoyISO(), inventario, clientes, ventas, abonos, compras, fichas };
   document.getElementById('jsonTexto').value = JSON.stringify(data,null,2);
   document.getElementById('modalJson').classList.add('open');
 }
@@ -1302,8 +1613,9 @@ document.getElementById('fileImport').addEventListener('change', e=>{
       if(!confirm('Esto reemplaza todos los datos actuales por los del respaldo. ¿Continuar?')) return;
       inventario = d.inventario || []; clientes = d.clientes || [];
       ventas = d.ventas || []; abonos = d.abonos || []; compras = d.compras || [];
+      fichas = d.fichas || [];
       save('inventario',inventario); save('clientes',clientes);
-      save('ventas',ventas); save('abonos',abonos); save('compras',compras);
+      save('ventas',ventas); save('abonos',abonos); save('compras',compras); save('fichas',fichas);
       renderAll();
       alert('Respaldo restaurado: ' + inventario.length + ' perfumes, ' + clientes.length + ' clientes, ' + ventas.length + ' ventas.');
     } catch(err){
@@ -1314,7 +1626,7 @@ document.getElementById('fileImport').addEventListener('change', e=>{
   e.target.value = '';
 });
 
-function renderAll(){ renderInventario(); renderClientes(); renderVentas(); renderBalance(); }
+function renderAll(){ renderInventario(); renderCatalogo(); renderClientes(); renderVentas(); renderBalance(); }
 renderAll();
 
 (async function iniciarNube(){
@@ -1332,7 +1644,7 @@ renderAll();
         localStorage.setItem(k, JSON.stringify(items));
       });
       inventario = load('inventario'); clientes = load('clientes'); ventas = load('ventas');
-      abonos = load('abonos'); compras = load('compras');
+      abonos = load('abonos'); compras = load('compras'); fichas = load('fichas');
       renderAll();
       estadoNube('Datos cargados de la nube');
     } else {

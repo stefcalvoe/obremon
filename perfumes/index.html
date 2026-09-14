@@ -318,6 +318,9 @@
     <h3 id="fTitulo">Ficha técnica</h3>
     <div class="sub">Completá o corregí los datos; se guardan con el resto del negocio.</div>
     <input type="hidden" id="fId">
+    <label>Pegar ficha de Fragrantica (o de la marca) y completar sola</label>
+    <textarea id="fPegado" rows="3" placeholder="Pegá aquí el párrafo: «X de Y es una fragancia de la familia olfativa … Las Notas de Salida son …»"></textarea>
+    <button type="button" class="small gold" id="fLeer" style="width:100%;margin-top:8px;">Leer y completar campos</button>
     <label>Familia olfativa</label>
     <input type="text" id="fFamilia" placeholder="Ej: ámbar dulce">
     <label>Notas de salida</label>
@@ -3395,9 +3398,9 @@ const CATALOGO_BASE = [
     "nombre": "Hugo XY",
     "marca": "Hugo Boss",
     "familia": "amaderada aromática",
-    "salida": "hojas de peral, cedro, bergamota",
-    "corazon": "albahaca, menta",
-    "fondo": "pachulí, almizcle, cedro",
+    "salida": "cedro, hojas del peral, bergamota",
+    "corazon": "menta, albahaca",
+    "fondo": "cedro, almizcle, pachulí",
     "duracion": "4-6 h, estela moderada",
     "ocasion": "día, uso diario, juvenil",
     "genero": "masculino",
@@ -3431,7 +3434,8 @@ const CATALOGO_BASE = [
       "XY",
       "Boss XY",
       "Hugo Boss XY"
-    ]
+    ],
+    "anio": 2007
   },
   {
     "nombre": "Idôle",
@@ -5274,6 +5278,7 @@ function abrirFicha(id){
   document.getElementById('fOcasion').value = f.ocasion;
   document.getElementById('fGenero').value = f.genero;
   document.getElementById('fAcordes').value = (f.acordes || []).map(a => a.n).join(', ');
+  document.getElementById('fPegado').value = '';
   document.getElementById('modalFicha').classList.add('open');
 }
 document.getElementById('fGuardar').addEventListener('click', () => {
@@ -5299,6 +5304,37 @@ document.getElementById('fGuardar').addEventListener('click', () => {
   save('fichas', fichas);
   document.getElementById('modalFicha').classList.remove('open');
   renderCatalogo();
+});
+/* Lee el párrafo estándar de las fichas de perfumería y reparte los datos
+   en los campos. Lo que no reconoce lo deja como está, para corregir a mano. */
+function leerFichaPegada(txt){
+  const t = ' ' + txt.replace(/\s+/g, ' ').trim() + ' ';
+  const r = {};
+  let m;
+  if((m = t.match(/familia olfativa ([^.]+?) para (Hombres y Mujeres|Hombres|Mujeres)/i))){
+    r.familia = m[1].trim().toLowerCase();
+    const g = m[2].toLowerCase();
+    r.genero = g.indexOf('y') > -1 ? 'unisex' : (g === 'hombres' ? 'masculino' : 'femenino');
+  }
+  if((m = t.match(/se lanz[óo] en (\d{4})/i))) r.anio = m[1];
+  const notas = (etiqueta) => {
+    const re = new RegExp('Notas de ' + etiqueta + ' son ([^;.]+)', 'i');
+    const x = t.match(re);
+    return x ? x[1].replace(/\s+y\s+/g, ', ').replace(/\s*\([^)]*\)/g, '').trim().toLowerCase() : '';
+  };
+  r.salida = notas('Salida'); r.corazon = notas('Coraz[óo]n'); r.fondo = notas('Fondo');
+  return r;
+}
+document.getElementById('fLeer').addEventListener('click', () => {
+  const txt = document.getElementById('fPegado').value;
+  if(!txt.trim()){ alert('Pegá primero el texto de la ficha.'); return; }
+  const r = leerFichaPegada(txt);
+  const poner = (id, v) => { if(v) document.getElementById(id).value = v; };
+  poner('fFamilia', r.familia); poner('fGenero', r.genero);
+  poner('fSalida', r.salida); poner('fCorazon', r.corazon); poner('fFondo', r.fondo);
+  const leidos = ['familia','genero','salida','corazon','fondo'].filter(k => r[k]).length;
+  alert(leidos ? 'Listo: ' + leidos + ' campos completados' + (r.anio ? ' (año ' + r.anio + ')' : '') + '. Revisalos y guardá.'
+               : 'No reconocí el formato; completá a mano.');
 });
 document.getElementById('fCerrar').addEventListener('click', () => {
   document.getElementById('modalFicha').classList.remove('open');
